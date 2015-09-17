@@ -27,7 +27,7 @@ public class Launcher extends Canvas implements Runnable{
 	private void init(){
 		this.setGame(new Game(this));
 		Entity test = new Entity();
-		test.addComponent(new RenderableComponent("Res/ok_16c16.gif"));
+		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
 		game.getGraphicsSystem().addRenderable(test);	
 		game.addEntities(test);
 		game.getPhysicsSystem().addToPhysics(test);
@@ -38,7 +38,7 @@ public class Launcher extends Canvas implements Runnable{
 		
 		
 		Entity player2 = new Entity();
-		player2.addComponent(new RenderableComponent(""));
+		player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
 		game.getGraphicsSystem().addRenderable(player2);
 		game.addEntities(player2);
 		game.getPhysicsSystem().addToPhysics(player2);

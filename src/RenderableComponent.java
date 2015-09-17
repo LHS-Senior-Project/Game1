@@ -15,7 +15,8 @@ public class RenderableComponent extends BaseComponent{
 		
 		if(!imagePath.isEmpty()){
 			try {
-				image = ImageIO.read(new File(imagePath));
+				this.image = ImageIO.read(getClass().getResource(imagePath));
+				
 			} catch (IOException e) {
 				initDefault();
 				e.printStackTrace();
