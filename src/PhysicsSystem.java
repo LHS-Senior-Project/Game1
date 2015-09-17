@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+
+public class PhysicsSystem {
+
+	private ArrayList<Entity> physics;
+	private long lastTime;
+	
+	public PhysicsSystem(){
+		physics = new ArrayList<Entity>();
+		lastTime = System.currentTimeMillis();
+	}
+	
+	public void update(){
+		
+		handleInputs();
+		
+		long deltaTime = lastTime - System.currentTimeMillis();
+		for(Entity e : physics){
+			PositionComponent pc = e.positionComponent;
+			
+			pc.setVelX(pc.getVelX() + pc.getAccelX() * deltaTime);
+			pc.setVelY(pc.getVelY() + pc.getAccelY() * deltaTime);
+			pc.setX(pc.getX() + pc.getVelX() * deltaTime);
+			pc.setY(pc.getY() + pc.getVelY() * deltaTime);
+			pc.setVelX(pc.getVelX() * 0.995f);
+			pc.setVelY(pc.getVelY() * 0.995f);
+			
+		}
+		lastTime = System.currentTimeMillis();
+	}
+	
+	private void handleInputs() {
+		for(Entity e : physics){
+			int ID = e.getComponentID("InputCompnentBase");
+			if(ID != -1){
+				InputComponentBase ib = (InputComponentBase) e.getComponent(ID);
+				ib.updateInputs();
+			}
+		}
+	}
+
+	public void addToPhysics(Entity e){
+		this.physics.add(e);
+	}
+	
+}
