@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public class Game {
 	private GraphicsSystem graphicsSystem;
-	//SIMPLE CHANGE
 	private KeyInput keyInput;
 	private MouseInput mouseInput;
 	private PhysicsSystem physicsSystem;
