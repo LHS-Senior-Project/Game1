@@ -10,6 +10,13 @@ public class Entity {
 		this.positionComponent = new PositionComponent();
 	}
 	
+	public Entity(float x, float y){
+		this.components = new ArrayList<BaseComponent>();
+		this.positionComponent = new PositionComponent();
+		this.positionComponent.setX(x);
+		this.positionComponent.setY(x);
+	}
+	
 	public void addComponent(BaseComponent component){
 		this.components.add(component);
 	}

@@ -44,6 +44,11 @@ public class Launcher extends Canvas implements Runnable{
 		game.getPhysicsSystem().addToPhysics(player2);
 		player2.addComponent(new Player2InputComponent(player2,k,null));
 		
+		Entity car = new Entity(100,100);
+		car.addComponent(new RenderableComponent("/Images/car.png"));
+		game.getGraphicsSystem().addRenderable(car);
+		game.addEntities(car);
+		
 	}
 	
 	private void setGame(Game game) {
