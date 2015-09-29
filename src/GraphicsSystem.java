@@ -21,7 +21,7 @@ public class GraphicsSystem {
 
 	public void render() {
 		Graphics g = bs.getDrawGraphics();
-		g.clearRect(0, 0, 10000, 10000);
+		g.clearRect(0, 0, 1000, 1000);
 		for(Entity e : this.renderable){
 			RenderableComponent rc = (RenderableComponent) e.getComponent(ComponentName.RenderableComponent);
 			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);

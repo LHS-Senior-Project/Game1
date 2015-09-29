@@ -13,12 +13,20 @@ public class Player2InputComponent extends InputComponentBase{
 		}
 
 	public void updateInputs() {
+		float speed = .0075f;
 		parent.positionComponent.setAccelX(0.0f);
 		parent.positionComponent.setAccelY(0.0f);
-		if (k.l) parent.positionComponent.setAccelX(.0100f);
-		if (k.j) parent.positionComponent.setAccelX(-.0100f);
-		if (k.k) parent.positionComponent.setAccelY(.0100f);
-		if (k.i) parent.positionComponent.setAccelY(-.0100f);
+		if (k.l) parent.positionComponent.setAccelX(speed);
+		if (k.j) parent.positionComponent.setAccelX(-1 * speed);
+		if (k.k) parent.positionComponent.setAccelY(speed);
+		if (k.i) parent.positionComponent.setAccelY(-1 * speed);
+		if(k.space) parent.positionComponent.setAccelX(0);
+		if(k.space) parent.positionComponent.setAccelY(0);
+		if(k.space) parent.positionComponent.setX(10);
+		if(k.space) parent.positionComponent.setY(10);
+		if(k.space) parent.positionComponent.setVelX(0);
+		if(k.space) parent.positionComponent.setVelY(0);
+		
 	}
 
 }

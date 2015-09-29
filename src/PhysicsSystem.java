@@ -14,7 +14,8 @@ public class PhysicsSystem {
 		
 		handleInputs();
 		
-		long deltaTime = lastTime - System.currentTimeMillis();
+		long deltaTime = 1000/60; 
+		
 		for(Entity e : physics){
 			PositionComponent pc = e.positionComponent;
 			
@@ -22,11 +23,10 @@ public class PhysicsSystem {
 			pc.setVelY(pc.getVelY() + pc.getAccelY() * deltaTime);
 			pc.setX(pc.getX() + pc.getVelX() * deltaTime);
 			pc.setY(pc.getY() + pc.getVelY() * deltaTime);
-			pc.setVelX(pc.getVelX() * 0.995f);
-			pc.setVelY(pc.getVelY() * 0.995f);
+			pc.setVelX(pc.getVelX() * 0.6f);
+			pc.setVelY(pc.getVelY() * 0.6f);
 			
 		}
-		lastTime = System.currentTimeMillis();
 	}
 	
 	private void handleInputs() {

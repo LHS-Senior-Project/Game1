@@ -5,6 +5,7 @@ public class KeyInput implements KeyListener{
 
 	public boolean w,a,s,d;
 	public boolean i,j,k,l;
+	public boolean space;
 	
 	public KeyInput(){
 		w = false;
@@ -15,6 +16,7 @@ public class KeyInput implements KeyListener{
 		j = false;
 		k = false;
 		l = false;
+		space = false;
 	}
 	
 	@Override
@@ -27,6 +29,7 @@ public class KeyInput implements KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_J) j = true;
 		if(e.getKeyCode() == KeyEvent.VK_K) k = true;
 		if(e.getKeyCode() == KeyEvent.VK_L) l = true;
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) space = true;
 	}
 
 	@Override
@@ -39,6 +42,7 @@ public class KeyInput implements KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_J) j = false;
 		if(e.getKeyCode() == KeyEvent.VK_K) k = false;
 		if(e.getKeyCode() == KeyEvent.VK_L) l = false;
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) space = false;
 	}
 
 	@Override
