@@ -1,3 +1,6 @@
+package Components;
+import Main.BaseComponent;
+
 public class PositionComponent extends BaseComponent{
 
 	public final String name = "PositionComponent";

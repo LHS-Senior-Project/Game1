@@ -1,7 +1,12 @@
+package Main;
 import java.awt.Canvas;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+
+import Components.Player2InputComponent;
+import Components.PlayerInputComponent;
+import Components.RenderableComponent;
 
 @SuppressWarnings("serial")
 public class Launcher extends Canvas implements Runnable{

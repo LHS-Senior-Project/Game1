@@ -1,5 +1,9 @@
+package Main;
 import java.awt.Canvas;
 import java.util.ArrayList;
+
+import Systems.GraphicsSystem;
+import Systems.PhysicsSystem;
 
 public class Game {
 	private GraphicsSystem graphicsSystem;

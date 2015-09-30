@@ -1,9 +1,12 @@
+package Main;
 import java.util.ArrayList;
+
+import Components.PositionComponent;
 
 public class Entity {
 
 	ArrayList<BaseComponent> components; 
-	PositionComponent positionComponent;
+	public PositionComponent positionComponent;
 	
 	public Entity(){
 		this.components = new ArrayList<BaseComponent>();

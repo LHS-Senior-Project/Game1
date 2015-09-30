@@ -1,3 +1,4 @@
+package Main;
 
 public abstract class BaseComponent {
 	public String name;

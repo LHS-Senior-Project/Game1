@@ -1,3 +1,4 @@
+package Main;
 
 public class ComponentName {
 	public static String RenderableComponent = "RenderableComponent";

@@ -1,3 +1,4 @@
+package Main;
 
 public class InputComponentBase extends BaseComponent{
 

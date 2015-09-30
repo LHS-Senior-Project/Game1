@@ -1,10 +1,14 @@
+package Systems;
+
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
-import java.awt.image.ImageObserver;
 import java.util.ArrayList;
-import java.util.Observer;
+
+import Components.RenderableComponent;
+import Main.ComponentName;
+import Main.Entity;
 
 public class GraphicsSystem {
 

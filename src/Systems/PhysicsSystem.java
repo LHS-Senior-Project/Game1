@@ -1,4 +1,10 @@
+package Systems;
+
 import java.util.ArrayList;
+
+import Components.PositionComponent;
+import Main.Entity;
+import Main.InputComponentBase;
 
 public class PhysicsSystem {
 

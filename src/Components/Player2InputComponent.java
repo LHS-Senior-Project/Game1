@@ -1,3 +1,8 @@
+package Components;
+import Main.Entity;
+import Main.InputComponentBase;
+import Main.KeyInput;
+import Main.MouseInput;
 
 public class Player2InputComponent extends InputComponentBase{
 
