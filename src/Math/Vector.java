@@ -19,7 +19,15 @@ public class Vector{
 	}
 	
 	public float getY(){
-		return x;
+		return y;
+	}
+	
+	public void setX(float x){
+		this.x = x;
+	}
+	
+	public void setY(float y){
+		this.y = y;
 	}
 	
 	public float getMag(){
@@ -32,6 +40,7 @@ public class Vector{
 
 	public Vector getUnit(){
 		float mag = getMag();
+		if(mag == 0) return new Vector(0,0);
 		return new Vector(x/mag, y/mag);
 	}
 	
@@ -73,6 +82,7 @@ public class Vector{
 	
 	static Vector getUnit(Vector v){
 		float mag = v.getMag();
+		if(mag == 0) return new Vector(0,0);
 		return new Vector(v.getX()/mag, v.getY()/mag);
 	}
 	
@@ -84,14 +94,15 @@ public class Vector{
 	public static void main(String... args){
 		Vector one = new Vector(0,0);
 		Vector two = new Vector(10,0);
+		one=one.getUnit();
 		System.out.println(one);
-		one.x = one.x + 7;
+		one.x = one.x + 0;
 		System.out.println(one);
-		one.y = one.y + 10;
+		one.y = one.y - 1;
 		System.out.println(one);
-		two = one.getUnit();
-		two.multiplyScalar(10);
-		System.out.println(two);
+		one = one.getUnit();
+		one.multiplyScalar(.0075f);
+		System.out.println(one);
 //		System.out.println(Vector.getAngle(one, two));
 		
 		
