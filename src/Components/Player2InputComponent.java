@@ -3,6 +3,7 @@ import Main.Entity;
 import Main.InputComponentBase;
 import Main.KeyInput;
 import Main.MouseInput;
+import Math.Vector;
 
 public class Player2InputComponent extends InputComponentBase{
 
@@ -21,10 +22,18 @@ public class Player2InputComponent extends InputComponentBase{
 		float speed = .0075f;
 		parent.positionComponent.setAccelX(0.0f);
 		parent.positionComponent.setAccelY(0.0f);
-		if (k.l) parent.positionComponent.setAccelX(speed);
-		if (k.j) parent.positionComponent.setAccelX(-1 * speed);
-		if (k.k) parent.positionComponent.setAccelY(speed);
-		if (k.i) parent.positionComponent.setAccelY(-1 * speed);
+		
+		Vector xy = new Vector(0,0);
+		if (k.l) xy.setX(speed);
+		if (k.j) xy.setX(-speed);
+		if (k.k) xy.setY(speed);
+		if (k.i) xy.setY(-speed);
+		
+		xy = xy.getUnit();
+		xy.multiplyScalar(speed);
+		parent.positionComponent.setAccelX(xy.getX());
+		parent.positionComponent.setAccelY(xy.getY());
+		
 		if(k.space) parent.positionComponent.setAccelX(0);
 		if(k.space) parent.positionComponent.setAccelY(0);
 		if(k.space) parent.positionComponent.setX(10);

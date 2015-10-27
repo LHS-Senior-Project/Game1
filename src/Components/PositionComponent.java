@@ -1,20 +1,19 @@
 package Components;
 import Main.BaseComponent;
+import Math.Vector;
 
 public class PositionComponent extends BaseComponent{
 
 	public final String name = "PositionComponent";
 	
-	private float x;
-	private float y;
+	private Vector position;
 	private float accelX;
 	private float accelY;
 	private float velX;
 	private float velY;
 	
 	public PositionComponent(){
-		this.x = 0;
-		this.y = 0;
+		this.position = new Vector(0,0);
 		this.setAccelX(0);
 		this.setVelX(0);
 		this.setAccelY(0);
@@ -22,19 +21,23 @@ public class PositionComponent extends BaseComponent{
 	}
 	
 	public float getY(){
-		return y;
+		return this.position.getY();
 	}
 	
 	public void setY(float y){
-		this.y = y;
+		this.position.setY(y);
 	}
 	
 	public float getX() {
-		return x;
+		return this.position.getX();
 	}
 
 	public void setX(float x){
-		this.x = x;
+		this.position.setX(x);
+	}
+	
+	public Vector getVector(){
+		return this.position;
 	}
 	
 	public float getAccelX() {
