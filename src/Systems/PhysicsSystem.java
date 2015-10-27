@@ -2,7 +2,11 @@ package Systems;
 
 import java.util.ArrayList;
 
+import Components.CircleCollisionComponent;
 import Components.PositionComponent;
+import Components.RectangleCollisionComponent;
+import Main.CollisionComponentBase;
+import Main.ComponentName;
 import Main.Entity;
 import Main.InputComponentBase;
 
@@ -24,7 +28,6 @@ public class PhysicsSystem {
 		
 		for(Entity e : physics){
 			PositionComponent pc = e.positionComponent;
-			
 			pc.setVelX(pc.getVelX() + pc.getAccelX() * deltaTime);
 			pc.setVelY(pc.getVelY() + pc.getAccelY() * deltaTime);
 			pc.setX(pc.getX() + pc.getVelX() * deltaTime);
@@ -42,6 +45,66 @@ public class PhysicsSystem {
 				InputComponentBase ib = (InputComponentBase) e.getComponent(ID);
 				ib.updateInputs();
 			}
+		}
+	}
+	
+	private void handleCollisions(){
+		Object object1 = null;
+		Object object2 = null;
+		for(Entity e1 : physics){
+			int ID = e1.getComponentID(ComponentName.CollisionComponentBase);
+			if(ID != -1){
+				object1 = e1.getComponent(ID);
+				if(object1 instanceof CollisionComponentBase){
+					if(object1 instanceof RectangleCollisionComponent){
+						object1 = (RectangleCollisionComponent) object1;
+					}
+					if(object1 instanceof CircleCollisionComponent){
+						object1 = (CircleCollisionComponent) object1;
+					}
+				}
+				
+			}
+			for(Entity e2 : physics){
+				if(e1 == e2) break;
+				int ID2 = e2.getComponentID("CollisionComponentBase");
+				if(ID2 != -1){
+					object2 = e2.getComponent(ID);
+					if(object2 instanceof CollisionComponentBase){
+						if(object2 instanceof CircleCollisionComponent){
+							object2 = (CircleCollisionComponent) object2;
+						}
+						if(object2 instanceof CircleCollisionComponent){
+							object2 = (CircleCollisionComponent) object2;
+						}
+					}
+					
+				}
+			}
+			
+			if(object1 instanceof RectangleCollisionComponent){
+				object1 = (RectangleCollisionComponent) object1;
+			}
+			if(object1 instanceof CircleCollisionComponent){
+				object1 = (CircleCollisionComponent) object1;
+			}
+			if(object2 instanceof CircleCollisionComponent){
+				object2 = (CircleCollisionComponent) object2;
+			}
+			if(object2 instanceof CircleCollisionComponent){
+				object2 = (CircleCollisionComponent) object2;
+			}
+			
+			if(object1 instanceof CircleCollisionComponent && object2 instanceof CircleCollisionComponent){
+				float r1 = ((CircleCollisionComponent) object1).getRadius();
+				float r2 = ((CircleCollisionComponent) object2).getRadius();
+				float x1 = ((CircleCollisionComponent) object1).getParent().positionComponent.getX();
+				float y1 = ((CircleCollisionComponent) object1).getParent().positionComponent.getY();
+				float x2 = ((CircleCollisionComponent) object2).getParent().positionComponent.getX();
+				float y2 = ((CircleCollisionComponent) object2).getParent().positionComponent.getY();
+				
+			}
+			
 		}
 	}
 
