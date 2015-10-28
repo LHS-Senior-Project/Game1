@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Main.BaseComponent;
+import Math.Vector2D;
 
 public class RenderableComponent extends BaseComponent{
 	
@@ -15,7 +16,6 @@ public class RenderableComponent extends BaseComponent{
 	
 	public RenderableComponent(String imagePath){
 		this.name = "RenderableComponent";
-		
 		if(!imagePath.isEmpty()){
 			try {
 				this.image = ImageIO.read(getClass().getResource(imagePath));

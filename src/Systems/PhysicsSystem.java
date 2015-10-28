@@ -3,8 +3,12 @@ package Systems;
 import java.util.ArrayList;
 
 import Components.PositionComponent;
+import Components.RenderableComponent;
+import Main.BaseComponent;
+import Main.ComponentName;
 import Main.Entity;
 import Main.InputComponentBase;
+import Math.Vector2D;
 
 public class PhysicsSystem {
 
@@ -19,12 +23,12 @@ public class PhysicsSystem {
 	public void update(){
 		
 		handleInputs();
+		handleCollisions();
 		
 		long deltaTime = 1000/60; 
 		
 		for(Entity e : physics){
 			PositionComponent pc = e.positionComponent;
-			
 			pc.setVelX(pc.getVelX() + pc.getAccelX() * deltaTime);
 			pc.setVelY(pc.getVelY() + pc.getAccelY() * deltaTime);
 			pc.setX(pc.getX() + pc.getVelX() * deltaTime);
@@ -41,6 +45,25 @@ public class PhysicsSystem {
 			if(ID != -1){
 				InputComponentBase ib = (InputComponentBase) e.getComponent(ID);
 				ib.updateInputs();
+			}
+		}
+	}
+	
+	private void handleCollisions(){
+		for(Entity e1 :  physics){
+			for(Entity e2 : physics){
+				if(e1.equals(e2)){
+					continue;
+				}
+				else{
+					boolean collide = e1.positionComponent.checkCollide(e2.positionComponent);
+					if(collide){
+						e1.positionComponent.setAccelX(0);
+						e1.positionComponent.setAccelY(0);
+						e1.positionComponent.setVelX(0);
+						e1.positionComponent.setVelY(0);
+					}
+				}
 			}
 		}
 	}

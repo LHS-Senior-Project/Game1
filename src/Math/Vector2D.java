@@ -1,15 +1,15 @@
 package Math;
 
-public class Vector{
+public class Vector2D{
 
 	float x;
 	float y;
 	
-	public Vector(){
+	public Vector2D(){
 		
 	}
 	
-	public Vector(float x, float y){
+	public Vector2D(float x, float y){
 		this.x = x;
 		this.y = y;
 	}
@@ -38,25 +38,25 @@ public class Vector{
 		return ((x*x) + (y*y));
 	}
 
-	public Vector getUnit(){
+	public Vector2D getUnit(){
 		float mag = getMag();
-		if(mag == 0) return new Vector(0,0);
-		return new Vector(x/mag, y/mag);
+		if(mag == 0) return new Vector2D(0,0);
+		return new Vector2D(x/mag, y/mag);
 	}
 	
-	public void add(Vector v){
+	public void add(Vector2D v){
 		this.x += v.getX();
 		this.y += v.getY();
 	}
 	
-	public void subtract(Vector v){
+	public void subtract(Vector2D v){
 		this.x -= v.getX();
 		this.y -= v.getY();
 	}
 	
 	public void multiplyScalar(float scalar){
-		this.x *= scalar;
-		this.y *= scalar;
+		this.x = scalar * this.x;
+		this.y = scalar * this.y;
 	}
 	
 	@Override
@@ -68,32 +68,28 @@ public class Vector{
 		return toBeReturned;
 	}
 	
-	static Vector add(Vector one, Vector two){
-		return new Vector(one.getX() + two.getX(), one.getY() + two.getY());
+	static Vector2D add(Vector2D one, Vector2D two){
+		return new Vector2D(one.getX() + two.getX(), one.getY() + two.getY());
 	}
 	
-	static Vector subtract(Vector one, Vector two){
-		return new Vector(one.getX() - two.getX(), one.getY() - two.getY());
+	static Vector2D subtract(Vector2D one, Vector2D two){
+		return new Vector2D(one.getX() - two.getX(), one.getY() - two.getY());
 	}
 	
-	static Vector multiplyScalar(Vector v, float scalar){
-		return new Vector(v.getX() * scalar, v.getY() * scalar);
-	}
-	
-	static Vector getUnit(Vector v){
+	static Vector2D getUnit(Vector2D v){
 		float mag = v.getMag();
-		if(mag == 0) return new Vector(0,0);
-		return new Vector(v.getX()/mag, v.getY()/mag);
+		if(mag == 0) return new Vector2D(0,0);
+		return new Vector2D(v.getX()/mag, v.getY()/mag);
 	}
 	
 	
-	static float getAngle(Vector v, Vector c){
+	public float getAngle(Vector2D v, Vector2D c){
 		return (float) Math.acos((v.getX() * c.getX() + v.getY() * c.getY())/(v.getMag() * c.getMag()));
 	}
 	
 	public static void main(String... args){
-		Vector one = new Vector(0,0);
-		Vector two = new Vector(10,0);
+		Vector2D one = new Vector2D(0,0);
+		Vector2D two = new Vector2D(10,0);
 		one=one.getUnit();
 		System.out.println(one);
 		one.x = one.x + 0;
