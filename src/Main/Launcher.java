@@ -32,7 +32,7 @@ public class Launcher extends Canvas implements Runnable{
 	
 	private void init(){
 		this.setGame(new Game(this));
-		Entity test = new Entity();
+		Entity test = new Entity(100,100,16,16);
 		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
 		game.getGraphicsSystem().addRenderable(test);	
 		game.addEntities(test);
@@ -43,7 +43,7 @@ public class Launcher extends Canvas implements Runnable{
 		test.addComponent(new PlayerInputComponent(test,k,null));
 		
 		
-		Entity player2 = new Entity();
+		Entity player2 = new Entity(200,200,16,16);
 		player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
 		game.getGraphicsSystem().addRenderable(player2);
 		game.addEntities(player2);

@@ -13,11 +13,9 @@ public class Entity {
 		this.positionComponent = new PositionComponent();
 	}
 	
-	public Entity(float x, float y){
+	public Entity(float x, float y, float sizeX, float sizeY){
 		this.components = new ArrayList<BaseComponent>();
-		this.positionComponent = new PositionComponent();
-		this.positionComponent.setX(x);
-		this.positionComponent.setY(x);
+		this.positionComponent = new PositionComponent(x,y,sizeX,sizeY);
 	}
 	
 	public void addComponent(BaseComponent component){

@@ -29,6 +29,7 @@ public class GraphicsSystem {
 		for(Entity e : this.renderable){
 			RenderableComponent rc = (RenderableComponent) e.getComponent(ComponentName.RenderableComponent);
 			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
+			g.drawRect((int)e.positionComponent.getX(),(int)e.positionComponent.getY(),(int)e.positionComponent.getSizeX(),(int)e.positionComponent.getSizeY());
 		}
 		g.dispose();
 		bs.show();
