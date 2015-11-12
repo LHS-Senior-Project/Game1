@@ -36,8 +36,8 @@ public class Player2InputComponent extends InputComponentBase{
 		
 		if(k.space) parent.positionComponent.setAccelX(0);
 		if(k.space) parent.positionComponent.setAccelY(0);
-		if(k.space) parent.positionComponent.setX(10);
-		if(k.space) parent.positionComponent.setY(10);
+		if(k.space) parent.positionComponent.setX(200);
+		if(k.space) parent.positionComponent.setY(200);
 		if(k.space) parent.positionComponent.setVelX(0);
 		if(k.space) parent.positionComponent.setVelY(0);
 		

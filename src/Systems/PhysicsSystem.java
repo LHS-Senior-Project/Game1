@@ -23,7 +23,7 @@ public class PhysicsSystem {
 	public void update(){
 		
 		handleInputs();
-		handleCollision();
+		
 		
 		long deltaTime = 1000/60; 
 		
@@ -37,6 +37,7 @@ public class PhysicsSystem {
 			pc.setVelY(pc.getVelY() * 0.6f);
 			
 		}
+		handleCollision();
 	}
 	
 	private void handleCollision(){
