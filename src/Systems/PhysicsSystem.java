@@ -41,39 +41,18 @@ public class PhysicsSystem {
 	}
 	
 	private void handleCollision(){
-		for(int i=0; i<physics.size();i++){
-			Entity e1 = physics.get(i);
-			for(int j=i+1; j<physics.size();j++){
-				Entity e2 = physics.get(j);
-				if(e1.equals(e2)){
-					continue;
-				}
-				else{
-					boolean collide = e1.positionComponent.checkCollide(e2.positionComponent);
-					if(collide){
-						
+				for(Entity e1 :  physics){
+					for(Entity e2 : physics){
+						if(e1.equals(e2)){
+							continue;
+						}
+						else{
+							boolean collide = e1.positionComponent.checkCollide(e2.positionComponent);
+							if(collide){
+							}
+						}
 					}
 				}
-			}
-		}
-		
-//				for(Entity e1 :  physics){
-//					for(Entity e2 : physics){
-//						if(e1.equals(e2)){
-//							continue;
-//						}
-//						else{
-//							boolean collide = e1.positionComponent.checkCollide(e2.positionComponent);
-//							if(collide){
-//								System.out.println("collide " + e1.positionComponent.getX() + " " + e1.positionComponent.getY());
-//								e1.positionComponent.setAccelX(0);
-//								e1.positionComponent.setAccelY(0);
-//								e1.positionComponent.setVelX(0);
-//								e1.positionComponent.setVelY(0);
-//							}
-//						}
-//					}
-//				}
 			}
 	
 	private void handleInputs() {

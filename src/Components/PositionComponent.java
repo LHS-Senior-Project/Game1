@@ -81,90 +81,177 @@ public class PositionComponent extends BaseComponent{
 //			return true;
 //			}
 			System.out.println("Pen: " + penetration.getX() + " " + penetration.getY());
-			if(this.getAccelX()>0){
-				if(this.getAccelY()==0){
+			if(pc.getAccelX()!=0||pc.getAccelY()!=0){
+				if(this.getAccelX()==-pc.getAccelX()&&this.getAccelX()!=0){
 					this.setVelX(0);
-					this.setX(this.getX()-penetration.getX());
+					pc.setVelX(0);
+					if(this.getAccelX()>0){
+						this.setX(this.getX() - penetration.getX()/2);
+						pc.setX(pc.getX() + penetration.getX()/2);
+					}
+					else {
+						this.setX(this.getX() + penetration.getX()/2);
+						pc.setX(pc.getX() - penetration.getX()/2);
+					}
+				}
+				else if(this.getAccelY()==-pc.getAccelY()&&this.getAccelY()!=0){
+					this.setVelY(0);
+					pc.setVelY(0);
+					if(this.getAccelY()>0){
+						this.setY(this.getY() - penetration.getY()/2);
+						pc.setY(pc.getY() + penetration.getY()/2);
+					}
+					else {
+						this.setY(this.getY() + penetration.getY()/2);
+						pc.setY(pc.getY() - penetration.getY()/2);
+					}
+				}
+				else if (this.getAccelX() > 0) {
+					if (pc.getAccelY() > 0) {
+						if (penetration.getX() > penetration.getY()) {
+							pc.setVelY(0);
+							pc.setY(pc.getY() - penetration.getY());
+						} else if (penetration.getX() < penetration.getY()) {
+							this.setVelX(0);
+							this.setX(this.getX() - penetration.getX());
+						} else {
+							this.setVelX(0);
+							pc.setVelY(0);
+							this.setX(this.getX() - penetration.getX());
+							pc.setY(pc.getY() - penetration.getY());
+						}
+					} else if (pc.getAccelY() < 0) {
+						if (penetration.getX() > penetration.getY()) {
+							pc.setVelY(0);
+							pc.setY(pc.getY() + penetration.getY());
+						} else if (penetration.getX() < penetration.getY()) {
+							this.setVelX(0);
+							this.setX(this.getX() - penetration.getX());
+						} else {
+							this.setVelX(0);
+							pc.setVelY(0);
+							this.setX(this.getX() + penetration.getX());
+							pc.setY(pc.getY() - penetration.getY());
+						}
+					}
+				}
+				else if (this.getAccelX() < 0) {
+					if (pc.getAccelY() > 0) {
+						if (penetration.getX() > penetration.getY()) {
+							pc.setVelY(0);
+							pc.setY(pc.getY() - penetration.getY());
+						} else if (penetration.getX() < penetration.getY()) {
+							this.setVelX(0);
+							this.setX(this.getX() + penetration.getX());
+						} else {
+							this.setVelX(0);
+							pc.setVelY(0);
+							this.setX(this.getX() + penetration.getX());
+							pc.setY(pc.getY() - penetration.getY());
+						}
+					} else if (pc.getAccelY() < 0) {
+						if (penetration.getX() > penetration.getY()) {
+							pc.setVelY(0);
+							pc.setY(pc.getY() + penetration.getY());
+						} else if (penetration.getX() < penetration.getY()) {
+							this.setVelX(0);
+							this.setX(this.getX() + penetration.getX());
+						} else {
+							this.setVelX(0);
+							pc.setVelY(0);
+							this.setX(this.getX() + penetration.getX());
+							pc.setY(pc.getY() + penetration.getY());
+						}
+					}
+				}
+			}
+			else{
+				if(this.getAccelX()>0){
+					if(this.getAccelY()==0){
+						this.setVelX(0);
+						this.setX(this.getX()-penetration.getX());
+					}
+					else if(this.getAccelY()>0){
+						if(penetration.getX()>penetration.getY()){
+							this.setVelY(0);
+							this.setY(this.getY()-penetration.getY());
+						}
+						else if(penetration.getX()<penetration.getY()){
+							this.setVelX(0);
+							this.setX(this.getX()-penetration.getX());
+						}
+						else {
+							this.setVelX(0);
+							this.setVelY(0);
+							this.setX(this.getX()-penetration.getX());
+							this.setY(this.getY()-penetration.getY());
+						}
+					}
+					else {
+						if(penetration.getX()>penetration.getY()){
+							this.setVelY(0);
+							this.setY(this.getY()+penetration.getY());
+						}
+						else if(penetration.getX()<penetration.getY()){
+							this.setVelX(0);
+							this.setX(this.getX()-penetration.getX());
+						}
+						else {
+							this.setVelX(0);
+							this.setVelY(0);
+							this.setX(this.getX()-penetration.getX());
+							this.setY(this.getY()+penetration.getY());
+						}
+					}
+				}
+				else if(this.getAccelX()<0){
+					if(this.getAccelY()==0){
+						this.setVelX(0);
+						this.setX(this.getX()+penetration.getX());
+					}
+					else if(this.getAccelY()>0){
+						if(penetration.getX()>penetration.getY()){
+							this.setVelY(0);
+							this.setY(this.getY()-penetration.getY());
+						}
+						else if(penetration.getX()<penetration.getY()){
+							this.setVelX(0);
+							this.setX(this.getX()+penetration.getX());
+						}
+						else {
+							this.setVelX(0);
+							this.setVelY(0);
+							this.setX(this.getX()+penetration.getX());
+							this.setY(this.getY()-penetration.getY());
+						}
+					}
+					else {
+						if(penetration.getX()>penetration.getY()){
+							this.setVelY(0);
+							this.setY(this.getY()+penetration.getY());
+						}
+						else if(penetration.getX()<penetration.getY()){
+							this.setVelX(0);
+							this.setX(this.getX()+penetration.getX());
+						}
+						else {
+							this.setVelX(0);
+							this.setVelY(0);
+							this.setX(this.getX()+penetration.getX());
+							this.setY(this.getY()+penetration.getY());
+						}
+					}
 				}
 				else if(this.getAccelY()>0){
-					if(penetration.getX()>penetration.getY()){
-						this.setVelY(0);
-						this.setY(this.getY()-penetration.getY());
-					}
-					else if(penetration.getX()<penetration.getY()){
-						this.setVelX(0);
-						this.setX(this.getX()-penetration.getX());
-					}
-					else {
-						this.setVelX(0);
-						this.setVelY(0);
-						this.setX(this.getX()-penetration.getX());
-						this.setY(this.getY()-penetration.getY());
-					}
+					this.setVelY(0);
+					this.setY(this.getY()-penetration.getY());
 				}
-				else {
-					if(penetration.getX()>penetration.getY()){
-						this.setVelY(0);
-						this.setY(this.getY()+penetration.getY());
-					}
-					else if(penetration.getX()<penetration.getY()){
-						this.setVelX(0);
-						this.setX(this.getX()-penetration.getX());
-					}
-					else {
-						this.setVelX(0);
-						this.setVelY(0);
-						this.setX(this.getX()-penetration.getX());
-						this.setY(this.getY()+penetration.getY());
-					}
+				else if(this.getAccelY()<0){
+					this.setVelY(0);
+					this.setY(this.getY()+penetration.getY());
 				}
 			}
-			else if(this.getAccelX()<0){
-				if(this.getAccelY()==0){
-					this.setVelX(0);
-					this.setX(this.getX()+penetration.getX());
-				}
-				else if(this.getAccelY()>0){
-					if(penetration.getX()>penetration.getY()){
-						this.setVelY(0);
-						this.setY(this.getY()-penetration.getY());
-					}
-					else if(penetration.getX()<penetration.getY()){
-						this.setVelX(0);
-						this.setX(this.getX()+penetration.getX());
-					}
-					else {
-						this.setVelX(0);
-						this.setVelY(0);
-						this.setX(this.getX()+penetration.getX());
-						this.setY(this.getY()-penetration.getY());
-					}
-				}
-				else {
-					if(penetration.getX()>penetration.getY()){
-						this.setVelY(0);
-						this.setY(this.getY()+penetration.getY());
-					}
-					else if(penetration.getX()<penetration.getY()){
-						this.setVelX(0);
-						this.setX(this.getX()+penetration.getX());
-					}
-					else {
-						this.setVelX(0);
-						this.setVelY(0);
-						this.setX(this.getX()+penetration.getX());
-						this.setY(this.getY()+penetration.getY());
-					}
-				}
-			}
-			else if(this.getAccelY()>0){
-				this.setVelY(0);
-				this.setY(this.getY()-penetration.getY());
-			}
-			else if(this.getAccelY()<0){
-				this.setVelY(0);
-				this.setY(this.getY()+penetration.getY());
-			}
+			
 //			if(this.getAccelX()>0&&this.getAccelY()==0){
 //				this.setVelX(0);
 //				this.setX(this.getX()-penetration.getX()-);
