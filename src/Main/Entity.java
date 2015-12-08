@@ -18,6 +18,11 @@ public class Entity {
 		this.positionComponent = new PositionComponent(x,y,sizeX,sizeY);
 	}
 	
+	public Entity(PositionComponent positionComponent) {
+		this.components = new ArrayList<BaseComponent>();
+		this.positionComponent = positionComponent;
+	}
+
 	public void addComponent(BaseComponent component){
 		this.components.add(component);
 	}
@@ -39,4 +44,8 @@ public class Entity {
 		return -1;
 	}
 	
+	public boolean hasCompoent(String componentName){
+		if(getComponentID(componentName) == -1) return false;
+		return true;
+	}
 }
