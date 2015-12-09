@@ -49,14 +49,18 @@ public class Vector2D{
 		this.y += v.getY();
 	}
 	
-	public void subtract(Vector2D v){
-		this.x -= v.getX();
-		this.y -= v.getY();
-	}
+//	private void subtract(Vector2D v){
+//		this.x -= v.getX();
+//		this.y -= v.getY();
+//	}
 	
 	public void multiplyScalar(float scalar){
 		this.x *= scalar;
 		this.y *= scalar;
+	}
+	
+	public float dotProduct(Vector2D v){
+		return (this.getX() * v.getX() + this.getY() * v.getY());
 	}
 	
 	@Override
@@ -72,8 +76,8 @@ public class Vector2D{
 		return new Vector2D(one.getX() + two.getX(), one.getY() + two.getY());
 	}
 	
-	static Vector2D subtract(Vector2D one, Vector2D two){
-		return new Vector2D(one.getX() - two.getX(), one.getY() - two.getY());
+	public Vector2D subtract(Vector2D one){
+		return new Vector2D(this.getX() - one.getX(), this.getY() - one.getY());
 	}
 	
 	static Vector2D multiplyScalar(Vector2D v, float scalar){
