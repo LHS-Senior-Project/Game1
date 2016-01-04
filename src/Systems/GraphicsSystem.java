@@ -41,7 +41,8 @@ public class GraphicsSystem {
 				g.drawPolygon(xp, yp, 6);
 			}
 			else if(pc.getShape().getNumVertices()==5){
-				g.drawPolygon(new int[]{(int)pc.getX()-50,(int)pc.getX()+25,(int)pc.getX()+100,(int)pc.getX()+50,(int)pc.getX()},new int[]{(int)pc.getY()+50,(int)pc.getY()-75,(int)pc.getY()+50,(int)pc.getY()+100,(int)pc.getY()+100}, 5);
+				if(pc.getX()==400) g.drawPolygon(new int[]{(int)pc.getX()-50,(int)pc.getX()+25,(int)pc.getX()+100,(int)pc.getX()+50,(int)pc.getX()},new int[]{(int)pc.getY()+50,(int)pc.getY()-75,(int)pc.getY()+50,(int)pc.getY()+100,(int)pc.getY()+100}, 5);
+				else g.drawPolygon(new int[]{(int)pc.getX()-23,(int)pc.getX()+13,(int)pc.getX()+84,(int)pc.getX()+36,(int)pc.getX()},new int[]{(int)pc.getY()+22,(int)pc.getY()-9,(int)pc.getY()+46,(int)pc.getY()+75,(int)pc.getY()+91}, 5);
 			}
 			else if(pc.getShape().getNumVertices()==4){
 				g.drawRect((int)pc.getX(), (int)pc.getY(), (int)pc.getShape().getVertex(1).getX(), (int)pc.getShape().getVertex(3).getY());

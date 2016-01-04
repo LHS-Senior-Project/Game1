@@ -34,17 +34,7 @@ public class Launcher extends Canvas implements Runnable{
 	
 	private void init(){
 		this.setGame(new Game(this));
-//		Entity test = new Entity(391,248,150,100);
-//		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
-//		game.getGraphicsSystem().addRenderable(test);	
-//		game.addEntities(test);
-//		game.getPhysicsSystem().addToPhysics(test);
-//		KeyInput k = new KeyInput();
-//		game.setKeyInput(k);
-//		this.addKeyListener(k);
-//		test.addComponent(new PlayerInputComponent(test,k,null));
-		
-		Entity test = new Entity(500,250,30);
+		Entity test = new Entity(100,248,120,120);
 		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
 		game.getGraphicsSystem().addRenderable(test);	
 		game.addEntities(test);
@@ -54,12 +44,29 @@ public class Launcher extends Canvas implements Runnable{
 		this.addKeyListener(k);
 		test.addComponent(new PlayerInputComponent(test,k,null));
 		
-		Entity player2 = new Entity(100,100,new float[]{-60f,0f,60f,120f,60f,0f},new float[]{60f,0f,0f,60f,120f,120f},6);
-		player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
-		game.getGraphicsSystem().addRenderable(player2);
-		game.addEntities(player2);
-		game.getPhysicsSystem().addToPhysics(player2);
-		player2.addComponent(new Player2InputComponent(player2,k,null));
+//		Entity test = new Entity(500,250,30);
+//		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
+//		game.getGraphicsSystem().addRenderable(test);	
+//		game.addEntities(test);
+//		game.getPhysicsSystem().addToPhysics(test);
+//		KeyInput k = new KeyInput();
+//		game.setKeyInput(k);
+//		this.addKeyListener(k);
+//		test.addComponent(new PlayerInputComponent(test,k,null));
+		
+//		Entity player2 = new Entity(100,100,new float[]{-60f,0f,60f,120f,60f,0f},new float[]{60f,0f,0f,60f,120f,120f},6);
+//		player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
+//		game.getGraphicsSystem().addRenderable(player2);
+//		game.addEntities(player2);
+//		game.getPhysicsSystem().addToPhysics(player2);
+//		player2.addComponent(new Player2InputComponent(player2,k,null));
+		
+//		Entity player2 = new Entity(290,200,100,100);
+//		player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
+//		game.getGraphicsSystem().addRenderable(player2);
+//		game.addEntities(player2);
+//		game.getPhysicsSystem().addToPhysics(player2);
+//		player2.addComponent(new Player2InputComponent(player2,k,null));
 		
 		Entity car = new Entity(100,100, new float[]{-30f,30f,90f}, new float[]{30f,-60f,30f}, 3);
 		car.addComponent(new RenderableComponent("/Images/car.png"));
@@ -72,6 +79,12 @@ public class Launcher extends Canvas implements Runnable{
 		game.getGraphicsSystem().addRenderable(car2);
 		game.addEntities(car2);
 		game.getPhysicsSystem().addToPhysics(car2);
+		
+		Entity car5 = new Entity(500,500, new float[]{-23f,13f,84f,36f,0f}, new float[]{22f,-9f,46f,75f,91f}, 5);
+		car5.addComponent(new RenderableComponent("/Images/car.png"));
+		game.getGraphicsSystem().addRenderable(car5);
+		game.addEntities(car5);
+		game.getPhysicsSystem().addToPhysics(car5);
 		
 		Entity car3 = new Entity(100, 500, 100, 100);
 		car3.addComponent(new RenderableComponent("/Images/car.png"));

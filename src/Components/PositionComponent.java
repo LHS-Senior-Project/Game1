@@ -61,8 +61,6 @@ public class PositionComponent extends BaseComponent{
 			axis = pc.getPosition().subtract(this.getPosition());
 			float r1 = pc.border.getRadius();
 			float r2 = this.border.getRadius();
-			if(axis.getX()<0)axis.setX(axis.getX()*-1);
-			if(axis.getY()<0)axis.setY(axis.getY()*-1);
 			if((r1+r2)<axis.getMag()){
 				return false;
 			}
@@ -70,6 +68,52 @@ public class PositionComponent extends BaseComponent{
 				minOverlap = (r1+r2) - axis.getMag();
 				smallestAxis = axis;
 			}
+		}
+		else if(this.border.getNumVertices()==0||pc.border.getNumVertices()==0){
+			PositionComponent circle = this;
+			PositionComponent poly = pc;
+			if(pc.border.getNumVertices()==0){
+				circle = pc;
+				poly = this;
+			}
+			Vector2D minVertex = new Vector2D();
+			Vector2D distance;
+			float maxMag = Float.MAX_VALUE;
+			for(int i = 0; i<poly.getShape().getNumVertices(); i++){
+				axis = poly.border.getAxis(i);
+				distance = new Vector2D(circle.getShape().getCentroid().getX()+circle.getX()-(poly.getShape().getVertex(i).getX()+poly.getX()),circle.getShape().getCentroid().getY()+circle.getY()-(poly.getShape().getVertex(i).getY()+poly.getY()));
+				if(distance.getMag()<maxMag){
+					maxMag = distance.getMag();
+					minVertex = poly.getShape().getVertex(i);
+				}
+				Vector2D projPoly = project(axis, poly);
+				Vector2D projCircle = project(axis, circle);
+				if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
+					return false;
+				} else {
+					float overlap = calcOverlap(projPoly, projCircle);
+					if (overlap <= minOverlap) {
+						minOverlap = overlap;
+						smallestAxis = axis;
+					}
+				}
+			}
+			axis = new Vector2D(circle.getShape().getCentroid().getX()+circle.getX()-(minVertex.getX()+poly.getX()),circle.getShape().getCentroid().getY()+circle.getY()-(minVertex.getY()+poly.getY()));
+			float temp = axis.getX();
+			axis.setX(axis.getY()*-1);
+			axis.setY(temp);
+			Vector2D projPoly = project(axis, poly);
+			Vector2D projCircle = project(axis, circle);
+			if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
+				return false;
+			} else {
+				float overlap = calcOverlap(projPoly, projCircle);
+				if (overlap < minOverlap) {
+					minOverlap = overlap;
+					smallestAxis = axis;
+				}
+			}
+			minOverlap /= smallestAxis.getMag();
 		}
 		else{
 			for (int i = 0; i < pc.border.getNumVertices(); i++) {
@@ -81,9 +125,29 @@ public class PositionComponent extends BaseComponent{
 				}
 				else {
 					float overlap = calcOverlap(projThis, projPc);
-					if (overlap < minOverlap) {
+					if (overlap <= minOverlap) {
 						minOverlap = overlap;
 						smallestAxis = axis;
+					}
+					else if(overlap == minOverlap){
+//						Vector2D centerThis = new Vector2D(this.getShape().getCentroid().getX()+this.getX(),this.getShape().getCentroid().getY()+this.getY());
+//						Vector2D centerPc = new Vector2D(pc.getShape().getCentroid().getX()+pc.getX(),pc.getShape().getCentroid().getY()+pc.getY());
+//						Vector2D vertex1 = new Vector2D(pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getX()+pc.getX(),pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getY()+pc.getY());
+//						Vector2D vertex2 = new Vector2D(pc.getShape().getVertex(i).getX()+pc.getX(),pc.getShape().getVertex(i).getY()+pc.getY());
+//						if(this.getShape().getCentroid().getX()*2==70){
+//							System.out.println("");
+//							System.out.println(centerThis.getX() + " < " + centerPc.getX());
+//							System.out.println(vertex1.getY() + " < " + centerThis.getY());
+//							System.out.println(centerThis.getY()+ " < " + vertex2.getY());
+//						}
+//						if(centerThis.getX()<centerPc.getX()&&vertex1.getY()<centerThis.getY()&&centerThis.getY()<vertex2.getY()){
+//							minOverlap = overlap;
+//							smallestAxis = axis;
+//						}
+//						else if(centerThis.getY()>centerPc.getY()&&vertex1.getX()<centerThis.getX()&&centerThis.getX()<vertex2.getX()){
+//							minOverlap = overlap;
+//							smallestAxis = axis;
+//						}
 					}
 				}
 			}
@@ -93,13 +157,32 @@ public class PositionComponent extends BaseComponent{
 				Vector2D projThis = project(axis, this);
 				Vector2D projPc = project(axis, pc);
 				if (projPc.getY() < projThis.getX() || projThis.getY() < projPc.getX()) {
-
 					return false;
 				} else {
 					float overlap = calcOverlap(projThis, projPc);
 					if (overlap < minOverlap) {
 						minOverlap = overlap;
 						smallestAxis = axis;
+					}
+					else if(overlap == minOverlap){
+//						Vector2D centerThis = new Vector2D(this.getShape().getCentroid().getX()+this.getX(),this.getShape().getCentroid().getY()+this.getY());
+//						Vector2D centerPc = new Vector2D(pc.getShape().getCentroid().getX()+pc.getX(),pc.getShape().getCentroid().getY()+pc.getY());
+//						Vector2D vertex1 = new Vector2D(pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getX()+pc.getX(),pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getY()+pc.getY());
+//						Vector2D vertex2 = new Vector2D(pc.getShape().getVertex(i).getX()+pc.getX(),pc.getShape().getVertex(i).getY()+pc.getY());
+//						if(this.getShape().getCentroid().getX()*2==70){
+//							System.out.println("");
+//							System.out.println(centerThis.getX() + " < " + centerPc.getX());
+//							System.out.println(vertex1.getY() + " < " + centerThis.getY());
+//							System.out.println(centerThis.getY()+ " < " + vertex2.getY());
+//						}
+//						if(centerThis.getX()<centerPc.getX()&&vertex1.getY()<centerThis.getY()&&centerThis.getY()<vertex2.getY()){
+//							minOverlap = overlap;
+//							smallestAxis = axis;
+//						}
+//						else if(centerThis.getY()>centerPc.getY()&&vertex1.getX()<centerThis.getX()&&centerThis.getX()<vertex2.getX()){
+//							minOverlap = overlap;
+//							smallestAxis = axis;
+//						}
 					}
 				}
 			}
@@ -110,14 +193,14 @@ public class PositionComponent extends BaseComponent{
 		
 		//Collision Correction
 		
-		smallestAxis = smallestAxis.getUnit();
+		System.out.println("axis: " + smallestAxis);
 		
+		smallestAxis = smallestAxis.getUnit();
 		overlapX = minOverlap * smallestAxis.getX();
 		overlapY = minOverlap * smallestAxis.getY();
 		
 		Vector2D overlapCorrect = new Vector2D(overlapX,overlapY);
 		
-		//System.out.println("overlap correct: " + overlapCorrect);
 		
 		
 //		overlapCorrect.setX(overlapCorrect.getX()*overlapCorrect.getUnit().getX());
@@ -136,39 +219,45 @@ public class PositionComponent extends BaseComponent{
 	private Vector2D project(Vector2D axis, PositionComponent pc){
 		float min=Float.MAX_VALUE;
 		float max=-Float.MAX_VALUE;
-		for (int j = 0; j < pc.border.getNumVertices(); j++) {
-			Vector2D verPos = new Vector2D(pc.border.getVertex(j).getX()+pc.getX(),pc.border.getVertex(j).getY()+pc.getY());
-			float dp = axis.dotProduct(verPos);
-			if(dp<min){
-				min = dp;
+		Vector2D verPos;
+		float dp;
+		if(pc.border.getNumVertices()!=0){
+			for (int j = 0; j < pc.border.getNumVertices(); j++) {
+				verPos = new Vector2D(pc.border.getVertex(j).getX() + pc.getX(), pc.border.getVertex(j).getY() + pc.getY());
+				dp = axis.dotProduct(verPos);
+				if (dp < min) {
+					min = dp;
+				}
+				if (dp > max) {
+					max = dp;
+				}
 			}
-			else if(dp>max){
-				max = dp;
-			}
+		}
+		else{
+			verPos = new Vector2D(pc.border.getCentroid().getX() + pc.getX(), pc.border.getCentroid().getY() + pc.getY());
+			dp = axis.dotProduct(verPos);
+			min = dp - pc.border.getRadius()*axis.getMag();
+			max = dp + pc.border.getRadius()*axis.getMag();
 		}
 		Vector2D projPc = new Vector2D(min,max);
 		return projPc;
 	}
 	
+	
 	private float calcOverlap(Vector2D proj1, Vector2D proj2){
 		float max1 = proj1.getY() - proj2.getX();
-		if(max1<0) max1 *= -1;
 		float max2 = proj2.getY() - proj1.getX();
-		if(max2<0) max2 *= -1;
 		if(max1<max2) return max1;
 		else return max2;	
 	}
 	
 	private void correctCollide(PositionComponent pc, PositionComponent check, Vector2D overlapCorrect){
-		float dirX = (pc.border.getCentroid().getX() + pc.getX()) - (check.border.getCentroid().getX() + check.getX());
-		float dirY = (pc.border.getCentroid().getY() + pc.getY()) - (check.border.getCentroid().getY() + check.getY());
+		//float dirX = (pc.border.getCentroid().getX() + pc.getX()) - (check.border.getCentroid().getX() + check.getX());
+		//float dirY = (pc.border.getCentroid().getY() + pc.getY()) - (check.border.getCentroid().getY() + check.getY());
 		//System.out.println("direction: " + dirX + " " + overlapCorrect.getY());
 		//System.out.println("overlap correct: " + overlapCorrect.getX() + " " + overlapCorrect.getY());
-		if(dirX>0) pc.setX(pc.getX()+overlapCorrect.getX());
-		else pc.setX(pc.getX()-overlapCorrect.getX());
-		
-		if(dirY>0) pc.setY(pc.getY()+overlapCorrect.getY());
-		else pc.setY(pc.getY()-overlapCorrect.getY());
+		pc.setX(pc.getX()+overlapCorrect.getX());
+		pc.setY(pc.getY()+overlapCorrect.getY());
 	}
 	
 	public Shape getShape(){
