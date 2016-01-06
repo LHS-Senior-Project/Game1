@@ -52,7 +52,7 @@ public class PositionComponent extends BaseComponent{
 		this.setVelY(0);
 	}
 	
-	public boolean checkCollide(PositionComponent pc){
+	public boolean checkCollide(PositionComponent pc, boolean correctCollide){
 		//Collision Detection
 		Vector2D axis;
 		Vector2D smallestAxis = new Vector2D();
@@ -98,16 +98,14 @@ public class PositionComponent extends BaseComponent{
 					}
 				}
 			}
-			axis = new Vector2D(circle.getShape().getCentroid().getX()+circle.getX()-(minVertex.getX()+poly.getX()),circle.getShape().getCentroid().getY()+circle.getY()-(minVertex.getY()+poly.getY()));
-			float temp = axis.getX();
-			axis.setX(axis.getY()*-1);
-			axis.setY(temp);
+			axis = new Vector2D((minVertex.getX()+poly.getX())-(circle.getShape().getCentroid().getX()+circle.getX()),(minVertex.getY()+poly.getY())-(circle.getShape().getCentroid().getY()+circle.getY()));
 			Vector2D projPoly = project(axis, poly);
 			Vector2D projCircle = project(axis, circle);
 			if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
 				return false;
 			} else {
 				float overlap = calcOverlap(projPoly, projCircle);
+				System.out.println(overlap + " < " + minOverlap);
 				if (overlap < minOverlap) {
 					minOverlap = overlap;
 					smallestAxis = axis;
@@ -129,26 +127,6 @@ public class PositionComponent extends BaseComponent{
 						minOverlap = overlap;
 						smallestAxis = axis;
 					}
-					else if(overlap == minOverlap){
-//						Vector2D centerThis = new Vector2D(this.getShape().getCentroid().getX()+this.getX(),this.getShape().getCentroid().getY()+this.getY());
-//						Vector2D centerPc = new Vector2D(pc.getShape().getCentroid().getX()+pc.getX(),pc.getShape().getCentroid().getY()+pc.getY());
-//						Vector2D vertex1 = new Vector2D(pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getX()+pc.getX(),pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getY()+pc.getY());
-//						Vector2D vertex2 = new Vector2D(pc.getShape().getVertex(i).getX()+pc.getX(),pc.getShape().getVertex(i).getY()+pc.getY());
-//						if(this.getShape().getCentroid().getX()*2==70){
-//							System.out.println("");
-//							System.out.println(centerThis.getX() + " < " + centerPc.getX());
-//							System.out.println(vertex1.getY() + " < " + centerThis.getY());
-//							System.out.println(centerThis.getY()+ " < " + vertex2.getY());
-//						}
-//						if(centerThis.getX()<centerPc.getX()&&vertex1.getY()<centerThis.getY()&&centerThis.getY()<vertex2.getY()){
-//							minOverlap = overlap;
-//							smallestAxis = axis;
-//						}
-//						else if(centerThis.getY()>centerPc.getY()&&vertex1.getX()<centerThis.getX()&&centerThis.getX()<vertex2.getX()){
-//							minOverlap = overlap;
-//							smallestAxis = axis;
-//						}
-					}
 				}
 			}
 		
@@ -164,55 +142,22 @@ public class PositionComponent extends BaseComponent{
 						minOverlap = overlap;
 						smallestAxis = axis;
 					}
-					else if(overlap == minOverlap){
-//						Vector2D centerThis = new Vector2D(this.getShape().getCentroid().getX()+this.getX(),this.getShape().getCentroid().getY()+this.getY());
-//						Vector2D centerPc = new Vector2D(pc.getShape().getCentroid().getX()+pc.getX(),pc.getShape().getCentroid().getY()+pc.getY());
-//						Vector2D vertex1 = new Vector2D(pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getX()+pc.getX(),pc.getShape().getVertex((i + 1 == pc.getShape().getNumVertices() ? 0 : i + 1)).getY()+pc.getY());
-//						Vector2D vertex2 = new Vector2D(pc.getShape().getVertex(i).getX()+pc.getX(),pc.getShape().getVertex(i).getY()+pc.getY());
-//						if(this.getShape().getCentroid().getX()*2==70){
-//							System.out.println("");
-//							System.out.println(centerThis.getX() + " < " + centerPc.getX());
-//							System.out.println(vertex1.getY() + " < " + centerThis.getY());
-//							System.out.println(centerThis.getY()+ " < " + vertex2.getY());
-//						}
-//						if(centerThis.getX()<centerPc.getX()&&vertex1.getY()<centerThis.getY()&&centerThis.getY()<vertex2.getY()){
-//							minOverlap = overlap;
-//							smallestAxis = axis;
-//						}
-//						else if(centerThis.getY()>centerPc.getY()&&vertex1.getX()<centerThis.getX()&&centerThis.getX()<vertex2.getX()){
-//							minOverlap = overlap;
-//							smallestAxis = axis;
-//						}
-					}
+
 				}
 			}
 			minOverlap /= smallestAxis.getMag();
 		}
-		
-		float overlapX, overlapY;
-		
-		//Collision Correction
-		
-		System.out.println("axis: " + smallestAxis);
-		
-		smallestAxis = smallestAxis.getUnit();
-		overlapX = minOverlap * smallestAxis.getX();
-		overlapY = minOverlap * smallestAxis.getY();
-		
-		Vector2D overlapCorrect = new Vector2D(overlapX,overlapY);
-		
-		
-		
-//		overlapCorrect.setX(overlapCorrect.getX()*overlapCorrect.getUnit().getX());
-//		overlapCorrect.setY(overlapCorrect.getY()*overlapCorrect.getUnit().getY());
-		
-		//System.out.println("minOverlap: " + minOverlap + "\nAxis:\n" + smallestAxis + "\nOverlap:\n" + overlapCorrect);
-		if((this.getVelX()>0.000001||this.getVelX()<-0.000001||this.getVelY()>0.000001||this.getVelY()<-0.000001)&&(pc.getVelX()<=0.000001&&pc.getVelX()>=-0.000001&&pc.getVelY()<=0.000001&&pc.getVelY()>=-0.000001)) correctCollide(this, pc, overlapCorrect);
-		else if((pc.getVelX()>0.000001||pc.getVelX()<-0.000001||pc.getVelY()>0.000001||pc.getVelY()<-0.000001)&&(this.getVelX()<=0.000001&&this.getVelX()>=-0.000001&&this.getVelY()<=0.000001&&this.getVelY()>=-0.000001)) correctCollide(pc, this, overlapCorrect);
-		else{
-			// *need mass in order to correctly adjust 2 moving objects colliding*
+		if(correctCollide){
+			float overlapX, overlapY;
+			smallestAxis = smallestAxis.getUnit();
+			overlapX = minOverlap * smallestAxis.getX();
+			overlapY = minOverlap * smallestAxis.getY();
+			Vector2D overlapCorrect = new Vector2D(overlapX, overlapY);
+			if ((this.getVelX() > 0.000001 || this.getVelX() < -0.000001 || this.getVelY() > 0.000001|| this.getVelY() < -0.000001) && (pc.getVelX() <= 0.000001 && pc.getVelX() >= -0.000001 && pc.getVelY() <= 0.000001 && pc.getVelY() >= -0.000001))
+				correctCollide(this, pc, overlapCorrect);
+			else if ((pc.getVelX() > 0.000001 || pc.getVelX() < -0.000001 || pc.getVelY() > 0.000001 || pc.getVelY() < -0.000001) && (this.getVelX() <= 0.000001 && this.getVelX() >= -0.000001 && this.getVelY() <= 0.000001 && this.getVelY() >= -0.000001))
+				correctCollide(pc, this, overlapCorrect);
 		}
-		
 		return true;
 	}
 	
@@ -252,10 +197,6 @@ public class PositionComponent extends BaseComponent{
 	}
 	
 	private void correctCollide(PositionComponent pc, PositionComponent check, Vector2D overlapCorrect){
-		//float dirX = (pc.border.getCentroid().getX() + pc.getX()) - (check.border.getCentroid().getX() + check.getX());
-		//float dirY = (pc.border.getCentroid().getY() + pc.getY()) - (check.border.getCentroid().getY() + check.getY());
-		//System.out.println("direction: " + dirX + " " + overlapCorrect.getY());
-		//System.out.println("overlap correct: " + overlapCorrect.getX() + " " + overlapCorrect.getY());
 		pc.setX(pc.getX()+overlapCorrect.getX());
 		pc.setY(pc.getY()+overlapCorrect.getY());
 	}
