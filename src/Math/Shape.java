@@ -82,25 +82,6 @@ public class Shape  {
 		return vertices.size();
 	}
 	
-//	private Vector2D calcNormal(int i, int numVertices){
-//		Vector2D normal = new Vector2D(this.getVertex(i).getX()-this.getVertex((i+1==numVertices ? 0 : i+1)).getX(), this.getVertex(i).getY()-this.getVertex((i+1==numVertices ? 0 : i+1)).getY());
-//		float temp = normal.getX();
-//		if(normal.getX()==normal.getY()&&normal.getX()<0){
-//			normal.setX(normal.getX()*-1);
-//		}
-//		else if(normal.getX()==normal.getY()&&normal.getX()>0){
-//			normal.setY(normal.getY()*-1);
-//		}
-//		else if(normal.getX()<normal.getY()){
-//			normal.setX(normal.getY());
-//			normal.setY(temp * -1);
-//		}
-//		else {
-//			normal.setX(normal.getY() * -1);
-//			normal.setY(temp);
-//		}
-//		return normal;
-//	}
 	
 	private Vector2D calcNormal(int i, int numVertices){
 		Vector2D normal = new Vector2D(this.getVertex(i).getX()-this.getVertex((i+1==numVertices ? 0 : i+1)).getX(), this.getVertex(i).getY()-this.getVertex((i+1==numVertices ? 0 : i+1)).getY());

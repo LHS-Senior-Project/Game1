@@ -46,7 +46,7 @@ public class PhysicsSystem {
 							continue;
 						}
 						else{
-							boolean collide = e1.positionComponent.checkCollide(e2.positionComponent, true);
+							boolean collide = e1.positionComponent.checkCollide(e2.positionComponent);
 							if(collide){
 							}
 						}
