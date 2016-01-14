@@ -27,7 +27,7 @@ public class Launcher extends Canvas implements Runnable{
 		jframe.pack();
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setVisible(true);
-		jframe.setSize(new Dimension(300,300));
+		jframe.setSize(new Dimension(700,700));
 	}
 	
 	private void init(){
