@@ -52,7 +52,7 @@ public class PositionComponent extends BaseComponent{
 		this.setVelY(0);
 	}
 	
-	public boolean checkCollide(PositionComponent pc){
+	public Vector2D checkCollide(PositionComponent pc){
 		//Collision Detection
 		boolean correctCollide = true; //move into method header if/when implementing collision correction
 		Vector2D axis;
@@ -63,7 +63,7 @@ public class PositionComponent extends BaseComponent{
 			float r1 = pc.border.getRadius();
 			float r2 = this.border.getRadius();
 			if((r1+r2)<axis.getMag()){
-				return false;
+				return new Vector2D(0,0);
 			}
 			else{
 				minOverlap = (r1+r2) - axis.getMag();
@@ -90,7 +90,7 @@ public class PositionComponent extends BaseComponent{
 				Vector2D projPoly = project(axis, poly);
 				Vector2D projCircle = project(axis, circle);
 				if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
-					return false;
+					return new Vector2D(0,0);
 				} else {
 					float overlap = calcOverlap(projPoly, projCircle);
 					if (overlap <= minOverlap) {
@@ -108,7 +108,7 @@ public class PositionComponent extends BaseComponent{
 			Vector2D projPoly = project(axis, poly);
 			Vector2D projCircle = project(axis, circle);
 			if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
-				return false;
+				return new Vector2D(0,0);
 			} else {
 				float overlap = calcOverlap(projPoly, projCircle);
 				if (overlap < minOverlap) {
@@ -124,7 +124,7 @@ public class PositionComponent extends BaseComponent{
 				Vector2D projThis = project(axis, this);
 				Vector2D projPc = project(axis, pc);
 				if (projPc.getY() < projThis.getX() || projThis.getY() < projPc.getX()) {
-					return false;
+					return new Vector2D(0,0);
 				}
 				else {
 					float overlap = calcOverlap(projThis, projPc);
@@ -140,7 +140,7 @@ public class PositionComponent extends BaseComponent{
 				Vector2D projThis = project(axis, this);
 				Vector2D projPc = project(axis, pc);
 				if (projPc.getY() < projThis.getX() || projThis.getY() < projPc.getX()) {
-					return false;
+					return new Vector2D(0,0);
 				} else {
 					float overlap = calcOverlap(projThis, projPc);
 					if (overlap < minOverlap) {
@@ -152,14 +152,43 @@ public class PositionComponent extends BaseComponent{
 			}
 			minOverlap /= smallestAxis.getMag();
 		}
+//		float overlapX, overlapY;
+//		smallestAxis = smallestAxis.getUnit();
+//		overlapX = minOverlap * smallestAxis.getX();
+//		overlapY = minOverlap * smallestAxis.getY();
+//		Vector2D overlapCorrect = new Vector2D(overlapX, overlapY);
+//		PositionComponent tempPos;
+//		if ((this.getVelX() > 0.000001 || this.getVelX() < -0.000001 || this.getVelY() > 0.000001 || this.getVelY() < -0.000001) && (pc.getVelX() <= 0.000001 && pc.getVelX() >= -0.000001 && pc.getVelY() <= 0.000001 && pc.getVelY() >= -0.000001)) {
+//			tempPos = this;
+//		} else if ((pc.getVelX() > 0.000001 || pc.getVelX() < -0.000001 || pc.getVelY() > 0.000001 || pc.getVelY() < -0.000001) && (this.getVelX() <= 0.000001 && this.getVelX() >= -0.000001 && this.getVelY() <= 0.000001 && this.getVelY() >= -0.000001)) {
+//			tempPos = pc;
+//			pc = this;
+//		}
+//		else {
+//			tempPos = new PositionComponent();
+//		}
+//		tempPos.setX(tempPos.getX() + overlapCorrect.getX());
+//		tempPos.setY(tempPos.getY() + overlapCorrect.getY());
+//		Vector2D projTemp = project(smallestAxis, tempPos);
+//		Vector2D projPc = project(smallestAxis, pc);
+//		float overlap = calcOverlap(projTemp, projPc);
+//		overlap /= smallestAxis.getMag();
+//		if (overlap > minOverlap) {
+//			overlapCorrect.setX(overlapCorrect.getX() * -1);
+//			overlapCorrect.setY(overlapCorrect.getY() * -1);
+//		}
+//		return overlapCorrect;
+		
+		
+		
+		
 		if(correctCollide){
-			float overlapX, overlapY;
-			smallestAxis = smallestAxis.getUnit();
-			overlapX = minOverlap * smallestAxis.getX();
-			overlapY = minOverlap * smallestAxis.getY();
-			Vector2D overlapCorrect = new Vector2D(overlapX, overlapY);
-			if ((this.getVelX() > 0.000001 || this.getVelX() < -0.000001 || this.getVelY() > 0.000001|| this.getVelY() < -0.000001) && (pc.getVelX() <= 0.000001 && pc.getVelX() >= -0.000001 && pc.getVelY() <= 0.000001 && pc.getVelY() >= -0.000001)){
-				this.setX(this.getX()+overlapCorrect.getX());
+ 			float overlapX, overlapY;
+ 			smallestAxis = smallestAxis.getUnit();
+ 			overlapX = minOverlap * smallestAxis.getX();
+  			overlapY = minOverlap * smallestAxis.getY();
+  			Vector2D overlapCorrect = new Vector2D(overlapX, overlapY);
+  			this.setX(this.getX()+overlapCorrect.getX());
 				this.setY(this.getY()+overlapCorrect.getY());
 				Vector2D projThis = project(smallestAxis, this);
 				Vector2D projPc = project(smallestAxis, pc);
@@ -168,20 +197,25 @@ public class PositionComponent extends BaseComponent{
 					this.setX(this.getX()-(overlapCorrect.getX()*2));
 					this.setY(this.getY()-(overlapCorrect.getY()*2));
 				}
-			}
-			else if ((pc.getVelX() > 0.000001 || pc.getVelX() < -0.000001 || pc.getVelY() > 0.000001 || pc.getVelY() < -0.000001) && (this.getVelX() <= 0.000001 && this.getVelX() >= -0.000001 && this.getVelY() <= 0.000001 && this.getVelY() >= -0.000001)){
-				pc.setX(pc.getX()+overlapCorrect.getX());
-				pc.setY(pc.getY()+overlapCorrect.getY());
-				Vector2D projpc = project(smallestAxis, pc);
-				Vector2D projPc = project(smallestAxis, pc);
-				float overlap = calcOverlap(projpc, projPc);
-				if(overlap>minOverlap){
-					pc.setX(pc.getX()-(overlapCorrect.getX()*2));
-					pc.setY(pc.getY()-(overlapCorrect.getY()*2));
-				}
-			}
-		}
-		return true;
+// 			if ((this.getVelX() > 0.000001 || this.getVelX() < -0.000001 || this.getVelY() > 0.000001|| this.getVelY() < -0.000001) && (pc.getVelX() <= 0.000001 && pc.getVelX() >= -0.000001 && pc.getVelY() <= 0.000001 && pc.getVelY() >= -0.000001)){
+// 				
+// 			}
+// 			else if ((pc.getVelX() > 0.000001 || pc.getVelX() < -0.000001 || pc.getVelY() > 0.000001 || pc.getVelY() < -0.000001) && (this.getVelX() <= 0.000001 && this.getVelX() >= -0.000001 && this.getVelY() <= 0.000001 && this.getVelY() >= -0.000001)){
+// 				pc.setX(pc.getX()+overlapCorrect.getX());
+// 				pc.setY(pc.getY()+overlapCorrect.getY());
+// 				Vector2D projpc = project(smallestAxis, pc);
+// 				Vector2D projPc = project(smallestAxis, pc);
+// 				float overlap = calcOverlap(projpc, projPc);
+// 				if(overlap>minOverlap){
+// 					pc.setX(pc.getX()-(overlapCorrect.getX()*2));
+// 					pc.setY(pc.getY()-(overlapCorrect.getY()*2));
+// 				}
+// 			}
+ 		}
+  		return new Vector2D(0,0);
+		
+		
+		
 	}
 	
 	private Vector2D project(Vector2D axis, PositionComponent pc){

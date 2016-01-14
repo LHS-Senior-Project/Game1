@@ -9,6 +9,7 @@ import Main.CollisionComponentBase;
 import Main.ComponentName;
 import Main.Entity;
 import Main.InputComponentBase;
+import Math.Vector2D;
 
 public class PhysicsSystem {
 
@@ -40,19 +41,25 @@ public class PhysicsSystem {
 	}
 	
 	private void handleCollision(){
-				for(Entity e1 :  physics){
-					for(Entity e2 : physics){
-						if(e1.equals(e2)){
-							continue;
-						}
-						else{
-							boolean collide = e1.positionComponent.checkCollide(e2.positionComponent);
-							if(collide){
-							}
-						}
-					}
+		Vector2D collide = new Vector2D(0,0);
+		for (Entity e1 : physics) {
+			collide = new Vector2D(0,0);
+			for (Entity e2 : physics) {
+				if (e1.equals(e2)) {
+					continue;
+				} else {
+					Vector2D correct = e1.positionComponent.checkCollide(e2.positionComponent);
+					collide.setX(collide.getX() + correct.getX());
+					collide.setY(collide.getY() + correct.getY());
+
 				}
+				//System.out.println(collide.getX() + " " + collide.getY());
 			}
+			
+			e1.positionComponent.setX(e1.positionComponent.getX() + collide.getX());
+			e1.positionComponent.setY(e1.positionComponent.getY() + collide.getY());
+		}
+	}
 	
 	private void handleInputs() {
 		for(Entity e : physics){
