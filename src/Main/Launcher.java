@@ -2,6 +2,7 @@ package Main;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -35,21 +36,22 @@ public class Launcher extends Canvas implements Runnable {
 		jframe.setSize(new Dimension(1202, 720));
 		jframe.setResizable(true);
 	}
-
+	
 	private void init(){
 		this.setGame(new Game(this));
-//		Entity test = new Entity(100,100,16,16);
-//		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif",true));
+				
+//		Entity test = new Entity(500,250,30);
+//		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
 //		game.getGraphicsSystem().addRenderable(test);	
 //		game.addEntities(test);
 //		game.getPhysicsSystem().addToPhysics(test);
-//		KeyInput k = new KeyInput();
-//		MouseInput mouseInput = new MouseInput();
-//		game.setKeyInput(k);
-//		this.addMouseListener(mouseInput);
-//		this.addMouseMotionListener(mouseInput);
-//		game.setMouseInput(mouseInput);
-//		this.addKeyListener(k);
+		KeyInput k = new KeyInput();
+		MouseInput mouseInput = new MouseInput();
+		game.setKeyInput(k);
+		this.addMouseListener(mouseInput);
+		this.addMouseMotionListener(mouseInput);
+		game.setMouseInput(mouseInput);
+		this.addKeyListener(k);
 		
 		Path path = new Path(new Vector2D(69, 106),new Vector2D(51, 219),new Vector2D(61, 338),new Vector2D(195, 529),new Vector2D(332, 340),new Vector2D(347, 116) ,new Vector2D(417, 12),new Vector2D(514, 27),new Vector2D(531, 120),new Vector2D(540, 232),new Vector2D(452, 314),new Vector2D(413, 546),new Vector2D(574, 559),new Vector2D(674, 125),new Vector2D(706, 211),new Vector2D(701, 321));
 		Level testLevel = new Level(game, path);
@@ -190,6 +192,7 @@ public class Launcher extends Canvas implements Runnable {
 				
 		
 		game.loadLevel(0);
+
 
 	}
 

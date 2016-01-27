@@ -1,5 +1,8 @@
 package Components;
+import java.util.ArrayList;
+
 import Main.BaseComponent;
+import Math.Shape;
 import Math.Vector2D;
 
 public class PositionComponent extends BaseComponent{
@@ -7,7 +10,7 @@ public class PositionComponent extends BaseComponent{
 	public final String name = "PositionComponent";
 	
 	private Vector2D position;
-	private Vector2D size;
+	private Shape border;
 	private float accelX;
 	private float accelY;
 	private float velX;
@@ -17,7 +20,17 @@ public class PositionComponent extends BaseComponent{
 	
 	public PositionComponent(){
 		this.position = new Vector2D(0,0);
-		this.size = new Vector2D(0,0);
+		this.border = new Shape();
+		this.setAccelX(0);
+		this.setVelX(0);
+		this.setAccelY(0);
+		this.setVelY(0);
+		this.collide = true;
+	}
+	
+	public PositionComponent(float x, float y, float[] xVert, float[] yVert, int numVertices){
+		this.position = new Vector2D(x,y);
+		this.border = new Shape(xVert, yVert, numVertices);
 		this.setAccelX(0);
 		this.setVelX(0);
 		this.setAccelY(0);
@@ -27,7 +40,17 @@ public class PositionComponent extends BaseComponent{
 	
 	public PositionComponent(float x, float y, float sizeX, float sizeY){
 		this.position = new Vector2D(x,y);
-		this.size = new Vector2D(sizeX,sizeY);
+		this.border = new Shape(sizeX, sizeY);
+		this.setAccelX(0);
+		this.setVelX(0);
+		this.setAccelY(0);
+		this.setVelY(0);
+		this.collide = true;
+	}
+	
+	public PositionComponent(float x, float y, float radius){
+		this.position = new Vector2D(x,y);
+		this.border = new Shape(x, y, radius);
 		this.setAccelX(0);
 		this.setVelX(0);
 		this.setAccelY(0);
@@ -36,279 +59,188 @@ public class PositionComponent extends BaseComponent{
 	}
 	
 	public boolean checkCollide(PositionComponent pc){
-		if(!this.collide || !pc.collide){
-			return false;
-		}
+
+		if(pc.collide == false) return false;
+		if(this.collide == false) return false;
 		
-		float lineY11, lineY12, lineY21, lineY22;
-		float lineX11, lineX12, lineX21, lineX22;
-		if(pc.getY()>this.getY()){
-			lineY11 = this.getY();
-			lineY12 = lineY11 + this.getSizeY();
-			lineY21 = pc.getY();
-			lineY22 = lineY21 + pc.getSizeY();
-		}
-		else{
-			lineY11 = pc.getY();
-			lineY12 = lineY11 + pc.getSizeY();
-			lineY21 = this.getY();
-			lineY22 = lineY21 + this.getSizeY();
-		}
-		if(pc.getX()>this.getX()){
-			lineX11 = this.getX();
-			lineX12 = lineX11 + this.getSizeX();
-			lineX21 = pc.getX();
-			lineX22 = lineX21 + pc.getSizeX();
-		}
-		else{
-			lineX11 = pc.getX();
-			lineX12 = lineX11 + pc.getSizeX();
-			lineX21 = this.getX();
-			lineX22 = lineX21 + this.getSizeX();
-		}
-//		System.out.println("Test for x = " + this.getX() + " and y = " + this.getY());
-//		System.out.println("Y12>=Y21: " + lineY12 + " >= " + lineY21);
-//		System.out.println("Y22-Y11<=Size: " + (Math.abs(lineY22-lineY11) + " <= " + (this.getSizeY()+pc.getSizeY())));
-//		System.out.println("X12>=X21: " + lineX12 + " >= " + lineX21);
-//		System.out.println("X22-X11<=Size: " + (Math.abs(lineX22-lineX11) + " <= " + (this.getSizeX()+pc.getSizeX())));
-		if((lineY12>lineY21&&Math.abs(lineY22-lineY11)<this.getSizeY()+pc.getSizeY())&&(lineX12>lineX21&&Math.abs(lineX22-lineX11)<this.getSizeX()+pc.getSizeX())){
-			Vector2D penetration = new Vector2D(lineX12-lineX21,lineY12-lineY21);
-//			if(penetration.getX()>penetration.getY()){
-//				this.setVelY(this.getVelY() * -1);	
-//				this.setAccelY(0);
-//			}
-//			else if(penetration.getY()>penetration.getX()){
-//				this.setVelX(this.getVelX() * -1);	
-//				this.setAccelX(0);
-//			}
-//			else{
-//				this.setAccelX(this.getAccelX() * -1);
-//				this.setAccelY(this.getAccelY() * -1);
-//				this.setVelY(0);
-//				this.setVelX(0);
-//			return true;
-//			}
-//			System.out.println("Pen: " + penetration.getX() + " " + penetration.getY());
-			if(pc.getAccelX()!=0||pc.getAccelY()!=0){
-				if(this.getAccelX()==-pc.getAccelX()&&this.getAccelX()!=0){
-					this.setVelX(0);
-					pc.setVelX(0);
-					if(this.getAccelX()>0){
-						this.setX(this.getX() - penetration.getX()/2);
-						pc.setX(pc.getX() + penetration.getX()/2);
-					}
-					else {
-						this.setX(this.getX() + penetration.getX()/2);
-						pc.setX(pc.getX() - penetration.getX()/2);
-					}
-				}
-				else if(this.getAccelY()==-pc.getAccelY()&&this.getAccelY()!=0){
-					this.setVelY(0);
-					pc.setVelY(0);
-					if(this.getAccelY()>0){
-						this.setY(this.getY() - penetration.getY()/2);
-						pc.setY(pc.getY() + penetration.getY()/2);
-					}
-					else {
-						this.setY(this.getY() + penetration.getY()/2);
-						pc.setY(pc.getY() - penetration.getY()/2);
-					}
-				}
-				else if (this.getAccelX() > 0) {
-					if (pc.getAccelY() > 0) {
-						if (penetration.getX() > penetration.getY()) {
-							pc.setVelY(0);
-							pc.setY(pc.getY() - penetration.getY());
-						} else if (penetration.getX() < penetration.getY()) {
-							this.setVelX(0);
-							this.setX(this.getX() - penetration.getX());
-						} else {
-							this.setVelX(0);
-							pc.setVelY(0);
-							this.setX(this.getX() - penetration.getX());
-							pc.setY(pc.getY() - penetration.getY());
-						}
-					} else if (pc.getAccelY() < 0) {
-						if (penetration.getX() > penetration.getY()) {
-							pc.setVelY(0);
-							pc.setY(pc.getY() + penetration.getY());
-						} else if (penetration.getX() < penetration.getY()) {
-							this.setVelX(0);
-							this.setX(this.getX() - penetration.getX());
-						} else {
-							this.setVelX(0);
-							pc.setVelY(0);
-							this.setX(this.getX() + penetration.getX());
-							pc.setY(pc.getY() - penetration.getY());
-						}
-					}
-				}
-				else if (this.getAccelX() < 0) {
-					if (pc.getAccelY() > 0) {
-						if (penetration.getX() > penetration.getY()) {
-							pc.setVelY(0);
-							pc.setY(pc.getY() - penetration.getY());
-						} else if (penetration.getX() < penetration.getY()) {
-							this.setVelX(0);
-							this.setX(this.getX() + penetration.getX());
-						} else {
-							this.setVelX(0);
-							pc.setVelY(0);
-							this.setX(this.getX() + penetration.getX());
-							pc.setY(pc.getY() - penetration.getY());
-						}
-					} else if (pc.getAccelY() < 0) {
-						if (penetration.getX() > penetration.getY()) {
-							pc.setVelY(0);
-							pc.setY(pc.getY() + penetration.getY());
-						} else if (penetration.getX() < penetration.getY()) {
-							this.setVelX(0);
-							this.setX(this.getX() + penetration.getX());
-						} else {
-							this.setVelX(0);
-							pc.setVelY(0);
-							this.setX(this.getX() + penetration.getX());
-							pc.setY(pc.getY() + penetration.getY());
-						}
-					}
-				}
+		//Collision Detection
+		boolean correctCollide = true; //move into method header if/when implementing collision correction
+		Vector2D axis;
+		Vector2D smallestAxis = new Vector2D();
+		float minOverlap = Float.MAX_VALUE;
+		if(pc.border.getNumVertices()==0&&this.border.getNumVertices()==0){
+			axis = pc.getPosition().subtract(this.getPosition());
+			float r1 = pc.border.getRadius();
+			float r2 = this.border.getRadius();
+			if((r1+r2)<axis.getMag()){
+				return false;
 			}
 			else{
-				if(this.getAccelX()>0){
-					if(this.getAccelY()==0){
-						this.setVelX(0);
-						this.setX(this.getX()-penetration.getX());
-					}
-					else if(this.getAccelY()>0){
-						if(penetration.getX()>penetration.getY()){
-							this.setVelY(0);
-							this.setY(this.getY()-penetration.getY());
-						}
-						else if(penetration.getX()<penetration.getY()){
-							this.setVelX(0);
-							this.setX(this.getX()-penetration.getX());
-						}
-						else {
-							this.setVelX(0);
-							this.setVelY(0);
-							this.setX(this.getX()-penetration.getX());
-							this.setY(this.getY()-penetration.getY());
-						}
-					}
-					else {
-						if(penetration.getX()>penetration.getY()){
-							this.setVelY(0);
-							this.setY(this.getY()+penetration.getY());
-						}
-						else if(penetration.getX()<penetration.getY()){
-							this.setVelX(0);
-							this.setX(this.getX()-penetration.getX());
-						}
-						else {
-							this.setVelX(0);
-							this.setVelY(0);
-							this.setX(this.getX()-penetration.getX());
-							this.setY(this.getY()+penetration.getY());
-						}
-					}
+				minOverlap = (r1+r2) - axis.getMag();
+				smallestAxis = axis;
+			}
+		}
+		else if(this.border.getNumVertices()==0||pc.border.getNumVertices()==0){
+			PositionComponent circle = this;
+			PositionComponent poly = pc;
+			if(pc.border.getNumVertices()==0){
+				circle = pc;
+				poly = this;
+			}
+			Vector2D minVertex = new Vector2D();
+			Vector2D distance;
+			float maxMag = Float.MAX_VALUE;
+			for(int i = 0; i<poly.getShape().getNumVertices(); i++){
+				axis = poly.border.getAxis(i);
+				distance = new Vector2D(circle.getShape().getCentroid().getX()+circle.getX()-(poly.getShape().getVertex(i).getX()+poly.getX()),circle.getShape().getCentroid().getY()+circle.getY()-(poly.getShape().getVertex(i).getY()+poly.getY()));
+				if(distance.getMag()<maxMag){
+					maxMag = distance.getMag();
+					minVertex = poly.getShape().getVertex(i);
 				}
-				else if(this.getAccelX()<0){
-					if(this.getAccelY()==0){
-						this.setVelX(0);
-						this.setX(this.getX()+penetration.getX());
+				Vector2D projPoly = project(axis, poly);
+				Vector2D projCircle = project(axis, circle);
+				if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
+					return false;
+				} else {
+					float overlap = calcOverlap(projPoly, projCircle);
+					if (overlap <= minOverlap) {
+						minOverlap = overlap;
+						smallestAxis = axis;
 					}
-					else if(this.getAccelY()>0){
-						if(penetration.getX()>penetration.getY()){
-							this.setVelY(0);
-							this.setY(this.getY()-penetration.getY());
-						}
-						else if(penetration.getX()<penetration.getY()){
-							this.setVelX(0);
-							this.setX(this.getX()+penetration.getX());
-						}
-						else {
-							this.setVelX(0);
-							this.setVelY(0);
-							this.setX(this.getX()+penetration.getX());
-							this.setY(this.getY()-penetration.getY());
-						}
-					}
-					else {
-						if(penetration.getX()>penetration.getY()){
-							this.setVelY(0);
-							this.setY(this.getY()+penetration.getY());
-						}
-						else if(penetration.getX()<penetration.getY()){
-							this.setVelX(0);
-							this.setX(this.getX()+penetration.getX());
-						}
-						else {
-							this.setVelX(0);
-							this.setVelY(0);
-							this.setX(this.getX()+penetration.getX());
-							this.setY(this.getY()+penetration.getY());
-						}
-					}
-				}
-				else if(this.getAccelY()>0){
-					this.setVelY(0);
-					this.setY(this.getY()-penetration.getY());
-				}
-				else if(this.getAccelY()<0){
-					this.setVelY(0);
-					this.setY(this.getY()+penetration.getY());
 				}
 			}
-			
-//			if(this.getAccelX()>0&&this.getAccelY()==0){
-//				this.setVelX(0);
-//				this.setX(this.getX()-penetration.getX()-);
-//			}
-//			else if(this.getAccelX()<0&&this.getAccelY()==0){
-//				this.setVelX(0);
-//				this.setX(this.getX()+penetration.getX()+);
-//			}
-//			else if(this.getAccelY()>0&&this.getAccelX()==0){
-//				this.setVelY(0);
-//				this.setY(this.getY()-penetration.getY()-);
-//			}
-//			else if(this.getAccelY()<0&&this.getAccelX()==0){
-//				this.setVelY(0);
-//				this.setY(this.getY()+penetration.getY()+);
-//			}
-//			else if(this.getAccelY()>0&&this.getAccelX()>0){
-//				this.setVelX(0);
-//				this.setVelY(0);
-//				this.setX(this.getX()-penetration.getX());
-//				this.setY(this.getY()-penetration.getY());
-//			}
-//			else if(this.getAccelY()<0&&this.getAccelX()>0){
-//				this.setVelX(0);
-//				this.setVelY(0);
-//				this.setX(this.getX()+penetration.getX());
-//				this.setY(this.getY()-penetration.getY());
-//			}
-//			else if(this.getAccelY()>0&&this.getAccelX()<0){
-//				this.setVelX(0);
-//				this.setVelY(0);
-//				this.setX(this.getX()-penetration.getX());
-//				this.setY(this.getY()+penetration.getY());
-//			}
-//			else if(this.getAccelY()<0&&this.getAccelX()<0){
-//				this.setVelX(0);
-//				this.setVelY(0);
-//				this.setX(this.getX()+penetration.getX());
-//				this.setY(this.getY()+penetration.getY());
-//			}
-//			else{
-//				this.setVelX(0);
-//				this.setVelY(0);
-//			}
-//			this.setX(this.getX()-penetration.getX());
-//			this.setY(this.getY()-penetration.getY());
-			return true;
+			if(pc.border.getNumVertices()==0){
+				axis = new Vector2D((circle.getShape().getCentroid().getX()+circle.getX())-(minVertex.getX()+poly.getX()),(circle.getShape().getCentroid().getY()+circle.getY())-(minVertex.getY()+poly.getY()));
+			}
+			else{
+				axis = new Vector2D((minVertex.getX()+poly.getX())-(circle.getShape().getCentroid().getX()+circle.getX()),(minVertex.getY()+poly.getY())-(circle.getShape().getCentroid().getY()+circle.getY()));
+			}
+			Vector2D projPoly = project(axis, poly);
+			Vector2D projCircle = project(axis, circle);
+			if (projPoly.getY() < projCircle.getX() || projCircle.getY() < projPoly.getX()) {
+				return false;
+			} else {
+				float overlap = calcOverlap(projPoly, projCircle);
+				if (overlap < minOverlap) {
+					minOverlap = overlap;
+					smallestAxis = axis;
+				}
+			}
+			minOverlap /= smallestAxis.getMag();
 		}
-		return false;
+		else{
+			for (int i = 0; i < pc.border.getNumVertices(); i++) {
+				axis = pc.border.getAxis(i);
+				Vector2D projThis = project(axis, this);
+				Vector2D projPc = project(axis, pc);
+				if (projPc.getY() < projThis.getX() || projThis.getY() < projPc.getX()) {
+					return false;
+				}
+				else {
+					float overlap = calcOverlap(projThis, projPc);
+					if (overlap <= minOverlap) {
+						minOverlap = overlap;
+						smallestAxis = axis;
+					}
+				}
+			}
+		
+			for (int i = 0; i < this.border.getNumVertices(); i++) {
+				axis = this.border.getAxis(i);
+				Vector2D projThis = project(axis, this);
+				Vector2D projPc = project(axis, pc);
+				if (projPc.getY() < projThis.getX() || projThis.getY() < projPc.getX()) {
+					return false;
+				} else {
+					float overlap = calcOverlap(projThis, projPc);
+					if (overlap < minOverlap) {
+						minOverlap = overlap;
+						smallestAxis = axis;
+					}
+
+				}
+			}
+			minOverlap /= smallestAxis.getMag();
+		}
+		if(correctCollide){
+			float overlapX, overlapY;
+			smallestAxis = smallestAxis.getUnit();
+			overlapX = minOverlap * smallestAxis.getX();
+			overlapY = minOverlap * smallestAxis.getY();
+			Vector2D overlapCorrect = new Vector2D(overlapX, overlapY);
+			if ((this.getVelX() > 0.000001 || this.getVelX() < -0.000001 || this.getVelY() > 0.000001|| this.getVelY() < -0.000001) && (pc.getVelX() <= 0.000001 && pc.getVelX() >= -0.000001 && pc.getVelY() <= 0.000001 && pc.getVelY() >= -0.000001)){
+				this.setX(this.getX()+overlapCorrect.getX());
+				this.setY(this.getY()+overlapCorrect.getY());
+				Vector2D projThis = project(smallestAxis, this);
+				Vector2D projPc = project(smallestAxis, pc);
+				float overlap = calcOverlap(projThis, projPc);
+				if(overlap>minOverlap){
+					this.setX(this.getX()-(overlapCorrect.getX()*2));
+					this.setY(this.getY()-(overlapCorrect.getY()*2));
+				}
+			}
+			else if ((pc.getVelX() > 0.000001 || pc.getVelX() < -0.000001 || pc.getVelY() > 0.000001 || pc.getVelY() < -0.000001) && (this.getVelX() <= 0.000001 && this.getVelX() >= -0.000001 && this.getVelY() <= 0.000001 && this.getVelY() >= -0.000001)){
+				pc.setX(pc.getX()+overlapCorrect.getX());
+				pc.setY(pc.getY()+overlapCorrect.getY());
+				Vector2D projpc = project(smallestAxis, pc);
+				Vector2D projPc = project(smallestAxis, pc);
+				float overlap = calcOverlap(projpc, projPc);
+				if(overlap>minOverlap){
+					pc.setX(pc.getX()-(overlapCorrect.getX()*2));
+					pc.setY(pc.getY()-(overlapCorrect.getY()*2));
+				}
+			}
+		}
+		return true;
+	}
+	
+	private Vector2D project(Vector2D axis, PositionComponent pc){
+		float min=Float.MAX_VALUE;
+		float max=-Float.MAX_VALUE;
+		Vector2D verPos;
+		float dp;
+		if(pc.border.getNumVertices()!=0){
+			for (int j = 0; j < pc.border.getNumVertices(); j++) {
+				verPos = new Vector2D(pc.border.getVertex(j).getX() + pc.getX(), pc.border.getVertex(j).getY() + pc.getY());
+				dp = axis.dotProduct(verPos);
+				if (dp < min) {
+					min = dp;
+				}
+				if (dp > max) {
+					max = dp;
+				}
+			}
+		}
+		else{
+			verPos = new Vector2D(pc.border.getCentroid().getX() + pc.getX(), pc.border.getCentroid().getY() + pc.getY());
+			dp = axis.dotProduct(verPos);
+			min = dp - pc.border.getRadius()*axis.getMag();
+			max = dp + pc.border.getRadius()*axis.getMag();
+		}
+		Vector2D projPc = new Vector2D(min,max);
+		return projPc;
+	}
+	
+	
+	private float calcOverlap(Vector2D proj1, Vector2D proj2){
+		float max1 = proj1.getY() - proj2.getX();
+		float max2 = proj2.getY() - proj1.getX();
+		if(max1<max2) return max1;
+		else return max2;	
+	}
+	
+	protected void correctCollide(PositionComponent pc, Vector2D overlapCorrect){
+		pc.setX(pc.getX()+overlapCorrect.getX());
+		pc.setY(pc.getY()+overlapCorrect.getY());
+	}
+	
+//	public void setSizeX(float x){
+//		this.size.setX(x);
+//		
+//	}
+	
+	public Shape getShape(){
+		return this.border;
 	}
 	
 	public float getY(){
@@ -319,22 +251,6 @@ public class PositionComponent extends BaseComponent{
 		this.position.setY(y);
 	}
 	
-	public float getSizeX(){
-		return this.size.getX();
-	}
-	
-	public void setSizeX(float x){
-		this.size.setX(x);
-	}
-	
-	public float getSizeY(){
-		return this.size.getY();
-	}
-	
-	public void setSizeY(float y){
-		this.size.setY(y);
-	}
-	
 	public float getX() {
 		return this.position.getX();
 	}
@@ -343,7 +259,7 @@ public class PositionComponent extends BaseComponent{
 		this.position.setX(x);
 	}
 	
-	public Vector2D getVector(){
+	public Vector2D getPosition(){
 		return this.position;
 	}
 	
@@ -381,6 +297,21 @@ public class PositionComponent extends BaseComponent{
 
 	public void setCollide(boolean b) {
 		this.collide = b;		
+	}
+	
+	public float getSizeX(){
+		return this.getShape().getSizeX();
+	}
+	
+	public float getSizeY(){
+		return this.getShape().getSizeY();
+	}
+	
+	public void setSizeX(float sizeX){
+		this.border = new Shape(sizeX,this.getShape().getSizeY());
+	}
+	public void setSizeY(float sizeY){
+		this.border = new Shape(this.getShape().getSizeX(), sizeY);
 	}
 	
 }

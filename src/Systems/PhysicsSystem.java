@@ -24,7 +24,6 @@ public class PhysicsSystem {
 		
 		handleInputs();
 		
-		
 		long deltaTime = 1000/60; 
 		
 		for(Entity e : physics){

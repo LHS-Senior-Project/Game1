@@ -13,6 +13,11 @@ public class Entity {
 		this.positionComponent = new PositionComponent();
 	}
 	
+	public Entity(float x, float y, float[] xVert, float[] yVert, int numVertices){
+		this.components = new ArrayList<BaseComponent>();
+		this.positionComponent = new PositionComponent(x,y,xVert,yVert,numVertices);
+	}
+	
 	public Entity(float x, float y, float sizeX, float sizeY){
 		this.components = new ArrayList<BaseComponent>();
 		this.positionComponent = new PositionComponent(x,y,sizeX,sizeY);
@@ -23,6 +28,10 @@ public class Entity {
 		this.positionComponent = positionComponent;
 	}
 
+	public Entity(float x, float y, float radius){
+		this.components = new ArrayList<BaseComponent>();
+		this.positionComponent = new PositionComponent(x,y,radius);
+	}	
 	public void addComponent(BaseComponent component){
 		this.components.add(component);
 	}
