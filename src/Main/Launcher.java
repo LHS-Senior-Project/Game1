@@ -38,24 +38,24 @@ public class Launcher extends Canvas implements Runnable {
 
 	private void init(){
 		this.setGame(new Game(this));
-		Entity test = new Entity(100,100,16,16);
-		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif",true));
-		game.getGraphicsSystem().addRenderable(test);	
-		game.addEntities(test);
-		game.getPhysicsSystem().addToPhysics(test);
-		KeyInput k = new KeyInput();
-		MouseInput mouseInput = new MouseInput();
-		game.setKeyInput(k);
-		this.addMouseListener(mouseInput);
-		this.addMouseMotionListener(mouseInput);
-		game.setMouseInput(mouseInput);
-		this.addKeyListener(k);
+//		Entity test = new Entity(100,100,16,16);
+//		test.addComponent(new RenderableComponent("/Images/ok_16x16.gif",true));
+//		game.getGraphicsSystem().addRenderable(test);	
+//		game.addEntities(test);
+//		game.getPhysicsSystem().addToPhysics(test);
+//		KeyInput k = new KeyInput();
+//		MouseInput mouseInput = new MouseInput();
+//		game.setKeyInput(k);
+//		this.addMouseListener(mouseInput);
+//		this.addMouseMotionListener(mouseInput);
+//		game.setMouseInput(mouseInput);
+//		this.addKeyListener(k);
 		
 		Path path = new Path(new Vector2D(69, 106),new Vector2D(51, 219),new Vector2D(61, 338),new Vector2D(195, 529),new Vector2D(332, 340),new Vector2D(347, 116) ,new Vector2D(417, 12),new Vector2D(514, 27),new Vector2D(531, 120),new Vector2D(540, 232),new Vector2D(452, 314),new Vector2D(413, 546),new Vector2D(574, 559),new Vector2D(674, 125),new Vector2D(706, 211),new Vector2D(701, 321));
 		Level testLevel = new Level(game, path);
 		game.getMobSystem().currentLevel = testLevel;
 		
-		test.addComponent(new PlayerInputComponent(test,k,null));
+//		test.addComponent(new PlayerInputComponent(test,k,null));
 		
 		Entity background = new Entity(0,0,946,720);
 		background.addComponent(new RenderableComponent("/Images/Background.png",true));
@@ -124,13 +124,6 @@ public class Launcher extends Canvas implements Runnable {
 		
 		Entity carButton = new Entity(956, 200, 32, 16);
 		carButton.addComponent(new RenderableComponent("/Images/car.png",32,16,true));
-//		TowerInfoComponent carTower = new TowerInfoComponent();
-//		carTower.imageLoc = "/Images/car.png";
-//		carTower.xSize = 60;
-//		carTower.ySize = 30;
-//		carTower.cost = 50;
-//		carTower.towerName = "Car Tower";
-//		carTower.towerDescription = "This is a car that does everything";
 		carButton.addComponent(new UIInfoComponent(true, TowerTypes.CarTower));
 		game.getGraphicsSystem().addRenderable(carButton);
 		game.addEntities(carButton);
@@ -197,55 +190,12 @@ public class Launcher extends Canvas implements Runnable {
 				
 		
 		game.loadLevel(0);
-//		Entity player2 = new Entity(200,200,16,16);
-//		player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
-//		player2.addComponent(new Player2InputComponent(player2,k,null));
-//		game.getGraphicsSystem().addRenderable(player2);
-//		game.addEntities(player2);
-//		game.getPhysicsSystem().addToPhysics(player2);
-//		player2.addComponent(new Player2InputComponent(player2,k,null));
-//		game.getUISystem().addElemnt(player2);
-//		game.getUISystem().addElemnt(test);
-		
-//		Entity car = new Entity(100,100);
-//		car.addComponent(new RenderableComponent("/Images/car.png"));
-//		game.getGraphicsSystem().addRenderable(car);
-//		game.addEntities(car);
-		
-/*		for(int i = 0; i < 1; i ++){
-//			Entity car = new Entity(i,i);
-//			car.addComponent(new RenderableComponent("/Images/car.png"));
-//			game.getGraphicsSystem().addRenderable(car);
-//			game.addEntities(car);
-			Entity player2 = new Entity(i * 2,i * 2);
-			player2.addComponent(new RenderableComponent("/Images/ok_16x16.gif"));
-			game.getGraphicsSystem().addRenderable(player2);
-			game.addEntities(player2);
-			game.getPhysicsSystem().addToPhysics(player2);
-			player2.addComponent(new Player2InputComponent(player2,k,null));
-		}*/
+
 	}
 
 	private void setGame(Game game) {
 		this.game = game;
 	}
-
-	// @Override
-	// public void run() {
-	// game.setRunning(true);
-	//
-	// long deltaTime = 0;
-	// long timeCount = 0;
-	//
-	// while(game.getRunning()){
-	//
-	// if(timeCount > TIME_STEP){
-	// game.update();
-	// timeCount = 0;
-	// }
-	// game.render();
-	// }
-	// }
 
 	public void run() {
 		game.setRunning(true);
