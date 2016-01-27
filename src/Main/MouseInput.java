@@ -52,6 +52,7 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 	public void mouseReleased(MouseEvent e) {
 		drag = false;
 		mouseButton = e.getButton();
+		click = false;
 	}
 
 	public int lastMouseButton(){

@@ -324,7 +324,7 @@ public class PositionComponent extends BaseComponent{
 	}
 	
 	public void setSizeX(float x){
-		this.size.setY(x);
+		this.size.setX(x);
 	}
 	
 	public float getSizeY(){

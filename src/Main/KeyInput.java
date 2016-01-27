@@ -31,8 +31,19 @@ public class KeyInput implements KeyListener {
 	public int x = KeyEvent.VK_X;
 	public int y = KeyEvent.VK_Y;
 	public int z = KeyEvent.VK_Z;
-	public int debug = KeyEvent.VK_DEAD_TILDE;
+	public int k1 = KeyEvent.VK_1;
+	public int k2 = KeyEvent.VK_2;
+	public int k3 = KeyEvent.VK_3;
+	public int k4 = KeyEvent.VK_4;
+	public int k5 = KeyEvent.VK_5;
+	public int k6 = KeyEvent.VK_6;
+	public int k7 = KeyEvent.VK_7;
+	public int k8 = KeyEvent.VK_8;
+	public int k9 = KeyEvent.VK_9;
+	
+	public int debug = 192;
 	public int space = KeyEvent.VK_SPACE;
+	public int esc = KeyEvent.VK_ESCAPE;
 
 	public boolean[] keys = new boolean[KeyEvent.KEY_LAST];
 
@@ -47,7 +58,9 @@ public class KeyInput implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+			if(e.getKeyCode() == debug){
+				keys[e.getKeyCode()] = false;
+			}
 	}
 
 	@Override
@@ -57,6 +70,10 @@ public class KeyInput implements KeyListener {
 
 	public boolean isPressed(int keyCode) {
 		return keys[keyCode];
+	}
+	
+	public void handled(int keyCode){
+		keys[keyCode] = false;
 	}
 
 }

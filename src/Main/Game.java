@@ -3,7 +3,11 @@ package Main;
 import java.awt.Canvas;
 import java.util.ArrayList;
 
+import Components.RenderableComponent;
+import Math.Path;
+import Math.Vector2D;
 import Systems.GraphicsSystem;
+import Systems.LevelLoader;
 import Systems.MobSystem;
 import Systems.PhysicsSystem;
 import Systems.TowerHandingSystem;
@@ -16,24 +20,36 @@ public class Game {
 	private PhysicsSystem physicsSystem;
 	private UISystem uiSystem;
 	private TowerHandingSystem towerHandlingSystem;
+	private LevelLoader ll;
+	
 	
 
 	private MobSystem mobSystem;
 	private ArrayList<Entity> entities;
 	private boolean running;
+	private boolean stopped;
 	private int gold;
 	private int heart;
+	private boolean hardPause;
+	private boolean softPause;
+	private Level level;
 
 	public Game(Canvas canvas) {
-		this.graphicsSystem = new GraphicsSystem(canvas);
+		this.stopped = false;
+		this.graphicsSystem = new GraphicsSystem(canvas, this);
 		this.keyInput = new KeyInput();
 		this.mouseInput = new MouseInput();
 		this.physicsSystem = new PhysicsSystem();
-		this.setTowerHandlingSystem(new TowerHandingSystem());
+		this.setTowerHandlingSystem(new TowerHandingSystem(this));
 		this.entities = new ArrayList<Entity>();
 		this.uiSystem = new UISystem(mouseInput, keyInput, this);
 		this.mobSystem = new MobSystem(this);
+		this.level = new Level(this, new Path(new Vector2D(69, 106),new Vector2D(51, 219),new Vector2D(61, 338),new Vector2D(195, 529),new Vector2D(332, 340),new Vector2D(347, 116) ,new Vector2D(417, 12),new Vector2D(514, 27),new Vector2D(531, 120),new Vector2D(540, 232),new Vector2D(452, 314),new Vector2D(413, 546),new Vector2D(574, 559),new Vector2D(674, 125),new Vector2D(706, 211),new Vector2D(701, 321)));
+		this.ll = new LevelLoader(this);
 		this.gold = 300;
+		this.heart = 100;
+		this.softPause = false;
+		this.hardPause = false;
 	}
 
 	public GraphicsSystem getGraphicsSystem() {
@@ -67,6 +83,10 @@ public class Game {
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
+	
+	public String getGamePath(){
+		return ll.getDirectory();
+	}
 
 	public void addEntities(Entity... entities) {
 		for (Entity e : entities) {
@@ -79,9 +99,12 @@ public class Game {
 	}
 
 	public void update() {
-		this.physicsSystem.update();
 		this.uiSystem.update();
-		this.mobSystem.update();
+		if(!softPause){
+			this.physicsSystem.update();
+			this.mobSystem.update();
+			this.towerHandlingSystem.updateTowers();
+		}
 	}
 
 	public UISystem getUISystem() {
@@ -114,6 +137,10 @@ public class Game {
 		this.gold += gold;
 	}
 
+	public boolean getSoftPause(){
+		return this.softPause;
+	}
+	
 	public int getHeart() {
 		return heart;
 	}
@@ -154,4 +181,37 @@ public class Game {
 		this.gold = gold;
 	}
 
+	public void setHardPause(boolean hardPause){
+		this.hardPause = hardPause;
+	}
+	
+	public void setSoftPause(boolean softPause){
+		this.softPause = softPause;
+	}
+	
+	public boolean getHardPause(){
+		return this.hardPause;
+	}
+	
+	public boolean getStopped(){
+		return this.stopped;
+	}
+	
+	public void setStopped(boolean stopped){
+		this.stopped = stopped;
+	}
+	
+	public Level getCurLevel(){
+		return level;
+	}
+	
+	public void loadLevel(int index){
+		this.level = ll.loadLevel(index);
+		Entity background = new Entity(0,0,946,720);
+		background.addComponent(new RenderableComponent(this.level.getBackgroundPath(),946,720, false));
+		background.positionComponent.setCollide(false);
+		this.getGraphicsSystem().addBackground(background);
+		this.addEntities(background);
+		this.getMobSystem().currentLevel = this.level;
+	}
 }

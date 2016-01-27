@@ -14,7 +14,7 @@ public class Path {
 	}
 	
 	public boolean hasNext(int position){
-		return (pathCords.get(position) != null);
+		return (position + 1 <= pathCords.size());
 	}
 	
 	public Vector2D getNext(int position){

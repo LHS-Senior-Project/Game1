@@ -3,12 +3,12 @@ package Components;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,12 +22,35 @@ public class RenderableComponent extends BaseComponent {
 	private BufferedImage image;
 	public static Font pirate;
 
-	public RenderableComponent(String imagePath) {
+	public RenderableComponent(String imagePath,int width, int height, boolean local) {
+		this.name = ComponentName.RenderableComponent;
+		loadFonts();
+		if (!imagePath.isEmpty()) {
+			this.image = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
+			System.out.println(imagePath);
+			setImage(imagePath,width,height,local);
+//				this.image = (BufferedImage) (ImageIO.read(getClass().getResource(imagePath)));
+//				BufferedImage newImg = new BufferedImage(width, height, image.getType());
+//				Graphics2D g = (Graphics2D) newImg.getGraphics();
+//				g.drawImage( image.getScaledInstance(width, height, Image.SCALE_FAST), 0, 0, width, height, null);
+//				g.setComposite(AlphaComposite.Clear);
+//				this.image = newImg;
+		} else {
+			initDefault();
+		}
+
+	}
+	
+	public RenderableComponent(String imagePath, boolean local) {
 		this.name = ComponentName.RenderableComponent;
 		loadFonts();
 		if (!imagePath.isEmpty()) {
 			try {
-				this.image = ImageIO.read(getClass().getResource(imagePath));
+				if(local){
+					this.image = (BufferedImage) ImageIO.read(getClass().getResource(imagePath));
+				}else{
+					this.image = (BufferedImage) ImageIO.read(new File(imagePath));
+				}
 				Graphics2D g = (Graphics2D) image.getGraphics();
 				g.setComposite(AlphaComposite.Clear);
 			} catch (IOException e) {
@@ -68,6 +91,17 @@ public class RenderableComponent extends BaseComponent {
 			this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g = (Graphics2D) image.getGraphics();
 			g.setComposite(AlphaComposite.Clear);
+		} else {
+			initDefault();
+		}
+	}
+
+	public RenderableComponent(String imagePath, float width, float height, boolean local) {
+		this.name = ComponentName.RenderableComponent;
+		loadFonts();
+		if (!imagePath.isEmpty()) {
+			this.image = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
+			setImage(imagePath,(int)width,(int)height, local);
 		} else {
 			initDefault();
 		}
@@ -114,9 +148,43 @@ public class RenderableComponent extends BaseComponent {
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, image.getWidth(), image.getHeight());
 		g.setComposite(AlphaComposite.Src);
-		
 		g.setFont(pirate.deriveFont(Font.PLAIN, 20));
 		g.drawString(text, 0, 20);
+	}
+	
+	public Graphics2D getGraphics(){
+		return (Graphics2D)this.image.getGraphics();
+	}
+	
+	public void setImage(String imagePath,int width, int height, boolean local) {
+		if (!imagePath.isEmpty()) {
+			try {
+				if(local){
+					this.image = (BufferedImage) ImageIO.read(getClass().getResource(imagePath));
+				}else{
+					System.out.println(imagePath);
+					this.image = (BufferedImage) ImageIO.read(new File(imagePath));
+				}
+				BufferedImage newImg = new BufferedImage(width, height, image.getType());
+				Graphics2D g = (Graphics2D) newImg.getGraphics();
+				g.drawImage( image.getScaledInstance(width, height, Image.SCALE_FAST), 0, 0, width, height, null);
+				g.setComposite(AlphaComposite.Clear);
+				this.image = newImg;
+			} catch (IOException e) {
+				initDefault();
+				e.printStackTrace();
+			}
+		} else {
+			initDefault();
+		}
+
+	}
+
+	public void clearImage() {
+		BufferedImage newImg = new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = (Graphics2D) newImg.getGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		this.image = newImg;
 	}
 
 }
