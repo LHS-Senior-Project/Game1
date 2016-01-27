@@ -12,6 +12,8 @@ public class PositionComponent extends BaseComponent{
 	private float accelY;
 	private float velX;
 	private float velY;
+
+	private boolean collide;
 	
 	public PositionComponent(){
 		this.position = new Vector2D(0,0);
@@ -20,6 +22,7 @@ public class PositionComponent extends BaseComponent{
 		this.setVelX(0);
 		this.setAccelY(0);
 		this.setVelY(0);
+		this.collide = true;
 	}
 	
 	public PositionComponent(float x, float y, float sizeX, float sizeY){
@@ -29,9 +32,14 @@ public class PositionComponent extends BaseComponent{
 		this.setVelX(0);
 		this.setAccelY(0);
 		this.setVelY(0);
+		this.collide = true;
 	}
 	
 	public boolean checkCollide(PositionComponent pc){
+		if(!this.collide || !pc.collide){
+			return false;
+		}
+		
 		float lineY11, lineY12, lineY21, lineY22;
 		float lineX11, lineX12, lineX21, lineX22;
 		if(pc.getY()>this.getY()){
@@ -58,11 +66,11 @@ public class PositionComponent extends BaseComponent{
 			lineX21 = this.getX();
 			lineX22 = lineX21 + this.getSizeX();
 		}
-		System.out.println("Test for x = " + this.getX() + " and y = " + this.getY());
-		System.out.println("Y12>=Y21: " + lineY12 + " >= " + lineY21);
-		System.out.println("Y22-Y11<=Size: " + (Math.abs(lineY22-lineY11) + " <= " + (this.getSizeY()+pc.getSizeY())));
-		System.out.println("X12>=X21: " + lineX12 + " >= " + lineX21);
-		System.out.println("X22-X11<=Size: " + (Math.abs(lineX22-lineX11) + " <= " + (this.getSizeX()+pc.getSizeX())));
+//		System.out.println("Test for x = " + this.getX() + " and y = " + this.getY());
+//		System.out.println("Y12>=Y21: " + lineY12 + " >= " + lineY21);
+//		System.out.println("Y22-Y11<=Size: " + (Math.abs(lineY22-lineY11) + " <= " + (this.getSizeY()+pc.getSizeY())));
+//		System.out.println("X12>=X21: " + lineX12 + " >= " + lineX21);
+//		System.out.println("X22-X11<=Size: " + (Math.abs(lineX22-lineX11) + " <= " + (this.getSizeX()+pc.getSizeX())));
 		if((lineY12>lineY21&&Math.abs(lineY22-lineY11)<this.getSizeY()+pc.getSizeY())&&(lineX12>lineX21&&Math.abs(lineX22-lineX11)<this.getSizeX()+pc.getSizeX())){
 			Vector2D penetration = new Vector2D(lineX12-lineX21,lineY12-lineY21);
 //			if(penetration.getX()>penetration.getY()){
@@ -80,7 +88,7 @@ public class PositionComponent extends BaseComponent{
 //				this.setVelX(0);
 //			return true;
 //			}
-			System.out.println("Pen: " + penetration.getX() + " " + penetration.getY());
+//			System.out.println("Pen: " + penetration.getX() + " " + penetration.getY());
 			if(pc.getAccelX()!=0||pc.getAccelY()!=0){
 				if(this.getAccelX()==-pc.getAccelX()&&this.getAccelX()!=0){
 					this.setVelX(0);
@@ -316,7 +324,7 @@ public class PositionComponent extends BaseComponent{
 	}
 	
 	public void setSizeX(float x){
-		this.size.setY(x);
+		this.size.setX(x);
 	}
 	
 	public float getSizeY(){
@@ -371,4 +379,8 @@ public class PositionComponent extends BaseComponent{
 		this.velY = velY;
 	}
 
+	public void setCollide(boolean b) {
+		this.collide = b;		
+	}
+	
 }
