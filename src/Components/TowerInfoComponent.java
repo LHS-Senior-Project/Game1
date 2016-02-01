@@ -3,6 +3,7 @@ package Components;
 import Main.BaseComponent;
 import Main.ComponentName;
 import Main.Entity;
+import Math.Shape;
 
 public class TowerInfoComponent extends BaseComponent{
 
@@ -23,10 +24,8 @@ public class TowerInfoComponent extends BaseComponent{
 	public float xPos;
 	//float yPos
 	public float yPos;
-	//size x
-	public float xSize;
-	//size y
-	public float ySize;
+	//Shape border
+	public Shape border;
 	//range Position Component
 	public PositionComponent rangePC;
 	//lastshot/damage
@@ -44,11 +43,10 @@ public class TowerInfoComponent extends BaseComponent{
 		this.imageLoc = "/Images/ok_16x16.gif";
 		xPos = 0;
 		yPos = 0;
-		xSize = 16;
-		ySize = 16;
+		this.border = new Shape(16,16);
 		this.speed = 1;
 		this.damage = 50;
-		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
+		rangePC = new PositionComponent(xPos, yPos, range + .5f * this.border.getSizeX(), range * .5f *this.border.getSizeY());
 		this.lastShot = System.currentTimeMillis();
 	}
 	
@@ -65,8 +63,7 @@ public class TowerInfoComponent extends BaseComponent{
 		this.speed = speed;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.xSize = xSize;
-		this.ySize = ySize;
+		this.border = new Shape(xSize,ySize);
 		this.damage = damage;
 		
 		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
@@ -84,11 +81,10 @@ public class TowerInfoComponent extends BaseComponent{
 		this.range = 150;
 		xPos = 0;
 		yPos = 0;
-		xSize = 16;
-		ySize = 16;
+		this.border = new Shape(16,16);
 		this.speed = 1;
 		this.damage = 50;
-		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
+		rangePC = new PositionComponent(xPos, yPos, range + .5f * this.border.getSizeX(), range * .5f *this.border.getSizeY());
 		this.lastShot = System.currentTimeMillis();
 	}
 
@@ -149,19 +145,23 @@ public class TowerInfoComponent extends BaseComponent{
 	}
 
 	public float getxSize() {
-		return xSize;
+		return this.border.getSizeX();
 	}
 
 	public void setxSize(float xSize) {
-		this.xSize = xSize;
+		this.border = new Shape(xSize,this.border.getSizeY());
 	}
 
 	public float getySize() {
-		return ySize;
+		return this.border.getSizeY();
 	}
 
 	public void setySize(float ySize) {
-		this.ySize = ySize;
+		this.border = new Shape(this.border.getSizeX(),ySize);
+	}
+	
+	public Shape getBorder(){
+		return this.border;
 	}
 
 	public PositionComponent getRangePC() {
@@ -211,10 +211,10 @@ public class TowerInfoComponent extends BaseComponent{
 	}
 	
 	public void updateRange(){
-		rangePC = new PositionComponent(xPos - (.5f * range), yPos - (.5f * range), range + xSize, range + ySize);
+		rangePC = new PositionComponent(xPos - (.5f * range), yPos - (.5f * range), range + this.border.getSizeX(), range + this.border.getSizeY());
 	}
 	
 	public TowerInfoComponent clone(){		
-		return new TowerInfoComponent(this.towerName,this.towerDescription,this.imageLoc,this.cost, this.range, this.speed, this.damage, this.xPos, this.yPos, this.xSize, this.ySize); 
+		return new TowerInfoComponent(this.towerName,this.towerDescription,this.imageLoc,this.cost, this.range, this.speed, this.damage, this.xPos, this.yPos, this.border.getSizeX(), this.border.getSizeY()); 
 	}
 }

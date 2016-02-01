@@ -90,7 +90,7 @@ public class MobSystem {
 	 */
 	
 	public void createMob(MobInfoComponent mob, float x, float y){
-		Entity newMob = new Entity(x, y, mob.xSize(), mob.ySize());
+		Entity newMob = new Entity(x, y, mob.getBorder());
 		MobInfoComponent mic = new MobInfoComponent(mob);
 		newMob.addComponent(new RenderableComponent(mob.imageString, mob.xSize(), mob.ySize(),true));
 		newMob.addComponent(mic);
@@ -103,7 +103,7 @@ public class MobSystem {
 
 
 	public void createMob(MobInfoComponent mob, float x, float y, boolean local){
-		Entity newMob = new Entity(x, y, mob.xSize(), mob.ySize());
+		Entity newMob = new Entity(x, y, mob.getBorder());
 		MobInfoComponent mic = new MobInfoComponent(mob);
 		newMob.addComponent(new RenderableComponent(mob.imageString, mob.xSize(), mob.ySize(),local));
 		newMob.addComponent(mic);

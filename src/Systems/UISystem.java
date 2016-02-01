@@ -126,8 +126,8 @@ public class UISystem {
 					// if you're placing a tower and you can afford it
 					if (placing && game.getGold() >= tic.getCost()) {
 						Entity newTower = game.getTowerHandlingSystem().buildTower(tic);
-						newTower.positionComponent.setX(mouse.getPositionComponent().getX() - tic.xSize / 2);
-						newTower.positionComponent.setY(mouse.getPositionComponent().getY() - tic.ySize / 2);
+						newTower.positionComponent.setX(mouse.getPositionComponent().getX() - tic.border.getCentroid().getX());
+						newTower.positionComponent.setY(mouse.getPositionComponent().getY() - tic.border.getCentroid().getY());
 						for (Entity e : game.getEntities()) {
 							if (e != newTower) {
 								if (newTower.positionComponent.checkCollide(e.positionComponent)) {
@@ -171,9 +171,8 @@ public class UISystem {
 								placing = true;
 								this.tic = info.getTowerInfo();
 								RenderableComponent rc = (RenderableComponent) this.pointer.getComponent(ComponentName.RenderableComponent);
-								this.pointer.positionComponent.setSizeX(tic.getxSize());
-								this.pointer.positionComponent.setSizeY(tic.getySize());
-								rc.setImage(tic.imageLoc, (int) tic.xSize, (int) tic.ySize,true);
+								this.pointer.positionComponent.setBorder(tic.getBorder());
+								rc.setImage(tic.imageLoc, (int) tic.getxSize(), (int) tic.getySize(),true);
 							}
 							if (info.updateValue == UIInfoComponent.TOGGLE_PLAY) {
 								togglePlay();

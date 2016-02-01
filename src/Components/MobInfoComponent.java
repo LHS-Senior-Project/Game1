@@ -3,6 +3,7 @@ package Components;
 import Main.BaseComponent;
 import Main.ComponentName;
 import Main.Level;
+import Math.Shape;
 
 public class MobInfoComponent extends BaseComponent {
 
@@ -11,8 +12,7 @@ public class MobInfoComponent extends BaseComponent {
 	public float speed;
 	public int goldOnKill;
 	
-	public int xSize;
-	public int ySize;
+	public Shape border;
 	
 	public int levelProgress;
 	
@@ -22,6 +22,7 @@ public class MobInfoComponent extends BaseComponent {
 	
 	public MobInfoComponent(){
 		this.name = ComponentName.MobInfoComponent;
+		this.border = new Shape();
 		this.health = 100;
 		this.startHealth = 100;
 		this.speed = .15f;
@@ -32,8 +33,7 @@ public class MobInfoComponent extends BaseComponent {
 	public MobInfoComponent(int xSize, int ySize, float startHealth, int health, float speed, int goldOnKill, int levelProgress, String imageString) {
 		super();
 		this.name = ComponentName.MobInfoComponent;
-		this.xSize = xSize;
-		this.ySize = ySize;
+		this.border = new Shape(xSize, ySize);
 		this.startHealth = startHealth;
 		this.health = health;
 		this.speed = speed;
@@ -44,8 +44,7 @@ public class MobInfoComponent extends BaseComponent {
 	
 	public MobInfoComponent(MobInfoComponent mob) {
 		this.name = ComponentName.MobInfoComponent;
-		this.xSize = mob.xSize;
-		this.ySize = mob.ySize;
+		this.border = new Shape(mob.xSize(), mob.ySize());
 		this.startHealth = mob.startHealth;
 		this.health = mob.health;
 		this.speed = mob.speed;
@@ -99,11 +98,15 @@ public class MobInfoComponent extends BaseComponent {
 	}
 
 	public int xSize() {
-		return xSize;
+		return (int) this.border.getSizeX();
 	}
 	
 	public int ySize() {
-		return ySize;
+		return (int) this.border.getSizeY();
+	}
+	
+	public Shape getBorder(){
+		return this.border;
 	}
 	
 }

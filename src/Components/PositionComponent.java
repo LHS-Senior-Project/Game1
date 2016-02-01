@@ -50,7 +50,17 @@ public class PositionComponent extends BaseComponent{
 	
 	public PositionComponent(float x, float y, float radius){
 		this.position = new Vector2D(x,y);
-		this.border = new Shape(x, y, radius);
+		this.border = new Shape(radius);
+		this.setAccelX(0);
+		this.setVelX(0);
+		this.setAccelY(0);
+		this.setVelY(0);
+		this.collide = true;
+	}
+	
+	public PositionComponent(float x, float y, Shape border){
+		this.position = new Vector2D(x,y);
+		this.border = border;
 		this.setAccelX(0);
 		this.setVelX(0);
 		this.setAccelY(0);
@@ -59,12 +69,12 @@ public class PositionComponent extends BaseComponent{
 	}
 	
 	public boolean checkCollide(PositionComponent pc){
+		//Collision Detection
+		boolean correctCollide = false; //move into method header if/when implementing collision correction
 
 		if(pc.collide == false) return false;
 		if(this.collide == false) return false;
 		
-		//Collision Detection
-		boolean correctCollide = true; //move into method header if/when implementing collision correction
 		Vector2D axis;
 		Vector2D smallestAxis = new Vector2D();
 		float minOverlap = Float.MAX_VALUE;
@@ -241,6 +251,10 @@ public class PositionComponent extends BaseComponent{
 	
 	public Shape getShape(){
 		return this.border;
+	}
+	
+	public void setBorder(Shape border){
+		this.border = border;
 	}
 	
 	public float getY(){

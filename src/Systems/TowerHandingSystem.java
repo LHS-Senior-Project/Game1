@@ -53,15 +53,15 @@ public class TowerHandingSystem {
 	}
 
 	public Entity buildTower(TowerInfoComponent tic) {
-		Entity tower = new Entity(tic.xPos, tic.yPos, tic.xSize, tic.ySize);
-		tower.addComponent(new RenderableComponent(tic.imageLoc, (int) tic.xSize, (int) tic.ySize,true));
+		Entity tower = new Entity(tic.xPos, tic.yPos, tic.getBorder());
+		tower.addComponent(new RenderableComponent(tic.imageLoc, (int) tic.getxSize(), (int) tic.getySize(),true));
 		return tower;
 	}
 	
 	public void createTower(TowerInfoComponent towerInfo, float x, float y){
 		TowerInfoComponent tic = towerInfo.clone();
-		Entity newTower = new Entity(x,y, (int)tic.getxSize(),(int) tic.getySize());
-		newTower.addComponent(new RenderableComponent(tic.imageLoc, tic.xSize, tic.ySize,true));
+		Entity newTower = new Entity(x,y, tic.getBorder());
+		newTower.addComponent(new RenderableComponent(tic.imageLoc, tic.getxSize(), tic.getySize(),true));
 		tic.updatePos(newTower);
 		tic.updateRange();
 		newTower.addComponent(tic);

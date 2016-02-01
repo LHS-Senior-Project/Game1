@@ -1,0 +1,50 @@
+<Levels>
+	<Level name="Pirate Cove">
+		<Background>Level1/images/bg.jpg</Background>
+		<Mobs>
+			<Mob>
+				<Name>derp</Name>
+				<Health>100</Health>
+				<Speed>10</Speed>
+				<Gold>10</Gold>
+				<MobID>0</MobID>
+				<Image width="32" height="32">Level2/images/bg.jpg</Image>
+			</Mob>
+			<Mob>
+			</Mob>
+		</Mobs>
+
+	</Level>
+		
+	<Level name="Bar">
+		<Background>Level2/images/bg2.jpg</Background>
+		<Mobs>
+			<Mob>
+				<Name>derp</Name>
+				<Health>100</Health>
+				<Speed>10</Speed>
+				<Gold>10</Gold>
+				<MobID>0</MobID>
+				<Image width="32" height="32">Level2/images/bg.jpg</Image>
+			</Mob>
+			<Mob>
+			</Mob>
+		</Mobs>
+	</Level>
+
+	<Level name="test3">
+		<Background>Level3/images/download.jpg</Background>
+		<Mobs>
+			<Mob>
+				<Name>derp</Name>
+				<Health>100</Health>
+				<Speed>10</Speed>
+				<Gold>10</Gold>
+				<MobID>0</MobID>
+				<Image width="32" height="32">Level2/images/bg.jpg</Image>
+			</Mob>
+			<Mob>
+			</Mob>
+		</Mobs>
+	</Level>
+</Levels>

@@ -21,13 +21,13 @@ public class Shape  {
 		centroid = new Vector2D();
 	}
 	
-	public Shape(float x, float y, float radius){
+	public Shape(float radius){
 		vertices = new ArrayList<Vector2D>();
 		axis = new ArrayList<Vector2D>();
 		this.radius = radius;
 		centroid = new Vector2D(radius,radius);
-		this.sizeX = radius;
-		this.sizeY = radius;
+		this.sizeX = radius*2;
+		this.sizeY = radius*2;
 	}
 	
 	public Shape(float sizeX, float sizeY){
@@ -51,9 +51,13 @@ public class Shape  {
 		vertices = new ArrayList<Vector2D>();
 		axis = new ArrayList<Vector2D>();
 		centroid = new Vector2D(0,0);
+		float maxX = 0;
+		float maxY = 0;
 		
 		for(int i=0;i<numVertices;i++){
 			vertices.add(new Vector2D(x[i],y[i]));
+			if(x[i]>maxX) maxX = x[i];
+			if(y[i]>maxY) maxY = y[i];
 		}
 		
 		for(int i=0;i<numVertices;i++){
@@ -64,6 +68,8 @@ public class Shape  {
 		}
 		centroid.setX(centroid.getX()/numVertices);
 		centroid.setY(centroid.getY()/numVertices);
+		this.sizeX = maxX;
+		this.sizeY = maxY;
 	}
 
 	
