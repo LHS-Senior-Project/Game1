@@ -15,6 +15,8 @@ public class PositionComponent extends BaseComponent{
 	private float accelY;
 	private float velX;
 	private float velY;
+
+	private boolean collide;
 	
 	public PositionComponent(){
 		this.position = new Vector2D(0,0);
@@ -23,6 +25,7 @@ public class PositionComponent extends BaseComponent{
 		this.setVelX(0);
 		this.setAccelY(0);
 		this.setVelY(0);
+		this.collide = true;
 	}
 	
 	public PositionComponent(float x, float y, float[] xVert, float[] yVert, int numVertices){
@@ -32,6 +35,7 @@ public class PositionComponent extends BaseComponent{
 		this.setVelX(0);
 		this.setAccelY(0);
 		this.setVelY(0);
+		this.collide = true;
 	}
 	
 	public PositionComponent(float x, float y, float sizeX, float sizeY){
@@ -41,6 +45,7 @@ public class PositionComponent extends BaseComponent{
 		this.setVelX(0);
 		this.setAccelY(0);
 		this.setVelY(0);
+		this.collide = true;
 	}
 	
 	public PositionComponent(float x, float y, float radius){
@@ -50,9 +55,14 @@ public class PositionComponent extends BaseComponent{
 		this.setVelX(0);
 		this.setAccelY(0);
 		this.setVelY(0);
+		this.collide = true;
 	}
 	
 	public boolean checkCollide(PositionComponent pc){
+
+		if(pc.collide == false) return false;
+		if(this.collide == false) return false;
+		
 		//Collision Detection
 		boolean correctCollide = true; //move into method header if/when implementing collision correction
 		Vector2D axis;
@@ -219,10 +229,15 @@ public class PositionComponent extends BaseComponent{
 		else return max2;	
 	}
 	
-	private void correctCollide(PositionComponent pc, Vector2D overlapCorrect){
+	protected void correctCollide(PositionComponent pc, Vector2D overlapCorrect){
 		pc.setX(pc.getX()+overlapCorrect.getX());
 		pc.setY(pc.getY()+overlapCorrect.getY());
 	}
+	
+//	public void setSizeX(float x){
+//		this.size.setX(x);
+//		
+//	}
 	
 	public Shape getShape(){
 		return this.border;
@@ -280,4 +295,23 @@ public class PositionComponent extends BaseComponent{
 		this.velY = velY;
 	}
 
+	public void setCollide(boolean b) {
+		this.collide = b;		
+	}
+	
+	public float getSizeX(){
+		return this.getShape().getSizeX();
+	}
+	
+	public float getSizeY(){
+		return this.getShape().getSizeY();
+	}
+	
+	public void setSizeX(float sizeX){
+		this.border = new Shape(sizeX,this.getShape().getSizeY());
+	}
+	public void setSizeY(float sizeY){
+		this.border = new Shape(this.getShape().getSizeX(), sizeY);
+	}
+	
 }

@@ -2,65 +2,112 @@ package Systems;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
-import Components.PositionComponent;
+import Components.MobInfoComponent;
 import Components.RenderableComponent;
+import Components.TowerInfoComponent;
 import Main.ComponentName;
 import Main.Entity;
-import Math.Shape;
+import Main.Game;
 import Math.Vector2D;
 
 public class GraphicsSystem {
 
 	private Canvas canvas;
 	private ArrayList<Entity> renderable;
+	private ArrayList<Entity> backgrounds;
 	private BufferStrategy bs;
+	private boolean debug;
+	private Game game;
+	public Font pirate;
 	
-	public GraphicsSystem(Canvas canvas) {
+	public GraphicsSystem(Canvas canvas, Game game) {
 		this.setCanvas(canvas);
 		this.renderable = new ArrayList<Entity>();
+		this.backgrounds = new ArrayList<Entity>();
 		canvas.createBufferStrategy(3);
 		bs = canvas.getBufferStrategy();
+		this.game = game;
+		setDebug(false);
 	}
 
 	public void render() {
 		Graphics g = bs.getDrawGraphics();
 		g.clearRect(0, 0, 1000, 1000);
+		for(Entity e : this.backgrounds){
+			RenderableComponent rc = (RenderableComponent) e.getComponent(ComponentName.RenderableComponent);
+			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
+			if(game.getSoftPause()){
+				drawString(g, "PAUSED", 10, 10, 100, Color.black, Color.blue);
+			}
+		}
 		for(Entity e : this.renderable){
 			RenderableComponent rc = (RenderableComponent) e.getComponent(ComponentName.RenderableComponent);
-			PositionComponent pc = e.positionComponent;
-			int[] xp = {(int)pc.getX()-60,(int)pc.getX(),(int)pc.getX()+60,(int)pc.getX()+120,(int)pc.getX()+60,(int)pc.getX()};
-			int[] yp = {(int)pc.getY()+60,(int)pc.getY(),(int)pc.getY(),(int)pc.getY()+60,(int)pc.getY()+120,(int)pc.getY()+120};
-//			G.DRAWRECT(0-(925/200),0-(925/150),16,16);
-//			G.DRAWPOLYGON(NEW INT[]{0,75,150,100,50}, NEW INT[]{25,-75,25,100,100}, 5);
-			if(pc.getShape().getNumVertices()==6){
-				g.drawPolygon(xp, yp, 6);
+			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
+			if(game.getSoftPause()){
+				drawString(g, "PAUSED", 10, 10, 100, Color.black, Color.blue);
 			}
-			else if(pc.getShape().getNumVertices()==5){
-				if(pc.getX()==400) g.drawPolygon(new int[]{(int)pc.getX()-50,(int)pc.getX()+25,(int)pc.getX()+100,(int)pc.getX()+50,(int)pc.getX()},new int[]{(int)pc.getY()+50,(int)pc.getY()-75,(int)pc.getY()+50,(int)pc.getY()+100,(int)pc.getY()+100}, 5);
-				else g.drawPolygon(new int[]{(int)pc.getX()-23,(int)pc.getX()+13,(int)pc.getX()+84,(int)pc.getX()+36,(int)pc.getX()},new int[]{(int)pc.getY()+22,(int)pc.getY()-9,(int)pc.getY()+46,(int)pc.getY()+75,(int)pc.getY()+91}, 5);
+			if(isDebug()){
+				g.drawRect((int)e.positionComponent.getX(),(int)e.positionComponent.getY(),(int)e.positionComponent.getSizeX(),(int)e.positionComponent.getSizeY());
+				if(e.hasCompoent(ComponentName.MobInfoComponent)){
+					MobInfoComponent mic = (MobInfoComponent) e.getComponent(ComponentName.MobInfoComponent);
+					g.setColor(Color.red);
+					g.fillRect((int)e.positionComponent.getX(), (int)e.positionComponent.getY(), (int)e.positionComponent.getSizeX(), 2);
+					g.setColor(Color.green);
+					System.out.println("health: " + mic.health + " SH: " + mic.startHealth + " and... "+ (mic.health/mic.startHealth));
+					g.fillRect((int)e.positionComponent.getX(), (int)e.positionComponent.getY(), (int)(e.positionComponent.getSizeX()*(mic.health/mic.startHealth)), 2);
+					g.setColor(Color.black);
+					drawString(g,"" + mic.health,(int) e.positionComponent.getX(),(int) e.positionComponent.getY()-10,10,Color.black,Color.white);
+				}
+				if(e.hasCompoent(ComponentName.TowerInfoComponent)){
+					TowerInfoComponent tic = (TowerInfoComponent)e.getComponent(ComponentName.TowerInfoComponent);
+					tic.updatePos(e);
+					g.drawRect((int)tic.rangePC.getX(),(int)tic.rangePC.getY(),(int)tic.rangePC.getSizeX(),(int)tic.rangePC.getSizeY());
+				}
+				for(Vector2D point : game.getMobSystem().currentLevel.getPath().pathCords){
+					g.fillRect((int)point.getX(),(int)point.getY(),5,5);
+				}
 			}
-			else if(pc.getShape().getNumVertices()==4){
-				g.drawRect((int)pc.getX(), (int)pc.getY(), (int)pc.getShape().getVertex(1).getX(), (int)pc.getShape().getVertex(3).getY());
-			}
-			else if(pc.getShape().getNumVertices()==3){
-				g.drawPolygon(new int[]{(int)pc.getX()-30,(int)pc.getX()+30,(int)pc.getX()+90},new int[]{(int)pc.getY()+30,(int)pc.getY()-60,(int)pc.getY()+30}, 3);
-			}
-			else if(pc.getShape().getNumVertices()==0){
-				g.drawOval((int)pc.getX(), (int)pc.getY(), (int)pc.getShape().getRadius()*2, (int)pc.getShape().getRadius()*2);
-			}
-			g.setColor(Color.RED);
-			g.drawLine((int)pc.getShape().getCentroid().getX()+(int)pc.getX(), (int)pc.getShape().getCentroid().getY()+(int)pc.getY(), (int)pc.getShape().getCentroid().getX()+(int)pc.getX(), (int)pc.getShape().getCentroid().getY()+(int)pc.getY());
-			g.setColor(Color.BLACK);
-			//g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
-			//g.drawRect((int)e.positionComponent.getX(),(int)e.positionComponent.getY(),(int)e.positionComponent.getSizeX(),(int)e.positionComponent.getSizeY());
+		}
+		if(isDebug()){
+			drawString(g, game.getGamePath(), 10, 10);
+			drawString(g, "Alex is the best \nthis is a test \nto see if I can write", 50,50,20,Color.DARK_GRAY, Color.green);
 		}
 		g.dispose();
 		bs.show();
+	}
+	
+	public static void drawString(Graphics g, String str, int x, int y){
+		g.setColor(Color.white);
+		Rectangle2D r = g.getFontMetrics(g.getFont()).getStringBounds(str, g);
+		g.fillRect(x, y, (int)r.getWidth(), (int)r.getHeight() + 3);		
+		g.setColor(Color.black);
+		g.drawString(str,x,(int)(y + r.getHeight()));
+	}
+	public static void drawString(Graphics g, String str, int x, int y , int size, Color textColor, Color backColor){
+		Color curColor = g.getColor();
+		Font curFont = g.getFont();
+		g.setFont(g.getFont().deriveFont((float)size));
+		
+		String[] lines = str.split("\n");
+		double lineHeight = g.getFontMetrics().getStringBounds("t",g).getHeight();
+		
+		for(int index = 0; index < lines.length; index++){
+			String line = lines[index];
+			g.setColor(backColor);
+			Rectangle2D r = g.getFontMetrics(g.getFont()).getStringBounds(line, g);
+			g.fillRect(x, (int)( y + (index * lineHeight)), (int)r.getWidth(), (int)(r.getHeight()));		
+			g.setColor(textColor);
+			g.drawString(line,x,(int)(y + r.getHeight() - g.getFontMetrics().getDescent()+(lineHeight*index)));
+		}
+		g.setFont(curFont);		
+		g.setColor(curColor);
 	}
 	
 	public void addRenderable(Entity entity){
@@ -73,6 +120,22 @@ public class GraphicsSystem {
 
 	public void setCanvas(Canvas canvas) {
 		this.canvas = canvas;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debugValue) {
+		this.debug = debugValue;
+	}
+
+	public void remove(Entity mob) {
+		this.renderable.remove(mob);
+	}
+
+	public void addBackground(Entity background) {
+		this.backgrounds.add(background);
 	}
 
 }

@@ -6,6 +6,8 @@ public class Shape  {
 	
 	private ArrayList<Vector2D> vertices;
 	private ArrayList<Vector2D> axis;
+	private float sizeX;
+	private float sizeY;
 	private Vector2D centroid;
 	private float radius;
 	
@@ -24,6 +26,8 @@ public class Shape  {
 		axis = new ArrayList<Vector2D>();
 		this.radius = radius;
 		centroid = new Vector2D(radius,radius);
+		this.sizeX = radius;
+		this.sizeY = radius;
 	}
 	
 	public Shape(float sizeX, float sizeY){
@@ -34,7 +38,8 @@ public class Shape  {
 		vertices.add(new Vector2D(sizeX,0));
 		vertices.add(new Vector2D(sizeX,sizeY));
 		vertices.add(new Vector2D(0,sizeY));
-		
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
 		for(int i=0;i<4;i++){
 			axis.add(calcNormal(i, 4));
 		}
@@ -91,6 +96,13 @@ public class Shape  {
 		return normal;
 	}
 	
+	public float getSizeX(){
+		return this.sizeX;
+	}
+	
+	public float getSizeY(){
+		return this.sizeY;
+	}
 	
 
 }

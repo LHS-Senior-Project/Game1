@@ -97,7 +97,7 @@ public class Vector2D{
 	
 	public static void main(String... args){
 		Vector2D one = new Vector2D(0,0);
-		Vector2D two = new Vector2D(10,0);
+//		Vector2D two = new Vector2D(10,0);
 		one=one.getUnit();
 		System.out.println(one);
 		one.x = one.x + 0;
