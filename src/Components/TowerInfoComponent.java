@@ -4,6 +4,7 @@ import Main.BaseComponent;
 import Main.ComponentName;
 import Main.Entity;
 import Math.Shape;
+import Types.ProjectileTypes;
 
 public class TowerInfoComponent extends BaseComponent{
 
@@ -32,6 +33,8 @@ public class TowerInfoComponent extends BaseComponent{
 	public long lastShot;
 	//damage
 	public int damage;
+	//projectile
+	public ProjectileInfoComponent projectile;
 	
 	
 	public TowerInfoComponent() {
@@ -48,11 +51,12 @@ public class TowerInfoComponent extends BaseComponent{
 		this.damage = 50;
 		rangePC = new PositionComponent(xPos, yPos, range + .5f * this.border.getSizeX(), range * .5f *this.border.getSizeY());
 		this.lastShot = System.currentTimeMillis();
+		this.projectile = ProjectileTypes.Cannonball;
 	}
 	
 	public TowerInfoComponent(String towerName, String towerDescription,
 			String imageLoc, int cost, float range, float speed, int damage, float xPos,
-			float yPos, float xSize, float ySize) {
+			float yPos, float xSize, float ySize, ProjectileInfoComponent projectile) {
 		super();
 		this.name = ComponentName.TowerInfoComponent;
 		this.towerName = towerName;
@@ -65,6 +69,7 @@ public class TowerInfoComponent extends BaseComponent{
 		this.yPos = yPos;
 		this.border = new Shape(xSize,ySize);
 		this.damage = damage;
+		this.projectile = projectile;
 		
 		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
 		this.lastShot = System.currentTimeMillis();
@@ -84,6 +89,7 @@ public class TowerInfoComponent extends BaseComponent{
 		this.border = new Shape(16,16);
 		this.speed = 1;
 		this.damage = 50;
+		this.projectile = ProjectileTypes.Cannonball;
 		rangePC = new PositionComponent(xPos, yPos, range + .5f * this.border.getSizeX(), range * .5f *this.border.getSizeY());
 		this.lastShot = System.currentTimeMillis();
 	}
@@ -215,6 +221,6 @@ public class TowerInfoComponent extends BaseComponent{
 	}
 	
 	public TowerInfoComponent clone(){		
-		return new TowerInfoComponent(this.towerName,this.towerDescription,this.imageLoc,this.cost, this.range, this.speed, this.damage, this.xPos, this.yPos, this.border.getSizeX(), this.border.getSizeY()); 
+		return new TowerInfoComponent(this.towerName,this.towerDescription,this.imageLoc,this.cost, this.range, this.speed, this.damage, this.xPos, this.yPos, this.border.getSizeX(), this.border.getSizeY(),this.projectile); 
 	}
 }

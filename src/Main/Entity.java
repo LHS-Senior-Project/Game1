@@ -60,7 +60,7 @@ public class Entity {
 		return -1;
 	}
 	
-	public boolean hasCompoent(String componentName){
+	public boolean hasComponent(String componentName){
 		if(getComponentID(componentName) == -1) return false;
 		return true;
 	}

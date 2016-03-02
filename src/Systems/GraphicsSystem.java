@@ -55,7 +55,7 @@ public class GraphicsSystem {
 			}
 			if(isDebug()){
 				g.drawRect((int)e.positionComponent.getX(),(int)e.positionComponent.getY(),(int)e.positionComponent.getSizeX(),(int)e.positionComponent.getSizeY());
-				if(e.hasCompoent(ComponentName.MobInfoComponent)){
+				if(e.hasComponent(ComponentName.MobInfoComponent)){
 					MobInfoComponent mic = (MobInfoComponent) e.getComponent(ComponentName.MobInfoComponent);
 					g.setColor(Color.red);
 					g.fillRect((int)e.positionComponent.getX(), (int)e.positionComponent.getY(), (int)e.positionComponent.getSizeX(), 2);
@@ -65,7 +65,7 @@ public class GraphicsSystem {
 					g.setColor(Color.black);
 					drawString(g,"" + mic.health,(int) e.positionComponent.getX(),(int) e.positionComponent.getY()-10,10,Color.black,Color.white);
 				}
-				if(e.hasCompoent(ComponentName.TowerInfoComponent)){
+				if(e.hasComponent(ComponentName.TowerInfoComponent)){
 					TowerInfoComponent tic = (TowerInfoComponent)e.getComponent(ComponentName.TowerInfoComponent);
 					tic.updatePos(e);
 					g.drawRect((int)tic.rangePC.getX(),(int)tic.rangePC.getY(),(int)tic.rangePC.getSizeX(),(int)tic.rangePC.getSizeY());

@@ -9,12 +9,12 @@ import Main.ComponentName;
 import Main.Entity;
 import Main.Game;
 
-public class TowerHandingSystem {
+public class TowerHandlingSystem {
 
 	private ArrayList<Entity> towers;
 	private Game game;
 
-	public TowerHandingSystem(Game game) {
+	public TowerHandlingSystem(Game game) {
 		towers = new ArrayList<Entity>();
 		this.game = game;
 	}
@@ -27,13 +27,13 @@ public class TowerHandingSystem {
 
 	public void updateTowers() {
 		for (Entity tower : towers) {
-			if (tower.hasCompoent(ComponentName.TowerInfoComponent)) {
+			if (tower.hasComponent(ComponentName.TowerInfoComponent)) {
 				TowerInfoComponent ti = (TowerInfoComponent) tower.getComponent(ComponentName.TowerInfoComponent);
 				ArrayList<Entity> mobsToRemove = new ArrayList<Entity>();
 				for (Entity mob : game.getMobSystem().currentLevel.mobs) {
 					if (mob.positionComponent.checkCollide(ti.rangePC)) {
 						if (System.currentTimeMillis() - ti.lastShot >= 1000 / ti.speed) {
-							if (mob.hasCompoent(ComponentName.MobInfoComponent)) {
+							if (mob.hasComponent(ComponentName.MobInfoComponent)) {
 								MobInfoComponent mic = (MobInfoComponent) mob
 										.getComponent(ComponentName.MobInfoComponent);
 								mic.damage(ti.getDamage());

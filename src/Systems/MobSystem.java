@@ -26,7 +26,7 @@ public class MobSystem {
 			if (currentLevel.getMobs().isEmpty())
 				return;
 			for (Entity mob : currentLevel.getMobs()) {
-				if (mob.hasCompoent(ComponentName.MobInfoComponent)) {
+				if (mob.hasComponent(ComponentName.MobInfoComponent)) {
 					MobInfoComponent info = (MobInfoComponent) mob.getComponent(ComponentName.MobInfoComponent);
 					float deltaX = 0;
 					float deltaY = 0;

@@ -10,7 +10,7 @@ import Systems.GraphicsSystem;
 import Systems.LevelLoader;
 import Systems.MobSystem;
 import Systems.PhysicsSystem;
-import Systems.TowerHandingSystem;
+import Systems.TowerHandlingSystem;
 import Systems.UISystem;
 
 public class Game {
@@ -19,7 +19,7 @@ public class Game {
 	private MouseInput mouseInput;
 	private PhysicsSystem physicsSystem;
 	private UISystem uiSystem;
-	private TowerHandingSystem towerHandlingSystem;
+	private TowerHandlingSystem towerHandlingSystem;
 	private LevelLoader ll;
 	
 	
@@ -40,7 +40,7 @@ public class Game {
 		this.keyInput = new KeyInput();
 		this.mouseInput = new MouseInput();
 		this.physicsSystem = new PhysicsSystem();
-		this.setTowerHandlingSystem(new TowerHandingSystem(this));
+		this.setTowerHandlingSystem(new TowerHandlingSystem(this));
 		this.entities = new ArrayList<Entity>();
 		this.uiSystem = new UISystem(mouseInput, keyInput, this);
 		this.mobSystem = new MobSystem(this);
@@ -121,11 +121,11 @@ public class Game {
 		this.uiSystem = new UISystem(mouseInput,keyInput,this);
 	}
 
-	public TowerHandingSystem getTowerHandlingSystem() {
+	public TowerHandlingSystem getTowerHandlingSystem() {
 		return towerHandlingSystem;
 	}
 
-	public void setTowerHandlingSystem(TowerHandingSystem towerHandlingSystem) {
+	public void setTowerHandlingSystem(TowerHandlingSystem towerHandlingSystem) {
 		this.towerHandlingSystem = towerHandlingSystem;
 	}
 

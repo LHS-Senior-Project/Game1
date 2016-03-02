@@ -44,7 +44,7 @@ public class MobInfoComponent extends BaseComponent {
 	
 	public MobInfoComponent(MobInfoComponent mob) {
 		this.name = ComponentName.MobInfoComponent;
-		this.border = new Shape(mob.xSize(), mob.ySize());
+		this.border = mob.getBorder();
 		this.startHealth = mob.startHealth;
 		this.health = mob.health;
 		this.speed = mob.speed;

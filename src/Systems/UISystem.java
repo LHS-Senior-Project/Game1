@@ -70,21 +70,21 @@ public class UISystem {
 
 		// check if the element needs to update
 		for (Entity ui : uiElements) {
-			if (ui.hasCompoent(ComponentName.UIInfoComponent)) {
+			if (ui.hasComponent(ComponentName.UIInfoComponent)) {
 				UIInfoComponent info = (UIInfoComponent) ui.getComponent(ComponentName.UIInfoComponent);
 				if (info.update) {
 					if (info.updateValue == UIInfoComponent.GOLD) {
-						if (ui.hasCompoent(ComponentName.RenderableComponent)) {
+						if (ui.hasComponent(ComponentName.RenderableComponent)) {
 							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
 							uiRenderable.updateText("" + game.getGold());
 						}
 					} else if (info.updateValue == UIInfoComponent.HEARTS) {
-						if (ui.hasCompoent(ComponentName.RenderableComponent)) {
+						if (ui.hasComponent(ComponentName.RenderableComponent)) {
 							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
 							uiRenderable.updateText("" + game.getHeart());
 						}
 					} else if (info.updateValue == UIInfoComponent.TOWER_DISPLAY) {
-						if (ui.hasCompoent(ComponentName.RenderableComponent)) {
+						if (ui.hasComponent(ComponentName.RenderableComponent)) {
 							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
 							Graphics2D g = uiRenderable.getGraphics();
 							g.setColor(uiBackground);
@@ -97,7 +97,7 @@ public class UISystem {
 							GraphicsSystem.drawString(g, "Tower Description: \n" + tic.getTowerDescription(), 10, 110, 12, Color.black, uiBackground);
 						}
 					} else if (info.updateValue == UIInfoComponent.TOGGLE_PLAY) {
-						if (ui.hasCompoent(ComponentName.RenderableComponent)) {
+						if (ui.hasComponent(ComponentName.RenderableComponent)) {
 							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
 							if (game.getSoftPause()) {
 								uiRenderable.setImage("/Buttons/play.png", (int) ui.positionComponent.getSizeX(), (int) ui.positionComponent.getSizeY(),true);
@@ -164,7 +164,7 @@ public class UISystem {
 				}
 			} else {
 				for (Entity clicked : clickedEntities) {
-					if (clicked.hasCompoent(ComponentName.UIInfoComponent)) {
+					if (clicked.hasComponent(ComponentName.UIInfoComponent)) {
 						UIInfoComponent info = (UIInfoComponent) clicked.getComponent(ComponentName.UIInfoComponent);
 						if (info.handleClick) {
 							if (info.towerPlace) {
@@ -180,7 +180,7 @@ public class UISystem {
 						}
 
 					}
-					if (clicked.hasCompoent(ComponentName.TowerInfoComponent)) {
+					if (clicked.hasComponent(ComponentName.TowerInfoComponent)) {
 						TowerInfoComponent towerInfo = (TowerInfoComponent) clicked.getComponent(ComponentName.TowerInfoComponent);
 						this.tic = towerInfo;
 						placing = false;
@@ -238,7 +238,7 @@ public class UISystem {
 	public void togglePlay() {
 		game.setSoftPause((!game.getSoftPause()));
 		for(Entity ui : uiElements){
-			if(ui.hasCompoent(ComponentName.UIInfoComponent)){
+			if(ui.hasComponent(ComponentName.UIInfoComponent)){
 				UIInfoComponent info = (UIInfoComponent) ui.getComponent(ComponentName.UIInfoComponent);
 				if(info.updateValue == UIInfoComponent.TOGGLE_PLAY){
 					if (game.getSoftPause()) {
