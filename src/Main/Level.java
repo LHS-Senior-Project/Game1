@@ -11,6 +11,7 @@ public class Level {
 	public Game game;
 	public ArrayList<MobInfoComponent> levelMobInfo;
 	public ArrayList<Entity> mobs;
+	public ArrayList<Entity> proj;
 	public Path path;
 	public String name;
 	public String description; 
@@ -21,6 +22,7 @@ public class Level {
 		this.levelMobInfo = new ArrayList<MobInfoComponent>();
 		this.levelMobInfo.add(MobTypes.lockNessMob);
 		this.mobs = new ArrayList<Entity>();
+		this.proj = new ArrayList<Entity>();
 		this.path = path;
 	}
 	
@@ -38,6 +40,18 @@ public class Level {
 
 	public void setMobs(ArrayList<Entity> mobs) {
 		this.mobs = mobs;
+	}
+	
+	public ArrayList<Entity> getProjectiles() {
+		return proj;
+	}
+	
+	public void addProjectile(Entity newProj) {
+		this.proj.add(newProj);
+	}
+	
+	public void setProjectiles(ArrayList<Entity> proj) {
+		this.proj = proj;
 	}
 
 	public Path getPath() {
@@ -58,6 +72,10 @@ public class Level {
 	
 	public void removeMob(Entity mob){
 		this.mobs.remove(mob);
+	}
+	
+	public void removeProjectile(Entity projectile){
+		this.proj.remove(projectile);
 	}
 
 	public String getName() {
@@ -83,5 +101,6 @@ public class Level {
 	public void setBackgroundPath(String backgroundPath) {
 		this.backgroundPath = backgroundPath;
 	}
+
 	
 }

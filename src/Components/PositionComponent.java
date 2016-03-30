@@ -1,5 +1,4 @@
 package Components;
-import java.util.ArrayList;
 
 import Main.BaseComponent;
 import Math.Shape;

@@ -1,7 +1,6 @@
 package Systems;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -14,7 +13,6 @@ import Main.Entity;
 import Main.Game;
 import Main.KeyInput;
 import Main.MouseInput;
-import Types.MobTypes;
 
 public class UISystem {
 

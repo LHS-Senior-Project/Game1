@@ -10,6 +10,7 @@ import Systems.GraphicsSystem;
 import Systems.LevelLoader;
 import Systems.MobSystem;
 import Systems.PhysicsSystem;
+import Systems.ProjectileSystem;
 import Systems.TowerHandlingSystem;
 import Systems.UISystem;
 
@@ -25,6 +26,7 @@ public class Game {
 	
 
 	private MobSystem mobSystem;
+	private ProjectileSystem projSystem;
 	private ArrayList<Entity> entities;
 	private boolean running;
 	private boolean stopped;
@@ -44,6 +46,7 @@ public class Game {
 		this.entities = new ArrayList<Entity>();
 		this.uiSystem = new UISystem(mouseInput, keyInput, this);
 		this.mobSystem = new MobSystem(this);
+		this.projSystem = new ProjectileSystem(this);
 		this.level = new Level(this, new Path(new Vector2D(69, 106),new Vector2D(51, 219),new Vector2D(61, 338),new Vector2D(195, 529),new Vector2D(332, 340),new Vector2D(347, 116) ,new Vector2D(417, 12),new Vector2D(514, 27),new Vector2D(531, 120),new Vector2D(540, 232),new Vector2D(452, 314),new Vector2D(413, 546),new Vector2D(574, 559),new Vector2D(674, 125),new Vector2D(706, 211),new Vector2D(701, 321)));
 		this.ll = new LevelLoader(this);
 		this.gold = 300;
@@ -103,6 +106,7 @@ public class Game {
 		if(!softPause){
 			this.physicsSystem.update();
 			this.mobSystem.update();
+			this.projSystem.update();
 			this.towerHandlingSystem.updateTowers();
 		}
 	}
@@ -168,6 +172,14 @@ public class Game {
 	public void setMobSystem(MobSystem mobSystem) {
 		this.mobSystem = mobSystem;
 	}
+	
+	public ProjectileSystem getProjectileSystem() {
+		return projSystem;
+	}
+
+	public void setProjectileSystem(ProjectileSystem projectileSystem) {
+		this.projSystem = projectileSystem;
+	}
 
 	public void setGraphicsSystem(GraphicsSystem graphicsSystem) {
 		this.graphicsSystem = graphicsSystem;
@@ -213,5 +225,6 @@ public class Game {
 		this.getGraphicsSystem().addBackground(background);
 		this.addEntities(background);
 		this.getMobSystem().currentLevel = this.level;
+		this.getProjectileSystem().currentLevel = this.level;
 	}
 }

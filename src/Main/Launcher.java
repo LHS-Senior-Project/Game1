@@ -2,11 +2,9 @@ package Main;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import Components.PlayerInputComponent;
 import Components.RenderableComponent;
 import Components.TowerInfoComponent;
 import Components.UIInfoComponent;

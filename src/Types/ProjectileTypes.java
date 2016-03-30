@@ -5,8 +5,8 @@ import Math.Shape;
 import Math.Vector2D;
 
 public class ProjectileTypes {
-	
-	public static ProjectileInfoComponent Cannonball = new ProjectileInfoComponent(new Shape(10), new Vector2D(0,0), new Vector2D(0,0), .5f, .25f, 25, "/Images/ok_16x16.gif");
+	//new ProjectileInfoComponent(border, target, speed, accuracy, range, flytime, damage, image);
+	public static ProjectileInfoComponent Cannonball = new ProjectileInfoComponent(new Shape(10), new Vector2D(0,0), 1f, 0, 1f, 0, 100, "/Images/ok_16x16.gif");
 
 
 }

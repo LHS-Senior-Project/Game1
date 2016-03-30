@@ -3,11 +3,13 @@ package Systems;
 import java.util.ArrayList;
 
 import Components.MobInfoComponent;
+import Components.ProjectileInfoComponent;
 import Components.RenderableComponent;
 import Components.TowerInfoComponent;
 import Main.ComponentName;
 import Main.Entity;
 import Main.Game;
+import Math.Vector2D;
 
 public class TowerHandlingSystem {
 
@@ -33,17 +35,37 @@ public class TowerHandlingSystem {
 				for (Entity mob : game.getMobSystem().currentLevel.mobs) {
 					if (mob.positionComponent.checkCollide(ti.rangePC)) {
 						if (System.currentTimeMillis() - ti.lastShot >= 1000 / ti.speed) {
-							if (mob.hasComponent(ComponentName.MobInfoComponent)) {
-								MobInfoComponent mic = (MobInfoComponent) mob
-										.getComponent(ComponentName.MobInfoComponent);
-								mic.damage(ti.getDamage());
-								System.out.println(mic.health);
-								ti.lastShot = System.currentTimeMillis();
-								if (mic.getHealth() <= 0) {
-									mobsToRemove.add(mob);
-									game.addGold(mic.goldOnKill);
-								}
-							}
+							float deltaX = (mob.positionComponent.getX() - (ti.getxPos() - .5f * ti.getxSize())) + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy();
+							float deltaY = (mob.positionComponent.getY() - (ti.getyPos() - .5f * ti.getySize())) + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy();
+							Vector2D heading = new Vector2D(deltaX, deltaY);
+							game.getProjectileSystem().createProjectile(ti.getProjectile(), ti.getxPos(),ti.getyPos(),heading);
+							ti.lastShot = System.currentTimeMillis();
+//							if (mob.hasComponent(ComponentName.MobInfoComponent)) {
+//								
+//								
+//								MobInfoComponent mic = (MobInfoComponent) mob
+//										.getComponent(ComponentName.MobInfoComponent);
+//								mic.damage(ti.getDamage());
+//								System.out.println(mic.health);
+//								ti.lastShot = System.currentTimeMillis();
+//								if (mic.getHealth() <= 0) {
+//									mobsToRemove.add(mob);
+//									game.addGold(mic.goldOnKill);
+//								}
+//							}
+							
+							
+//							if (mob.hasComponent(ComponentName.MobInfoComponent)) {
+//								MobInfoComponent mic = (MobInfoComponent) mob
+//										.getComponent(ComponentName.MobInfoComponent);
+//								mic.damage(ti.getDamage());
+//								System.out.println(mic.health);
+//								ti.lastShot = System.currentTimeMillis();
+//								if (mic.getHealth() <= 0) {
+//									mobsToRemove.add(mob);
+//									game.addGold(mic.goldOnKill);
+//								}
+//							}
 						}
 					}
 				}

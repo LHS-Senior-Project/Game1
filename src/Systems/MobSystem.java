@@ -61,6 +61,7 @@ public class MobSystem {
 				}
 			}
 			removeMobs(toRemove);
+			System.out.println("Mob Array Size: " + toRemove.size());
 		}
 	}
 

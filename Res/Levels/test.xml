@@ -13,6 +13,14 @@
 			<Mob>
 			</Mob>
 		</Mobs>
+		<Projectiles>
+			<Projectile>
+				<Speed>.5f</Speed>
+				<Accuracy>.25f</Accuracy>
+				<Damage>10</Damage>
+				<Image width="32" height="32">Images/ok_16x16.gif</Image>
+			</Projectile>
+		</Projectiles>
 
 	</Level>
 		
@@ -30,6 +38,14 @@
 			<Mob>
 			</Mob>
 		</Mobs>
+		<Projectiles>
+			<Projectile>
+				<Speed>.5f</Speed>
+				<Accuracy>.25f</Accuracy>
+				<Damage>10</Damage>
+				<Image width="32" height="32">Images/ok_16x16.gif</Image>
+			</Projectile>
+		</Projectiles>
 	</Level>
 
 	<Level name="test3">
@@ -46,5 +62,13 @@
 			<Mob>
 			</Mob>
 		</Mobs>
+		<Projectiles>
+			<Projectile>
+				<Speed>.5f</Speed>
+				<Accuracy>.25f</Accuracy>
+				<Damage>10</Damage>
+				<Image width="32" height="32">Images/ok_16x16.gif</Image>
+			</Projectile>
+		</Projectiles>
 	</Level>
 </Levels>

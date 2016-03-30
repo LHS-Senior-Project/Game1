@@ -133,6 +133,10 @@ public class TowerInfoComponent extends BaseComponent{
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
+	
+	public ProjectileInfoComponent getProjectile(){
+		return this.projectile;
+	}
 
 	public float getxPos() {
 		return xPos;
