@@ -1,6 +1,6 @@
 <Levels>
 	<Level name="Pirate Cove">
-		<Background>Level1/images/bg.jpg</Background>
+		<Background>Level1/images/bgTest.jpg</Background>
 		<Mobs>
 			<Mob>
 				<Name>derp</Name>
@@ -8,7 +8,7 @@
 				<Speed>10</Speed>
 				<Gold>10</Gold>
 				<MobID>0</MobID>
-				<Image width="32" height="32">Level2/images/bg.jpg</Image>
+				<Image width="32" height="32">Level1/images/bgTest.jpg</Image>
 			</Mob>
 			<Mob>
 			</Mob>

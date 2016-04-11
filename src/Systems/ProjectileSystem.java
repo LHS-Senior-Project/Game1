@@ -3,6 +3,7 @@ package Systems;
 import java.util.ArrayList;
 
 import Components.MobInfoComponent;
+import Components.PositionComponent;
 import Components.ProjectileInfoComponent;
 import Components.RenderableComponent;
 import Main.ComponentName;
@@ -24,7 +25,7 @@ public class ProjectileSystem {
 	public void update() {
 		if (game.getRunning()) {
 			ArrayList<Entity> mobsToRemove = new ArrayList<Entity>();
-			ArrayList<Entity> projToRemove = new ArrayList<Entity>();
+			ArrayList<Entity> projToRemove = new ArrayList<Entity>(); 
 			if (currentLevel.getProjectiles().isEmpty())
 				return;
 			for (Entity proj : currentLevel.getProjectiles()) {
@@ -42,7 +43,6 @@ public class ProjectileSystem {
 //					if (Math.abs(deltaX) <= 10 && Math.abs(deltaY) <= 10) {
 //						projToRemove.add(proj);
 //					}
-					System.out.println(info.getTarget());
 					if ((System.currentTimeMillis() - info.flyTime)/1000>info.getRange()) {
 						projToRemove.add(proj);
 					}
@@ -51,7 +51,20 @@ public class ProjectileSystem {
 							if (mob.hasComponent(ComponentName.MobInfoComponent)&&proj.positionComponent.checkCollide(mob.positionComponent)) {
 								MobInfoComponent mic = (MobInfoComponent) mob
 										.getComponent(ComponentName.MobInfoComponent);
-								mic.damage(info.getDamage());
+								mic.damage((int)(info.getDamage() * (1-info.getAoEDamage())));
+								PositionComponent AoE = new PositionComponent(proj.positionComponent.getX(), proj.positionComponent.getY(), info.getAoE());
+								if(info.getAoEDamage() != 0){
+									System.out.println(AoE.getX() + ", " + AoE.getY() + "      " + AoE.getShape().getRadius());
+									for (Entity AoECheck : game.getMobSystem().currentLevel.mobs) {
+										System.out.println(AoECheck.positionComponent.getX() + ", " + AoECheck.positionComponent.getY() + "      " + AoECheck.positionComponent.getShape().getSizeX() + ", " + AoECheck.positionComponent.getShape().getSizeY());
+										if(AoECheck.positionComponent.checkCollide(AoE)){
+											System.out.println("NEAT");
+											MobInfoComponent micAoE = (MobInfoComponent) AoECheck
+													.getComponent(ComponentName.MobInfoComponent);
+											micAoE.damage((int) (info.damage * info.getAoEDamage()));
+										}
+									}
+								}
 								projToRemove.add(proj);
 								if (mic.getHealth() <= 0) {
 									mobsToRemove.add(mob);

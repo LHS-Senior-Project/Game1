@@ -60,7 +60,7 @@ public class GraphicsSystem {
 					g.setColor(Color.red);
 					g.fillRect((int)e.positionComponent.getX(), (int)e.positionComponent.getY(), (int)e.positionComponent.getSizeX(), 2);
 					g.setColor(Color.green);
-					System.out.println("health: " + mic.health + " SH: " + mic.startHealth + " and... "+ (mic.health/mic.startHealth));
+					//System.out.println("health: " + mic.health + " SH: " + mic.startHealth + " and... "+ (mic.health/mic.startHealth));
 					g.fillRect((int)e.positionComponent.getX(), (int)e.positionComponent.getY(), (int)(e.positionComponent.getSizeX()*(mic.health/mic.startHealth)), 2);
 					g.setColor(Color.black);
 					drawString(g,"" + mic.health,(int) e.positionComponent.getX(),(int) e.positionComponent.getY()-10,10,Color.black,Color.white);

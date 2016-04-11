@@ -10,5 +10,6 @@ public class ComponentName {
 	public static String TowerInfoComponent = "TowerInfoComponent";
 	public static String MobInfoComponent = "MobInfoComponent";
 	public static String ProjectileInfoComponent = "ProjectileInfoComponent";
+	public static String ExplosiveComponent = "ExplosiveComponent";
 	
 }
