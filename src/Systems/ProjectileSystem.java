@@ -52,24 +52,30 @@ public class ProjectileSystem {
 								MobInfoComponent mic = (MobInfoComponent) mob
 										.getComponent(ComponentName.MobInfoComponent);
 								mic.damage((int)(info.getDamage() * (1-info.getAoEDamage())));
-								PositionComponent AoE = new PositionComponent(proj.positionComponent.getX(), proj.positionComponent.getY(), info.getAoE());
+								Entity AoE = new Entity(proj.positionComponent.getX()-info.getAoE(), proj.positionComponent.getY()-info.getAoE(), info.getAoE());
 								if(info.getAoEDamage() != 0){
-									System.out.println(AoE.getX() + ", " + AoE.getY() + "      " + AoE.getShape().getRadius());
+									//System.out.println(AoE.positionComponent.getX() + ", " + AoE.positionComponent.getY() + "      " + AoE.positionComponent.getShape().getRadius());
 									for (Entity AoECheck : game.getMobSystem().currentLevel.mobs) {
-										System.out.println(AoECheck.positionComponent.getX() + ", " + AoECheck.positionComponent.getY() + "      " + AoECheck.positionComponent.getShape().getSizeX() + ", " + AoECheck.positionComponent.getShape().getSizeY());
-										if(AoECheck.positionComponent.checkCollide(AoE)){
-											System.out.println("NEAT");
+										//System.out.println(AoECheck.positionComponent.getX() + ", " + AoECheck.positionComponent.getY() + "      " + AoECheck.positionComponent.getShape().getSizeX() + ", " + AoECheck.positionComponent.getShape().getSizeY());
+										if(AoECheck.positionComponent.checkCollide(AoE.positionComponent)){
+											//System.out.println("NEAT");
 											MobInfoComponent micAoE = (MobInfoComponent) AoECheck
 													.getComponent(ComponentName.MobInfoComponent);
 											micAoE.damage((int) (info.damage * info.getAoEDamage()));
+											if (micAoE.getHealth() <= 0) {
+												mobsToRemove.add(AoECheck);
+												game.addGold(micAoE.goldOnKill);
+											}
 										}
 									}
 								}
-								projToRemove.add(proj);
-								if (mic.getHealth() <= 0) {
-									mobsToRemove.add(mob);
-									game.addGold(mic.goldOnKill);
+								else{
+									if (mic.getHealth() <= 0) {
+										mobsToRemove.add(mob);
+										game.addGold(mic.goldOnKill);
+									}
 								}
+								projToRemove.add(proj);
 								break;
 							}
 						}

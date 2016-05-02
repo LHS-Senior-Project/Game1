@@ -25,7 +25,7 @@ public class Shape  {
 		vertices = new ArrayList<Vector2D>();
 		axis = new ArrayList<Vector2D>();
 		this.radius = radius;
-		centroid = new Vector2D(radius,radius);
+		this.centroid = new Vector2D(radius,radius);
 		this.sizeX = radius*2;
 		this.sizeY = radius*2;
 	}
