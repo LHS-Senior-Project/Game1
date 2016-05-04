@@ -70,6 +70,7 @@ public class MobSystem {
 			this.currentLevel.removeMob(mob);
 			game.getEntities().remove(mob);
 			game.getGraphicsSystem().remove(mob);
+			game.getPhysicsSystem().removeFromPhysics(mob);
 		}
 	}
 
@@ -77,6 +78,7 @@ public class MobSystem {
 		this.currentLevel.removeMob(toRemove);
 		game.getEntities().remove(toRemove);
 		game.getGraphicsSystem().remove(toRemove);
+		game.getPhysicsSystem().removeFromPhysics(toRemove);
 	}
 	
 	/*

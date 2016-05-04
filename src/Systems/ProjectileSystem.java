@@ -91,6 +91,7 @@ public class ProjectileSystem {
 		for (Entity proj : toRemove) {
 			game.getEntities().remove(proj);
 			game.getGraphicsSystem().remove(proj);
+			game.getPhysicsSystem().removeFromPhysics(proj);
 			this.currentLevel.removeProjectile(proj);
 		}
 	}
@@ -99,6 +100,7 @@ public class ProjectileSystem {
 		game.getEntities().remove(toRemove);
 		game.getGraphicsSystem().remove(toRemove);
 		this.currentLevel.removeProjectile(toRemove);
+		game.getPhysicsSystem().removeFromPhysics(toRemove);
 	}
 	
 	public void createProjectile(ProjectileInfoComponent projectile, float x, float y, Vector2D target){

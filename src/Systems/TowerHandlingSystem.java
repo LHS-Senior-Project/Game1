@@ -35,8 +35,8 @@ public class TowerHandlingSystem {
 				for (Entity mob : game.getMobSystem().currentLevel.mobs) {
 					if (mob.positionComponent.checkCollide(ti.rangePC)) {
 						if (System.currentTimeMillis() - ti.lastShot >= 1000 / ti.speed) {
-							float deltaX = (mob.positionComponent.getX() - (ti.getxPos() - .5f * ti.getxSize())) + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy();
-							float deltaY = (mob.positionComponent.getY() - (ti.getyPos() - .5f * ti.getySize())) + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy();
+							float deltaX = (mob.positionComponent.getX() - (ti.getxPos() + .5f * ti.getxSize())) + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy();
+							float deltaY = (mob.positionComponent.getY() - (ti.getyPos() + .5f * ti.getySize())) + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy();
 							Vector2D heading = new Vector2D(deltaX, deltaY);
 							game.getProjectileSystem().createProjectile(ti.getProjectile(), ti.getxPos(),ti.getyPos(),heading);
 							ti.lastShot = System.currentTimeMillis();

@@ -36,6 +36,7 @@ public class PhysicsSystem {
 	}
 	
 	private void handleCollision(){
+		System.out.println("Checking for " + physics.size() + " entities");
 				for(Entity e1 :  physics){
 					for(Entity e2 : physics){
 						if(e1.equals(e2)){
