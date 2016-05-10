@@ -5,12 +5,34 @@
 			<Mob>
 				<Name>derp</Name>
 				<Health>100</Health>
-				<Speed>10</Speed>
+				<Speed>.15</Speed>
+				<Gold>10</Gold>
+				<MobID>0</MobID>
+				<Image width="32" height="32">Level1/images/Pirateship.png</Image>
+			</Mob>
+			<Mob>
+				<Name>derp</Name>
+				<Health>100</Health>
+				<Speed>.15</Speed>
+				<Gold>10</Gold>
+				<MobID>0</MobID>
+				<Image width="32" height="32">Level1/images/download.jpg</Image>
+			</Mob>
+			<Mob>
+				<Name>derp</Name>
+				<Health>100</Health>
+				<Speed>.15</Speed>
+				<Gold>10</Gold>
+				<MobID>0</MobID>
+				<Image width="32" height="32">Level1/images/Pirateship.png</Image>
+			</Mob>
+			<Mob>
+				<Name>derp</Name>
+				<Health>100</Health>
+				<Speed>.15</Speed>
 				<Gold>10</Gold>
 				<MobID>0</MobID>
 				<Image width="32" height="32">Level1/images/bgTest.jpg</Image>
-			</Mob>
-			<Mob>
 			</Mob>
 		</Mobs>
 		<Projectiles>
@@ -22,6 +44,7 @@
 			</Projectile>
 		</Projectiles>
 
+		<Wave>1,2,1,-1,1</Wave>
 	</Level>
 		
 	<Level name="Bar">

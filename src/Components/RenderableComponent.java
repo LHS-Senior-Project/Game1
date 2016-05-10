@@ -47,6 +47,7 @@ public class RenderableComponent extends BaseComponent {
 		if (!imagePath.isEmpty()) {
 			try {
 				if(local){
+					System.out.println(this.getClass().getResource(imagePath).getPath());
 					this.image = (BufferedImage) ImageIO.read(getClass().getResource(imagePath));
 				}else{
 					this.image = (BufferedImage) ImageIO.read(new File(imagePath));
@@ -128,8 +129,7 @@ public class RenderableComponent extends BaseComponent {
 		if (pirate == null) {
 			try {
 				System.out.println(this.getClass().getResource("/Images/vinque.ttf"));
-				InputStream fileIn = new BufferedInputStream(
-						this.getClass().getResource("/Images/vinque.ttf").openStream());
+				InputStream fileIn = new BufferedInputStream(this.getClass().getResource("/Images/vinque.ttf").openStream());
 				pirate = Font.createFont(Font.TRUETYPE_FONT, fileIn);
 				GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(pirate);
 			} catch (Exception ex) {

@@ -203,6 +203,7 @@ public class Launcher extends Canvas implements Runnable {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
+		double spawnDelta = 0;
 		double delta = 0;
 		int frames = 0;
 		int updates = 0;
@@ -210,11 +211,16 @@ public class Launcher extends Canvas implements Runnable {
 		while (!game.getStopped()) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
+			spawnDelta += (now - lastTime)/ns;
 			lastTime = now;
 			while (delta >= 1) {
 				game.update();
 				updates++;
 				delta--;
+			}
+			while(spawnDelta >= 30){
+				game.getCurLevel().spawnMobs();
+				spawnDelta -= 30;
 			}
 			game.render();
 			frames++;

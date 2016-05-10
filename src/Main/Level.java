@@ -10,6 +10,7 @@ public class Level {
 
 	public Game game;
 	public ArrayList<MobInfoComponent> levelMobInfo;
+	public ArrayList<Integer> mobsToSpawn;
 	public ArrayList<Entity> mobs;
 	public ArrayList<Entity> proj;
 	public Path path;
@@ -21,6 +22,7 @@ public class Level {
 		this.game = game;
 		this.levelMobInfo = new ArrayList<MobInfoComponent>();
 		this.levelMobInfo.add(MobTypes.lockNessMob);
+		this.mobsToSpawn = new ArrayList<Integer>();
 		this.mobs = new ArrayList<Entity>();
 		this.proj = new ArrayList<Entity>();
 		this.path = path;
@@ -100,6 +102,17 @@ public class Level {
 
 	public void setBackgroundPath(String backgroundPath) {
 		this.backgroundPath = backgroundPath;
+	}
+	
+	public void spawnMobs() {
+		if(!this.mobsToSpawn.isEmpty() && this.levelMobInfo.size() >= this.mobsToSpawn.get(0) && this.mobsToSpawn.get(0) != -1){
+			game.getMobSystem().createMob(this.levelMobInfo.get(this.mobsToSpawn.get(0)), 50, 50, false);
+			this.mobsToSpawn.remove(0);
+		}else{
+			if(!this.mobsToSpawn.isEmpty()){
+				this.mobsToSpawn.remove(0);
+			}
+		}
 	}
 
 	

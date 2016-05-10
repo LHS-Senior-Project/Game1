@@ -153,6 +153,16 @@ public class LevelLoader {
 									}
 									
 								}
+								
+								if(nodeList.item(q).getNodeName().equalsIgnoreCase("Wave")){
+									System.out.println(nodeList.item(q).getTextContent());
+									String[] list = nodeList.item(q).getTextContent().split(",");
+									for(String mob : list){
+										System.out.println(mob);
+										nl.mobsToSpawn.add(Integer.parseInt(mob));
+									}
+								}
+								
 								if(nodeList.item(q).getNodeName().equalsIgnoreCase("Path")){
 									
 								}
