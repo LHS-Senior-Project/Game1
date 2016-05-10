@@ -152,10 +152,20 @@ public class LevelLoader {
 										}
 									}
 									
+								}//End of mob info
+								
+								if(nodeList.item(q).getNodeName().equalsIgnoreCase("Wave")){
+									String[] list = nodeList.item(q).getTextContent().split(",");
+									for(String mob : list){
+										nl.mobsToSpawn.add(Integer.parseInt(mob));
+									}
 								}
+								
 								if(nodeList.item(q).getNodeName().equalsIgnoreCase("Path")){
 									
-								}
+								}//End of path
+								
+								
 							}
 							
 							levelList.add(nl);
