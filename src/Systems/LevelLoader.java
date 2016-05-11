@@ -103,7 +103,7 @@ public class LevelLoader {
 							levelCount++;
 							System.out.print(levels.item(i).getNodeName() + " " + levelCount);
 							System.out.println(": " + levels.item(i).getAttributes().getNamedItem("name").getTextContent());
-							Level nl = new Level(this.game, new Path(new Vector2D(69, 106),new Vector2D(51, 219),new Vector2D(61, 338),new Vector2D(195, 529),new Vector2D(332, 340),new Vector2D(347, 116) ,new Vector2D(417, 12),new Vector2D(514, 27),new Vector2D(531, 120),new Vector2D(540, 232),new Vector2D(452, 314),new Vector2D(413, 546),new Vector2D(574, 559),new Vector2D(674, 125),new Vector2D(706, 211),new Vector2D(701, 321)));
+							Level nl = new Level(this.game,new Path(new Vector2D(86, 68),new Vector2D(216, 50),new Vector2D(365, 51),new Vector2D(465, 87),new Vector2D(489, 170),new Vector2D(428, 251),new Vector2D(310, 299),new Vector2D(149, 358),new Vector2D(64, 422),new Vector2D(36, 512),new Vector2D(82, 597),new Vector2D(205, 652),new Vector2D(339, 669),new Vector2D(509, 678),new Vector2D(684, 660),new Vector2D(865, 628),new Vector2D(968, 491),new Vector2D(973, 355),new Vector2D(981, 283)));// new Path(new Vector2D(69, 106),new Vector2D(51, 219),new Vector2D(61, 338),new Vector2D(195, 529),new Vector2D(332, 340),new Vector2D(347, 116) ,new Vector2D(417, 12),new Vector2D(514, 27),new Vector2D(531, 120),new Vector2D(540, 232),new Vector2D(452, 314),new Vector2D(413, 546),new Vector2D(574, 559),new Vector2D(674, 125),new Vector2D(706, 211),new Vector2D(701, 321)));
 							NodeList nodeList = levels.item(i).getChildNodes();
 							for(int q = 0; q < nodeList.getLength(); q++){
 //								System.out.println(nodeList.item(q).getNodeName());
@@ -221,21 +221,18 @@ public class LevelLoader {
 							levelList.add(nl);
 						}
 					}
-										
 //					System.out.println(levels.item(3).getNodeName());
 //					System.out.println(levels.item(3).getAttributes().getNamedItem("name"));
-					
 				} catch (ParserConfigurationException | SAXException | IOException e) {
 					e.printStackTrace();
-				} 
-				
+				} 		
 			}
 		}
-
 	}
 
 	public Level loadLevel(int index) {
 		return levelList.get(index);
 	}
 
+	
 }

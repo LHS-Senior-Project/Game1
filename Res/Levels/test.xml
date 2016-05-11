@@ -38,8 +38,8 @@
 		<Towers>
 			<Tower>
 				<Name>Cannon</Name>
-				<cost>150</cost>
-				<range>25</range>
+				<cost>50</cost>
+				<range>300</range>
 				<speed>1</speed>
 				<damage>50</damage>
 				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
