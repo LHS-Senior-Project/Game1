@@ -27,6 +27,10 @@ public class TowerInfoComponent extends BaseComponent{
 	public float xPos;
 	//float yPos
 	public float yPos;
+	//where the tower is looking x
+	public float xLook;
+	//where the tower is looking y
+	public float yLook;
 	//Shape border
 	public Shape border;
 	//range Position Component
@@ -49,6 +53,8 @@ public class TowerInfoComponent extends BaseComponent{
 		this.iconLoc = "/Images/ok_16x16.gif";
 		xPos = 0;
 		yPos = 0;
+		this.xLook = 0;
+		this.yLook = 0;
 		this.border = new Shape(16,16);
 		this.speed = 1;
 		this.damage = 50;
@@ -74,7 +80,8 @@ public class TowerInfoComponent extends BaseComponent{
 		this.border = new Shape(xSize,ySize);
 		this.damage = damage;
 		this.projectile = projectile;
-		
+		this.xLook = 0;
+		this.yLook = 0;
 		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
 		this.lastShot = System.currentTimeMillis();
 	}
@@ -96,7 +103,8 @@ public class TowerInfoComponent extends BaseComponent{
 		this.border = new Shape(xSize,ySize);
 		this.damage = damage;
 		this.projectile = projectile;
-		
+		this.xLook = 0;
+		this.yLook = 0;
 		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
 		this.lastShot = System.currentTimeMillis();
 	}
@@ -111,6 +119,8 @@ public class TowerInfoComponent extends BaseComponent{
 		this.range = 150;
 		xPos = 0;
 		yPos = 0;
+		this.xLook = 0;
+		this.yLook = 0;
 		this.border = new Shape(16,16);
 		this.speed = 1;
 		this.damage = 50;
@@ -131,6 +141,22 @@ public class TowerInfoComponent extends BaseComponent{
 		return towerDescription;
 	}
 
+	public void setLookX(float x){
+		this.xLook = x;
+	}
+	
+	public void setLookY(float y){
+		this.yLook = y;
+	}
+	
+	public float getLookX(){
+		return xLook;
+	}
+	
+	public float getLookY(){
+		return yLook;
+	}
+	
 	public void setTowerDescription(String towerDescription) {
 		this.towerDescription = towerDescription;
 	}

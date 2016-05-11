@@ -28,12 +28,20 @@ public class TowerHandlingSystem {
 	}
 
 	public void updateTowers() {
+		
 		for (Entity tower : towers) {
 			if (tower.hasComponent(ComponentName.TowerInfoComponent)) {
+				int mobLookIndex = 0;
 				TowerInfoComponent ti = (TowerInfoComponent) tower.getComponent(ComponentName.TowerInfoComponent);
 				ArrayList<Entity> mobsToRemove = new ArrayList<Entity>();
 				for (Entity mob : game.getMobSystem().currentLevel.mobs) {
 					if (mob.positionComponent.checkCollide(ti.rangePC)) {
+						MobInfoComponent mic = (MobInfoComponent) mob.getComponent(ComponentName.MobInfoComponent);
+						if(mic.getLevelProgress() > mobLookIndex){
+							ti.setLookX(mob.positionComponent.getX());
+							ti.setLookY(mob.positionComponent.getY());
+							mobLookIndex = mic.getLevelProgress();
+						}
 						if (System.currentTimeMillis() - ti.lastShot >= 1000 / ti.speed) {
 							Vector2D projPos = new Vector2D(ti.getxPos()+ti.getBorder().getCentroid().getX()-(ti.getProjectile().getBorder().getSizeX()*.5f),ti.getyPos()+ti.getBorder().getCentroid().getY()-(ti.getProjectile().getBorder().getSizeY()*.5f));
 							float deltaX = mob.positionComponent.getX() - (projPos.getX() + (float) Math.random()*ti.getProjectile().getAccuracy()*2 - ti.getProjectile().getAccuracy());

@@ -4,7 +4,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class GraphicsSystem {
 	}
 
 	public void render() {
-		Graphics g = bs.getDrawGraphics();
+		Graphics2D g = (Graphics2D)bs.getDrawGraphics();
 		g.clearRect(0, 0, 1280, 720);
 		for(Entity e : this.backgrounds){
 			RenderableComponentS rc = (RenderableComponentS) e.getComponent(ComponentName.RenderableComponent);
@@ -49,7 +51,16 @@ public class GraphicsSystem {
 		}
 		for(Entity e : this.renderable){
 			RenderableComponentS rc = (RenderableComponentS) e.getComponent(ComponentName.RenderableComponent);
-			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
+			if(e.hasComponent(ComponentName.TowerInfoComponent)){
+				TowerInfoComponent tic = (TowerInfoComponent) e.getComponent(ComponentName.TowerInfoComponent);
+				AffineTransform reset = new AffineTransform();
+				reset.rotate(0,0,0);
+				g.rotate(Math.atan2(e.positionComponent.getY() - tic.getLookY(),e.positionComponent.getX() - tic.getLookX()) - Math.toRadians(45), e.positionComponent.getX() + e.positionComponent.getSizeX()/2, e.positionComponent.getY() + e.positionComponent.getSizeY()/2);
+				g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
+				g.setTransform(reset);
+			}else{
+				g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
+			}
 			if(game.getSoftPause()){
 				drawString(g, "PAUSED", 10, 10, 100, Color.black, Color.blue);
 			}
