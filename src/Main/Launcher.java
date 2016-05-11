@@ -1,11 +1,10 @@
 package Main;
 
 import java.awt.Canvas;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Components.TowerInfoComponent;
 import Components.UIInfoComponent;
 import Math.Path;
@@ -28,11 +27,11 @@ public class Launcher extends Canvas implements Runnable {
 	public Launcher() {
 		jframe = new JFrame();
 		jframe.add(this);
-		jframe.pack();
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jframe.setVisible(true);
-		jframe.setSize(new Dimension(1202, 720));
 		jframe.setResizable(true);
+//		jframe.getContentPane().setPreferredSize(new Dimension(1280, 720));
+		jframe.setSize(1296, 758);
+		jframe.setVisible(true);
 	}
 	
 	private void init(){
@@ -56,12 +55,16 @@ public class Launcher extends Canvas implements Runnable {
 		game.getMobSystem().currentLevel = testLevel;
 		
 //		test.addComponent(new PlayerInputComponent(test,k,null));
+
+		/*
+		 * No longer need background :)
+		 */
 		
-		Entity background = new Entity(0,0,946,720);
-		background.addComponent(new RenderableComponent("/Images/Background.png",true));
-		background.positionComponent.setCollide(false);
-		game.getGraphicsSystem().addBackground(background);
-		game.addEntities(background);
+//		Entity background = new Entity(0,0,1024,720);
+//		background.addComponent(new RenderableComponentS("/Images/newBackground.png",true));
+//		background.positionComponent.setCollide(false);
+//		game.getGraphicsSystem().addBackground(background);
+//		game.addEntities(background);
 		
 		
 //		Entity testMob = new Entity(50,50,16,16);
@@ -77,8 +80,8 @@ public class Launcher extends Canvas implements Runnable {
 //			game.getMobSystem().createMob(MobTypes.checkMob, 0, i*10);
 //		}
 		//134
-		Entity UI = new Entity(946,0,256,720);
-		UI.addComponent(new RenderableComponent("/Images/UI.png",256,720,true));
+		Entity UI = new Entity(1024,0,256,720);
+		UI.addComponent(new RenderableComponentS("/Images/gui.png",256,720,true));
 		UIInfoComponent uiInfo = new UIInfoComponent(false, null);
 		uiInfo.handleClick = false;
 		UI.addComponent(uiInfo);
@@ -86,8 +89,8 @@ public class Launcher extends Canvas implements Runnable {
 		game.addEntities(UI);
 		game.getUISystem().addElement(UI);
 		
-		Entity UIGold = new Entity(991, 38, 114, 25);
-		UIGold.addComponent(new RenderableComponent(true,114,20));
+		Entity UIGold = new Entity(1120, 100, 114, 48);
+		UIGold.addComponent(new RenderableComponentS(true,114,48));
 		UIInfoComponent goldInfo = new UIInfoComponent(false, null);
 		goldInfo.setUpdate(true, UIInfoComponent.GOLD);
 		UIGold.addComponent(goldInfo);
@@ -104,8 +107,8 @@ public class Launcher extends Canvas implements Runnable {
 //		game.addEntities(UIPath);
 //		game.getUISystem().addElement(UIPath);
 		
-		Entity TowerInfoDisplay = new Entity(946,500,256,256);
-		TowerInfoDisplay.addComponent(new RenderableComponent(true, 256, 256));
+		Entity TowerInfoDisplay = new Entity(1041,561,226,146);
+		TowerInfoDisplay.addComponent(new RenderableComponentS(true, 222, 144));
 		UIInfoComponent towerInfo = new UIInfoComponent(false, null);
 		towerInfo.setUpdate(true, UIInfoComponent.TOWER_DISPLAY);
 		TowerInfoDisplay.addComponent(towerInfo);
@@ -113,8 +116,8 @@ public class Launcher extends Canvas implements Runnable {
 		game.addEntities(TowerInfoDisplay);
 		game.getUiSystem().addElement(TowerInfoDisplay);
 		
-		Entity UIHeart = new Entity(991,8,114,25);
-		UIHeart.addComponent(new RenderableComponent(true,144,20));
+		Entity UIHeart = new Entity(1120,15,114,48);
+		UIHeart.addComponent(new RenderableComponentS(true,114,48));
 		UIInfoComponent heartInfo = new UIInfoComponent(false, null);
 		heartInfo.setUpdate(true, UIInfoComponent.HEARTS);
 		UIHeart.addComponent(heartInfo);
@@ -122,56 +125,56 @@ public class Launcher extends Canvas implements Runnable {
 		game.addEntities(UIHeart);
 		game.getUISystem().addElement(UIHeart);
 		
-		Entity carButton = new Entity(956, 200, 32, 16);
-		carButton.addComponent(new RenderableComponent("/Images/car.png",32,16,true));
-		carButton.addComponent(new UIInfoComponent(true, TowerTypes.CarTower));
-		game.getGraphicsSystem().addRenderable(carButton);
-		game.addEntities(carButton);
-		game.getUISystem().addElement(carButton);
-		
-
-		Entity ssButton = new Entity(956,250,16,16);
-		ssButton.addComponent(new RenderableComponent("/Buttons/SailingShip_Blue.png",true));
-		TowerInfoComponent ssInfo = new TowerInfoComponent("/Buttons/SailingShip_Blue.png");
-		ssInfo.towerName = "SS_DerP";
-		ssInfo.cost = 10;
-		ssInfo.towerDescription = "This is a little derpy boat";
-		ssButton.addComponent(new UIInfoComponent(true, ssInfo));
-		game.getGraphicsSystem().addRenderable(ssButton);
-		game.addEntities(ssButton);
-		game.getUISystem().addElement(ssButton);
-		
-		Entity lhButton = new Entity(956,350,16,16);
-		lhButton.addComponent(new RenderableComponent("/Images/LightHouse.png", 16,16,true));
-		lhButton.addComponent(new UIInfoComponent(true, TowerTypes.LightHouseTower));
-		game.getGraphicsSystem().addRenderable(lhButton);
-		game.addEntities(lhButton);
-		game.getUISystem().addElement(lhButton);
-		
-		Entity RBButton = new Entity(956,430,16,16);
-		RBButton.addComponent(new RenderableComponent("/Images/RadBoat.png", 16,16,true));
-		RBButton.addComponent(new UIInfoComponent(true, TowerTypes.RBoat));
-		game.getGraphicsSystem().addRenderable(RBButton);
-		game.addEntities(RBButton);
-		game.getUISystem().addElement(RBButton);
+//		Entity carButton = new Entity(1058, 211, 83, 83);
+//		carButton.addComponent(new RenderableComponentS("/Buttons/cannon.png",83,83,true));
+//		carButton.addComponent(new UIInfoComponent(true, TowerTypes.CarTower));
+//		game.getGraphicsSystem().addRenderable(carButton);
+//		game.addEntities(carButton);
+//		game.getUISystem().addElement(carButton);
+//		
+//
+//		Entity ssButton = new Entity(956,250,16,16);
+//		ssButton.addComponent(new RenderableComponentS("/Buttons/SailingShip_Blue.png",true));
+//		TowerInfoComponent ssInfo = new TowerInfoComponent("/Buttons/SailingShip_Blue.png");
+//		ssInfo.towerName = "SS_DerP";
+//		ssInfo.cost = 10;
+//		ssInfo.towerDescription = "This is a little derpy boat";
+//		ssButton.addComponent(new UIInfoComponent(true, ssInfo));
+//		game.getGraphicsSystem().addRenderable(ssButton);
+//		game.addEntities(ssButton);
+//		game.getUISystem().addElement(ssButton);
+//		
+//		Entity lhButton = new Entity(956,350,16,16);
+//		lhButton.addComponent(new RenderableComponentS("/Images/LightHouse.png", 16,16,true));
+//		lhButton.addComponent(new UIInfoComponent(true, TowerTypes.LightHouseTower));
+//		game.getGraphicsSystem().addRenderable(lhButton);
+//		game.addEntities(lhButton);
+//		game.getUISystem().addElement(lhButton);
+//		
+//		Entity RBButton = new Entity(956,430,16,16);
+//		RBButton.addComponent(new RenderableComponentS("/Images/RadBoat.png", 16,16,true));
+//		RBButton.addComponent(new UIInfoComponent(true, TowerTypes.RBoat));
+//		game.getGraphicsSystem().addRenderable(RBButton);
+//		game.addEntities(RBButton);
+//		game.getUISystem().addElement(RBButton);
 		
 		Entity pointer = new Entity(0, 0, 100, 100);
-		pointer.addComponent(new RenderableComponent(true)); 
+		pointer.addComponent(new RenderableComponentS(true)); 
 		pointer.positionComponent.setCollide(false);
 		game.getGraphicsSystem().addRenderable(pointer);
 		game.addEntities(pointer);
 		
 		game.getUiSystem().setPointer(pointer);
-		
-		Entity nButton = new Entity(956,400,16,16);
-		nButton.addComponent(new RenderableComponent("/Images/SmallNessie.png", 16,16,true));
-		nButton.addComponent(new UIInfoComponent(true, TowerTypes.NessieTower));
-		game.getGraphicsSystem().addRenderable(nButton);
-		game.addEntities(nButton);
-		game.getUISystem().addElement(nButton);
+//		
+//		Entity nButton = new Entity(956,400,16,16);
+//		nButton.addComponent(new RenderableComponentS("/Images/SmallNessie.png", 16,16,true));
+//		nButton.addComponent(new UIInfoComponent(true, TowerTypes.NessieTower));
+//		game.getGraphicsSystem().addRenderable(nButton);
+//		game.addEntities(nButton);
+//		game.getUISystem().addElement(nButton);
 		
 		Entity playStopButton = new Entity(956,650,16,16);
-		playStopButton.addComponent(new RenderableComponent("/Buttons/pause.png",16,16,true));
+		playStopButton.addComponent(new RenderableComponentS("/Buttons/pause.png",16,16,true));
 		UIInfoComponent playStopInfo = new UIInfoComponent(false, null);
 		playStopInfo.setUpdate(false, UIInfoComponent.TOGGLE_PLAY);
 		playStopButton.addComponent(playStopInfo);
@@ -180,7 +183,7 @@ public class Launcher extends Canvas implements Runnable {
 		game.getUISystem().addElement(playStopButton);
 		
 		Entity settingsButton = new Entity(976, 10,16,16);
-		settingsButton.addComponent(new RenderableComponent("/Buttons/wheel.png",16,16,true));
+		settingsButton.addComponent(new RenderableComponentS("/Buttons/wheel.png",16,16,true));
 		UIInfoComponent settingsButtonInfo = new UIInfoComponent(false, null);
 		settingsButtonInfo.setUpdate(false, UIInfoComponent.SETTINGS);
 		settingsButton.addComponent(settingsButtonInfo);
@@ -226,7 +229,7 @@ public class Launcher extends Canvas implements Runnable {
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				jframe.setTitle(" | " + updates + " ups " + frames + " fps");
+				jframe.setTitle(" | " + updates + " ups " + frames + " fps" + " width: " + jframe.getContentPane().getWidth() + " | " + jframe.getWidth() + " |  Height: " + jframe.getContentPane().getHeight() + " | " + jframe.getHeight());
 				frames = 0;
 				updates = 0;
 

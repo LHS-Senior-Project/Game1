@@ -14,6 +14,8 @@ public class TowerInfoComponent extends BaseComponent{
 	public String towerDescription;
 	//Image Location
 	public String imageLoc;
+	//Icon Location
+	public String iconLoc;
 	//Tower Cost
 	public int cost;
 		
@@ -44,6 +46,7 @@ public class TowerInfoComponent extends BaseComponent{
 		this.range = 150;
 		towerDescription = "default";
 		this.imageLoc = "/Images/ok_16x16.gif";
+		this.iconLoc = "/Images/ok_16x16.gif";
 		xPos = 0;
 		yPos = 0;
 		this.border = new Shape(16,16);
@@ -62,6 +65,7 @@ public class TowerInfoComponent extends BaseComponent{
 		this.towerName = towerName;
 		this.towerDescription = towerDescription;
 		this.imageLoc = imageLoc;
+		this.iconLoc = "/Images/ok_16x16.gif";
 		this.cost = cost;
 		this.range = range;
 		this.speed = speed;
@@ -75,6 +79,27 @@ public class TowerInfoComponent extends BaseComponent{
 		this.lastShot = System.currentTimeMillis();
 	}
 
+	public TowerInfoComponent(String towerName, String towerDescription,
+			String imageLoc, String iconLoc, int cost, float range, float speed, int damage, float xPos,
+			float yPos, float xSize, float ySize, ProjectileInfoComponent projectile) {
+		super();
+		this.name = ComponentName.TowerInfoComponent;
+		this.towerName = towerName;
+		this.towerDescription = towerDescription;
+		this.imageLoc = imageLoc;
+		this.iconLoc = iconLoc;
+		this.cost = cost;
+		this.range = range;
+		this.speed = speed;
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.border = new Shape(xSize,ySize);
+		this.damage = damage;
+		this.projectile = projectile;
+		
+		rangePC = new PositionComponent(xPos, yPos, range + .5f * xSize, range * .5f *ySize);
+		this.lastShot = System.currentTimeMillis();
+	}
 
 
 	public TowerInfoComponent(String imageLocation) {

@@ -10,7 +10,7 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
 import Components.MobInfoComponent;
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Components.TowerInfoComponent;
 import Main.ComponentName;
 import Main.Entity;
@@ -39,16 +39,16 @@ public class GraphicsSystem {
 
 	public void render() {
 		Graphics g = bs.getDrawGraphics();
-		g.clearRect(0, 0, 1000, 1000);
+		g.clearRect(0, 0, 1280, 720);
 		for(Entity e : this.backgrounds){
-			RenderableComponent rc = (RenderableComponent) e.getComponent(ComponentName.RenderableComponent);
+			RenderableComponentS rc = (RenderableComponentS) e.getComponent(ComponentName.RenderableComponent);
 			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
 			if(game.getSoftPause()){
 				drawString(g, "PAUSED", 10, 10, 100, Color.black, Color.blue);
 			}
 		}
 		for(Entity e : this.renderable){
-			RenderableComponent rc = (RenderableComponent) e.getComponent(ComponentName.RenderableComponent);
+			RenderableComponentS rc = (RenderableComponentS) e.getComponent(ComponentName.RenderableComponent);
 			g.drawImage((Image)rc.getImage(), (int)e.positionComponent.getX(), (int)e.positionComponent.getY(), null);
 			if(game.getSoftPause()){
 				drawString(g, "PAUSED", 10, 10, 100, Color.black, Color.blue);

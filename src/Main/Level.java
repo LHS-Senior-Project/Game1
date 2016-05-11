@@ -3,6 +3,7 @@ package Main;
 import java.util.ArrayList;
 
 import Components.MobInfoComponent;
+import Components.TowerInfoComponent;
 import Math.Path;
 import Types.MobTypes;
 
@@ -10,6 +11,7 @@ public class Level {
 
 	public Game game;
 	public ArrayList<MobInfoComponent> levelMobInfo;
+	public ArrayList<TowerInfoComponent> levelTowerInfo;
 	public ArrayList<Integer> mobsToSpawn;
 	public ArrayList<Entity> mobs;
 	public ArrayList<Entity> proj;
@@ -21,11 +23,20 @@ public class Level {
 	public Level(Game game, Path path){
 		this.game = game;
 		this.levelMobInfo = new ArrayList<MobInfoComponent>();
+		this.levelTowerInfo = new ArrayList<TowerInfoComponent>();
 		this.levelMobInfo.add(MobTypes.lockNessMob);
 		this.mobsToSpawn = new ArrayList<Integer>();
 		this.mobs = new ArrayList<Entity>();
 		this.proj = new ArrayList<Entity>();
 		this.path = path;
+	}
+	
+	public void addTowerInfo(TowerInfoComponent tic){
+		this.levelTowerInfo.add(tic);
+	}
+	
+	public ArrayList<TowerInfoComponent> getTowers(){
+		return levelTowerInfo;
 	}
 	
 	public void addMobInfo(MobInfoComponent mic){

@@ -1,6 +1,6 @@
 <Levels>
 	<Level name="Pirate Cove">
-		<Background>Level1/images/bgTest.jpg</Background>
+		<Background>Level1/images/newBackground.png</Background>
 		<Mobs>
 			<Mob>
 				<Name>derp</Name>
@@ -35,6 +35,62 @@
 				<Image width="32" height="32">Level1/images/bgTest.jpg</Image>
 			</Mob>
 		</Mobs>
+		<Towers>
+			<Tower>
+				<Name>Cannon</Name>
+				<cost>150</cost>
+				<range>25</range>
+				<speed>1</speed>
+				<damage>50</damage>
+				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
+				<Icon>Level1/images/cannon.png</Icon>
+			</Tower>
+			<Tower>
+				<Name>Tower2</Name>
+				<cost>150</cost>
+				<range>25</range>
+				<speed>1</speed>
+				<damage>50</damage>
+				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
+				<Icon>Level1/images/cannon.png</Icon>
+			</Tower>
+			<Tower>
+				<Name>Tower3</Name>
+				<cost>150</cost>
+				<range>25</range>
+				<speed>1</speed>
+				<damage>50</damage>
+				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
+				<Icon>Level1/images/cannon.png</Icon>
+			</Tower>
+			<Tower>
+				<Name>Tower4</Name>
+				<cost>150</cost>
+				<range>25</range>
+				<speed>1</speed>
+				<damage>50</damage>
+				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
+				<Icon>Level1/images/cannon.png</Icon>
+			</Tower>
+			<Tower>
+				<Name>Tower5</Name>
+				<cost>150</cost>
+				<range>25</range>
+				<speed>1</speed>
+				<damage>50</damage>
+				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
+				<Icon>Level1/images/cannon.png</Icon>
+			</Tower>
+			<Tower>
+				<Name>Tower6</Name>
+				<cost>150</cost>
+				<range>25</range>
+				<speed>1</speed>
+				<damage>50</damage>
+				<Image width="32" height="32">Level1/images/BlankCannon.png</Image>
+				<Icon>Level1/images/cannon.png</Icon>
+			</Tower>
+		</Towers>
 		<Projectiles>
 			<Projectile>
 				<Speed>.5f</Speed>
@@ -44,7 +100,7 @@
 			</Projectile>
 		</Projectiles>
 
-		<Wave>1,2,1,-1,1</Wave>
+		<Wave>1,2,1,-1,1,1,2,1,-1,1,1,2,1,-1,1,1,2,1,-1,1,1,2,1,-1,1,1,2,1,-1,1,1,2,1,-1,1</Wave>
 	</Level>
 		
 	<Level name="Bar">

@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import Components.MobInfoComponent;
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Components.TowerInfoComponent;
 import Components.UIInfoComponent;
 import Main.ComponentName;
@@ -13,6 +13,7 @@ import Main.Entity;
 import Main.Game;
 import Main.KeyInput;
 import Main.MouseInput;
+import Types.TowerTypes;
 
 public class UISystem {
 
@@ -73,17 +74,17 @@ public class UISystem {
 				if (info.update) {
 					if (info.updateValue == UIInfoComponent.GOLD) {
 						if (ui.hasComponent(ComponentName.RenderableComponent)) {
-							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
+							RenderableComponentS uiRenderable = (RenderableComponentS) ui.getComponent(ComponentName.RenderableComponent);
 							uiRenderable.updateText("" + game.getGold());
 						}
 					} else if (info.updateValue == UIInfoComponent.HEARTS) {
 						if (ui.hasComponent(ComponentName.RenderableComponent)) {
-							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
+							RenderableComponentS uiRenderable = (RenderableComponentS) ui.getComponent(ComponentName.RenderableComponent);
 							uiRenderable.updateText("" + game.getHeart());
 						}
 					} else if (info.updateValue == UIInfoComponent.TOWER_DISPLAY) {
 						if (ui.hasComponent(ComponentName.RenderableComponent)) {
-							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
+							RenderableComponentS uiRenderable = (RenderableComponentS) ui.getComponent(ComponentName.RenderableComponent);
 							Graphics2D g = uiRenderable.getGraphics();
 							g.setColor(uiBackground);
 							g.fillRect(0, 0, 256, 256);
@@ -96,7 +97,7 @@ public class UISystem {
 						}
 					} else if (info.updateValue == UIInfoComponent.TOGGLE_PLAY) {
 						if (ui.hasComponent(ComponentName.RenderableComponent)) {
-							RenderableComponent uiRenderable = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
+							RenderableComponentS uiRenderable = (RenderableComponentS) ui.getComponent(ComponentName.RenderableComponent);
 							if (game.getSoftPause()) {
 								uiRenderable.setImage("/Buttons/play.png", (int) ui.positionComponent.getSizeX(), (int) ui.positionComponent.getSizeY(),true);
 							} else {
@@ -143,13 +144,13 @@ public class UISystem {
 						// game.addGold(-1 * tic.cost);
 
 						placing = false;
-						RenderableComponent rc = (RenderableComponent) this.pointer.getComponent(ComponentName.RenderableComponent);
+						RenderableComponentS rc = (RenderableComponentS) this.pointer.getComponent(ComponentName.RenderableComponent);
 						rc.clearImage();
 					}
 					mouse.clickHandled();
 
 					// spawn a mob when clicked
-					game.getMobSystem().createMob(game.getCurLevel().levelMobInfo.get(0), 50, 50);
+//					game.getMobSystem().createMob(game.getCurLevel().levelMobInfo.get(0), 50, 50);
 					// Entity testMob = new Entity(50, 50, 16, 16);
 					// MobInfoComponent mic = new MobInfoComponent();
 					// testMob.addComponent(new
@@ -168,9 +169,9 @@ public class UISystem {
 							if (info.towerPlace) {
 								placing = true;
 								this.tic = info.getTowerInfo();
-								RenderableComponent rc = (RenderableComponent) this.pointer.getComponent(ComponentName.RenderableComponent);
+								RenderableComponentS rc = (RenderableComponentS) this.pointer.getComponent(ComponentName.RenderableComponent);
 								this.pointer.positionComponent.setBorder(tic.getBorder());
-								rc.setImage(tic.imageLoc, (int) tic.getxSize(), (int) tic.getySize(),true);
+								rc.setImage(tic.imageLoc, (int) tic.getxSize(), (int) tic.getySize(),false);
 							}
 							if (info.updateValue == UIInfoComponent.TOGGLE_PLAY) {
 								togglePlay();
@@ -206,7 +207,7 @@ public class UISystem {
 		
 		if (key.isPressed(key.esc)) {
 			placing = false;
-			RenderableComponent rc = (RenderableComponent) this.pointer.getComponent(ComponentName.RenderableComponent);
+			RenderableComponentS rc = (RenderableComponentS) this.pointer.getComponent(ComponentName.RenderableComponent);
 			rc.clearImage();
 			key.handled(key.esc);
 		}
@@ -240,10 +241,10 @@ public class UISystem {
 				UIInfoComponent info = (UIInfoComponent) ui.getComponent(ComponentName.UIInfoComponent);
 				if(info.updateValue == UIInfoComponent.TOGGLE_PLAY){
 					if (game.getSoftPause()) {
-						RenderableComponent rc = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
+						RenderableComponentS rc = (RenderableComponentS) ui.getComponent(ComponentName.RenderableComponent);
 						rc.setImage("/Buttons/play.png", 16, 16,true);
 					} else {
-						RenderableComponent rc = (RenderableComponent) ui.getComponent(ComponentName.RenderableComponent);
+						RenderableComponentS rc = (RenderableComponentS) ui.getComponent(ComponentName.RenderableComponent);
 						rc.setImage("/Buttons/pause.png", 16, 16,true);
 					}
 				}
@@ -255,4 +256,49 @@ public class UISystem {
 		this.pointer = pointer;
 	}
 
+	public void updateTowerIcons(){
+		int count = 0;
+		int x = 0;
+		int y = 0;
+		for(TowerInfoComponent tic : game.getCurLevel().levelTowerInfo){
+			switch (count){
+				case 0:
+					x = 1058;
+					y = 211;
+					break;
+				case 1:
+					x = 1160;
+					y = 211;
+					break;
+				case 2:
+					x = 1058;
+					y = 315;
+					break;
+				case 3:
+					x = 1160;
+					y = 315;
+					break;
+				case 4:
+					x = 1058;
+					y = 419;
+					break;
+				case 5:
+					x = 1160;
+					y = 419;
+					break;
+				default:
+					break;
+			}
+			
+			Entity newTowerIcon = new Entity(x, y, 83, 83);
+			newTowerIcon.addComponent(new RenderableComponentS(tic.iconLoc,83,83,false));
+			newTowerIcon.addComponent(new UIInfoComponent(true, tic));
+			game.getGraphicsSystem().addRenderable(newTowerIcon);
+			game.addEntities(newTowerIcon);
+			game.getUISystem().addElement(newTowerIcon);
+			
+			count++;
+		}
+	}
+	
 }

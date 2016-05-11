@@ -17,12 +17,12 @@ import javax.imageio.ImageIO;
 import Main.BaseComponent;
 import Main.ComponentName;
 
-public class RenderableComponent extends BaseComponent {
+public class RenderableComponentS extends BaseComponent {
 
 	private BufferedImage image;
 	public static Font pirate;
 
-	public RenderableComponent(String imagePath,int width, int height, boolean local) {
+	public RenderableComponentS(String imagePath,int width, int height, boolean local) {
 		this.name = ComponentName.RenderableComponent;
 		loadFonts();
 		if (!imagePath.isEmpty()) {
@@ -41,7 +41,7 @@ public class RenderableComponent extends BaseComponent {
 
 	}
 	
-	public RenderableComponent(String imagePath, boolean local) {
+	public RenderableComponentS(String imagePath, boolean local) {
 		this.name = ComponentName.RenderableComponent;
 		loadFonts();
 		if (!imagePath.isEmpty()) {
@@ -64,7 +64,7 @@ public class RenderableComponent extends BaseComponent {
 
 	}
 
-	public RenderableComponent(boolean blank) {
+	public RenderableComponentS(boolean blank) {
 		this.name = ComponentName.RenderableComponent;
 		loadFonts();
 		if (blank) {
@@ -85,7 +85,7 @@ public class RenderableComponent extends BaseComponent {
 	 * @param height
 	 *            int for image height
 	 */
-	public RenderableComponent(boolean blank, int width, int height) {
+	public RenderableComponentS(boolean blank, int width, int height) {
 		this.name = ComponentName.RenderableComponent;
 		loadFonts();
 		if (blank) {
@@ -97,7 +97,7 @@ public class RenderableComponent extends BaseComponent {
 		}
 	}
 
-	public RenderableComponent(String imagePath, float width, float height, boolean local) {
+	public RenderableComponentS(String imagePath, float width, float height, boolean local) {
 		this.name = ComponentName.RenderableComponent;
 		loadFonts();
 		if (!imagePath.isEmpty()) {
@@ -148,8 +148,8 @@ public class RenderableComponent extends BaseComponent {
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, image.getWidth(), image.getHeight());
 		g.setComposite(AlphaComposite.Src);
-		g.setFont(pirate.deriveFont(Font.PLAIN, 20));
-		g.drawString(text, 0, 20);
+		g.setFont(pirate.deriveFont(Font.PLAIN, 48));
+		g.drawString(text, 0, 48);
 	}
 	
 	public Graphics2D getGraphics(){

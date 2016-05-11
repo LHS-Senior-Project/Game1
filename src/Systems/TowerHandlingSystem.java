@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Components.MobInfoComponent;
 import Components.ProjectileInfoComponent;
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Components.TowerInfoComponent;
 import Main.ComponentName;
 import Main.Entity;
@@ -77,14 +77,14 @@ public class TowerHandlingSystem {
 
 	public Entity buildTower(TowerInfoComponent tic) {
 		Entity tower = new Entity(tic.xPos, tic.yPos, tic.getBorder());
-		tower.addComponent(new RenderableComponent(tic.imageLoc, (int) tic.getxSize(), (int) tic.getySize(),true));
+		tower.addComponent(new RenderableComponentS(tic.imageLoc, (int) tic.getxSize(), (int) tic.getySize(),false));
 		return tower;
 	}
 	
 	public void createTower(TowerInfoComponent towerInfo, float x, float y){
 		TowerInfoComponent tic = towerInfo.clone();
 		Entity newTower = new Entity(x,y, tic.getBorder());
-		newTower.addComponent(new RenderableComponent(tic.imageLoc, tic.getxSize(), tic.getySize(),true));
+		newTower.addComponent(new RenderableComponentS(tic.imageLoc, tic.getxSize(), tic.getySize(),false));
 		tic.updatePos(newTower);
 		tic.updateRange();
 		newTower.addComponent(tic);

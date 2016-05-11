@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Components.MobInfoComponent;
 import Components.PositionComponent;
 import Components.ProjectileInfoComponent;
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Main.ComponentName;
 import Main.Entity;
 import Main.Game;
@@ -106,7 +106,7 @@ public class ProjectileSystem {
 	public void createProjectile(ProjectileInfoComponent projectile, float x, float y, Vector2D target){
 		Entity newProj = new Entity(x, y, projectile.getBorder());
 		ProjectileInfoComponent pic = new ProjectileInfoComponent(projectile, target);
-		newProj.addComponent(new RenderableComponent(projectile.imageString, projectile.getSizeX(), projectile.getSizeY(),true));
+		newProj.addComponent(new RenderableComponentS(projectile.imageString, projectile.getSizeX(), projectile.getSizeY(),true));
 		newProj.addComponent(pic);
 		game.getProjectileSystem().currentLevel.addProjectile(newProj);
 		game.addEntities(newProj);
@@ -118,7 +118,7 @@ public class ProjectileSystem {
 	public void createProjectile(ProjectileInfoComponent projectile, float x, float y, boolean local){
 		Entity newProj = new Entity(x, y, projectile.getBorder());
 		ProjectileInfoComponent pic = new ProjectileInfoComponent(projectile);
-		newProj.addComponent(new RenderableComponent(projectile.imageString, projectile.getSizeX(), projectile.getSizeY(),local));
+		newProj.addComponent(new RenderableComponentS(projectile.imageString, projectile.getSizeX(), projectile.getSizeY(),local));
 		newProj.addComponent(pic);
 		game.getProjectileSystem().currentLevel.addProjectile(newProj);
 		game.addEntities(newProj);

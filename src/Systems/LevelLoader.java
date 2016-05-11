@@ -14,11 +14,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import Components.MobInfoComponent;
+import Components.TowerInfoComponent;
 import Main.ComponentName;
 import Main.Game;
 import Main.Level;
 import Math.Path;
 import Math.Vector2D;
+import Types.ProjectileTypes;
 
 public class LevelLoader {
 
@@ -152,6 +154,54 @@ public class LevelLoader {
 										}
 									}
 									
+								}//Mobs End
+								
+								if(nodeList.item(q).getNodeName().equalsIgnoreCase("Towers")){
+									NodeList towers = nodeList.item(q).getChildNodes();
+									for(int t = 0; t < towers.getLength(); t++){
+										if(towers.item(t).getNodeName().equalsIgnoreCase("tower")){
+											String towerImagePath = "";
+											String towerIconPath = "";
+											int width = 0;
+											int height = 0;
+											
+											String name = "";
+											int cost = 0;
+											float range = 0;
+											float speed = 0;
+											int damage = 0;
+											NodeList towerInfo = towers.item(t).getChildNodes();
+											for(int attr = 0; attr < towerInfo.getLength(); attr++){
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("Image")){
+													towerImagePath = PROGRAM_DIRECTORY + "Levels/" + towerInfo.item(attr).getTextContent();
+													width = Integer.parseInt(towerInfo.item(attr).getAttributes().getNamedItem("width").getNodeValue());
+													height = Integer.parseInt(towerInfo.item(attr).getAttributes().getNamedItem("height").getNodeValue());
+												}
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("Icon")){
+													towerIconPath = PROGRAM_DIRECTORY + "Levels/" + towerInfo.item(attr).getTextContent();
+												}
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("cost")){
+													cost = Integer.parseInt(towerInfo.item(attr).getTextContent());
+												}
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("name")){
+													name = towerInfo.item(attr).getTextContent();
+												}
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("range")){
+													range = Float.parseFloat(towerInfo.item(attr).getTextContent());
+												}
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("speed")){
+													speed = Float.parseFloat(towerInfo.item(attr).getTextContent());
+												}
+												if(towerInfo.item(attr).getNodeName().equalsIgnoreCase("damage")){
+													damage = Integer.parseInt(towerInfo.item(attr).getTextContent());
+												}
+												
+												
+											}	
+											//(String towerName, String towerDescription, String imageLoc, String iconLoc, int cost, float range, float speed, int damage, float xPos, float yPos, float xSize, float ySize, ProjectileInfoComponent projectile)
+											nl.addTowerInfo(new TowerInfoComponent(name, "ription", towerImagePath, towerIconPath, cost, range, speed, damage, 0, 0, width, height, ProjectileTypes.Cannonball));
+										}
+									}
 								}
 								
 								if(nodeList.item(q).getNodeName().equalsIgnoreCase("Wave")){

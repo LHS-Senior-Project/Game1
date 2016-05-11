@@ -3,7 +3,7 @@ package Main;
 import java.awt.Canvas;
 import java.util.ArrayList;
 
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Math.Path;
 import Math.Vector2D;
 import Systems.GraphicsSystem;
@@ -219,12 +219,13 @@ public class Game {
 	
 	public void loadLevel(int index){
 		this.level = ll.loadLevel(index);
-		Entity background = new Entity(0,0,946,720);
-		background.addComponent(new RenderableComponent(this.level.getBackgroundPath(),946,720, false));
+		Entity background = new Entity(0,0,1024,720);
+		background.addComponent(new RenderableComponentS(this.level.getBackgroundPath(),1024,720, false));
 		background.positionComponent.setCollide(false);
 		this.getGraphicsSystem().addBackground(background);
 		this.addEntities(background);
 		this.getMobSystem().currentLevel = this.level;
 		this.getProjectileSystem().currentLevel = this.level;
+		this.uiSystem.updateTowerIcons();
 	}
 }

@@ -3,7 +3,7 @@ package Systems;
 import java.util.ArrayList;
 
 import Components.MobInfoComponent;
-import Components.RenderableComponent;
+import Components.RenderableComponentS;
 import Main.ComponentName;
 import Main.Entity;
 import Main.Game;
@@ -95,7 +95,7 @@ public class MobSystem {
 	public void createMob(MobInfoComponent mob, float x, float y){
 		Entity newMob = new Entity(x, y, mob.getBorder());
 		MobInfoComponent mic = new MobInfoComponent(mob);
-		newMob.addComponent(new RenderableComponent(mob.imageString, mob.xSize(), mob.ySize(),true));
+		newMob.addComponent(new RenderableComponentS(mob.imageString, mob.xSize(), mob.ySize(),true));
 		newMob.addComponent(mic);
 		game.getMobSystem().currentLevel.addMob(newMob);
 		game.addEntities(newMob);
@@ -108,7 +108,7 @@ public class MobSystem {
 	public void createMob(MobInfoComponent mob, float x, float y, boolean local){
 		Entity newMob = new Entity(x, y, mob.getBorder());
 		MobInfoComponent mic = new MobInfoComponent(mob);
-		newMob.addComponent(new RenderableComponent(mob.imageString, mob.xSize(), mob.ySize(),local));
+		newMob.addComponent(new RenderableComponentS(mob.imageString, mob.xSize(), mob.ySize(),local));
 		newMob.addComponent(mic);
 		game.getMobSystem().currentLevel.addMob(newMob);
 		game.addEntities(newMob);
